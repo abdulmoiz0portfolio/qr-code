@@ -232,4 +232,200 @@ input[type="color"]::-webkit-color-swatch {
   transform: scale(0.97);
 }
 
+/* ========================================================
+   COMPREHENSIVE DARK MODE ARCHITECTURE (SAAS LUXURY TIER)
+   ======================================================== */
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #090D16 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Smooth theme transition */
+body, header, aside, main, footer, .modal-dialog, div, button {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+}
+
+/* Dark Header */
+html.dark header {
+  background-color: rgba(15, 23, 42, 0.85) !important;
+  border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+/* Dark Navigation and Panels */
+html.dark .bg-white {
+  background-color: #0F172A !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #0B1120 !important;
+}
+
+html.dark .bg-slate-100,
+html.dark .bg-slate-100\/90,
+html.dark .bg-slate-100\/70 {
+  background-color: #1E293B !important;
+}
+
+html.dark .hover\:bg-slate-50:hover {
+  background-color: #1E293B !important;
+}
+
+html.dark .hover\:bg-slate-100:hover,
+html.dark .hover\:bg-slate-200\/80:hover {
+  background-color: #334155 !important;
+}
+
+/* Dark Borders */
+html.dark .border-slate-200,
+html.dark .border-slate-200\/90,
+html.dark .border-slate-200\/80,
+html.dark .border-slate-100 {
+  border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+html.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+html.dark .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+/* Dark Typography */
+html.dark .text-slate-900,
+html.dark .text-slate-800 {
+  color: #F8FAFC !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: #CBD5E1 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: #94A3B8 !important;
+}
+
+/* Dark Inputs, Selects & Textareas */
+html.dark input[type="text"],
+html.dark input[type="url"],
+html.dark input[type="email"],
+html.dark input[type="password"],
+html.dark input[type="number"],
+html.dark input[type="tel"],
+html.dark textarea,
+html.dark select {
+  background-color: #1E293B !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748B !important;
+}
+
+/* Dark Sidebar Nav Items */
+html.dark .nav-item {
+  color: #94A3B8;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+html.dark .nav-item:hover {
+  color: #F8FAFC;
+  background-color: #1E293B;
+}
+
+html.dark .nav-item.active {
+  color: #A5B4FC;
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark Tabs */
+html.dark .tab-btn {
+  color: #94A3B8;
+}
+
+html.dark .tab-btn:hover {
+  color: #F8FAFC;
+  background-color: #1E293B;
+}
+
+html.dark .tab-btn.active {
+  color: #A5B4FC;
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+/* Dark Double-Bezel Hardware Frame */
+html.dark .double-bezel-shell {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(11, 17, 32, 0.95) 100%) !important;
+  border-color: rgba(51, 65, 85, 0.7) !important;
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
+}
+
+/* Dark Modals */
+html.dark .modal-dialog {
+  background-color: #0F172A !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Dark Dropdowns */
+html.dark #lang-dropdown-menu,
+html.dark #user-dropdown-menu {
+  background-color: #0F172A !important;
+  border-color: #334155 !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Dark Preset Pills */
+html.dark .preset-pill {
+  background-color: #1E293B;
+  border-color: #334155;
+  color: #CBD5E1;
+}
+
+html.dark .preset-pill:hover {
+  border-color: #6366F1;
+  color: #F8FAFC;
+}
+
+html.dark .preset-pill.active {
+  background-color: rgba(99, 102, 241, 0.2) !important;
+  border-color: #6366F1 !important;
+  color: #A5B4FC !important;
+}
+
+/* Dark Template Cards */
+html.dark .template-card {
+  background-color: #0F172A;
+  border-color: #334155;
+}
+
+html.dark .template-card:hover {
+  border-color: #6366F1;
+}
+
+/* Dark Scrollbars */
+html.dark ::-webkit-scrollbar-track {
+  background: #090D16;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+
 
