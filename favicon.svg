@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#4338ca" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+  
+  <!-- Rounded Gradient App Icon Background -->
+  <rect width="64" height="64" rx="16" fill="url(#grad)" filter="url(#shadow)" />
+  
+  <!-- Outer Corner Boxes -->
+  <!-- Top Left -->
+  <rect x="12" y="12" width="16" height="16" rx="4" fill="#ffffff" />
+  <rect x="15.5" y="15.5" width="9" height="9" rx="2" fill="#4f46e5" />
+  <rect x="18" y="18" width="4" height="4" rx="1" fill="#ffffff" />
+
+  <!-- Top Right -->
+  <rect x="36" y="12" width="16" height="16" rx="4" fill="#ffffff" />
+  <rect x="39.5" y="15.5" width="9" height="9" rx="2" fill="#4f46e5" />
+  <rect x="42" y="18" width="4" height="4" rx="1" fill="#ffffff" />
+
+  <!-- Bottom Left -->
+  <rect x="12" y="36" width="16" height="16" rx="4" fill="#ffffff" />
+  <rect x="15.5" y="39.5" width="9" height="9" rx="2" fill="#4f46e5" />
+  <rect x="18" y="42" width="4" height="4" rx="1" fill="#ffffff" />
+
+  <!-- Center & Bottom Right Data Modules -->
+  <rect x="36" y="36" width="5" height="5" rx="1.5" fill="#ffffff" />
+  <rect x="47" y="36" width="5" height="5" rx="1.5" fill="#ffffff" />
+  <rect x="36" y="47" width="5" height="5" rx="1.5" fill="#ffffff" />
+  <rect x="43" y="43" width="9" height="9" rx="2.5" fill="#ffffff" />
+  <rect x="30" y="24" width="4" height="16" rx="1.5" fill="#ffffff" opacity="0.9" />
+</svg>
