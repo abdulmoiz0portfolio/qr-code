@@ -45,7 +45,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-indigo-500 selection:text-white">
 
-  <!-- Light Ambient Background Accents -->
+  <!-- Ambient Background Accents -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
     <div class="absolute -top-40 left-1/4 w-[600px] h-[600px] bg-indigo-100/60 rounded-full blur-[140px]"></div>
     <div class="absolute top-1/3 -right-20 w-[500px] h-[500px] bg-violet-100/50 rounded-full blur-[140px]"></div>
@@ -66,7 +66,7 @@
             <div class="flex items-center gap-2">
               <span class="text-base font-bold font-heading text-slate-900 tracking-tight">Automatix<span class="text-indigo-600">QR</span></span>
               <span class="px-2 py-0.5 text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-full flex items-center gap-1">
-                <i data-lucide="sparkles" class="w-3 h-3 text-indigo-600"></i>
+                <i data-lucide="shield-check" class="w-3 h-3 text-indigo-600"></i>
                 <span data-i18n="pro_badge">ENTERPRISE</span>
               </span>
             </div>
@@ -75,10 +75,16 @@
         </a>
       </div>
 
-      <!-- Right Header Actions (Language Switcher, Quota & Main Site Link) -->
+      <!-- Right Header Actions -->
       <div class="flex items-center gap-3">
         
-        <!-- Language Switcher Dropdown (Auto-Detect + Manual) -->
+        <!-- Admin Panel Switcher Button -->
+        <button id="header-admin-btn" class="px-3 py-1.5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white hover:from-slate-800 hover:to-indigo-900 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+          <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>Super Admin</span>
+        </button>
+
+        <!-- Language Switcher Dropdown -->
         <div class="relative">
           <button id="lang-selector-btn" class="px-3 py-1.5 bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 flex items-center gap-2 transition shadow-sm">
             <span id="current-lang-flag">🇺🇸</span>
@@ -184,6 +190,15 @@
             <span class="flex-1 text-left" data-i18n="nav_api">API & Widget</span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-mono">Dev</span>
           </button>
+
+          <!-- Admin Control Room Link in Nav -->
+          <div class="pt-2 border-t border-slate-100">
+            <button data-view="admin" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-indigo-900 bg-indigo-50/50 hover:bg-indigo-100/60 border border-indigo-100 transition-all">
+              <i data-lucide="shield-check" class="w-4 h-4 text-indigo-600"></i>
+              <span class="flex-1 text-left">Admin Console</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-700 font-mono font-bold">Root</span>
+            </button>
+          </div>
         </nav>
       </div>
 
@@ -579,7 +594,7 @@
               Change the destination URL anytime without reprinting your QR codes!
             </p>
           </div>
-          <button id="create-dynamic-btn" class="px-4 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs rounded-xl shadow-md shadow-cyan-600/20 transition flex items-center gap-2">
+          <button id="create-dynamic-btn" class="px-4 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs rounded-xl shadow-md shadow-cyan-600/20 transition flex items-center gap-2 active:scale-95">
             <i data-lucide="plus-circle" class="w-4 h-4"></i>
             <span data-i18n="btn_create_dynamic">Create Dynamic Link</span>
           </button>
@@ -595,7 +610,7 @@
                   <th class="p-4" data-i18n="th_short_url">Short Dynamic URL</th>
                   <th class="p-4" data-i18n="th_destination">Target Destination</th>
                   <th class="p-4 text-center" data-i18n="th_scans">Total Scans</th>
-                  <th class="p-4" data-i18n="th_status">Status</th>
+                  <th class="p-4">Status</th>
                   <th class="p-4 text-right" data-i18n="th_actions">Actions</th>
                 </tr>
               </thead>
@@ -674,7 +689,7 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="templates-grid">
-          <!-- Populated by JS -->
+          <!-- Populated by JS with live mini QRs -->
         </div>
       </section>
 
@@ -830,6 +845,176 @@ qrCode.download({ extension: "png" });</code></pre>
         </div>
       </section>
 
+      <!-- ============================================== -->
+      <!-- VIEW 8: MAIN ADMIN DASHBOARD & CONTROL ROOM    -->
+      <!-- ============================================== -->
+      <section id="view-admin" class="view-panel hidden space-y-6">
+        
+        <!-- Admin Header Banner -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 text-white shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-indigo-900/50">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-mono font-bold flex items-center gap-1">
+                <i data-lucide="shield-alert" class="w-3 h-3 text-amber-400"></i>
+                ROOT PRIVILEGES
+              </span>
+              <span class="text-xs text-slate-400">AutomatixQR Control Center</span>
+            </div>
+            <h2 class="text-xl font-bold font-heading text-white mt-1">Super Admin Console</h2>
+            <p class="text-xs text-slate-300 mt-1">
+              Global Platform Metrics, User Subscriptions, DNS & Domain Status, System Configuration.
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <button id="admin-export-backup-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-md">
+              <i data-lucide="download-cloud" class="w-4 h-4"></i>
+              Export JSON Backup
+            </button>
+            <button id="admin-reset-system-btn" class="px-3.5 py-2 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 text-rose-300 rounded-xl text-xs font-semibold transition flex items-center gap-1">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+              Purge Cache
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Platform Users</span>
+              <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono" id="admin-stat-users">1,482</div>
+            <div class="text-[11px] text-emerald-600 mt-1 font-medium">+18 today</div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Total QRs Created</span>
+              <i data-lucide="qr-code" class="w-4 h-4 text-violet-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono" id="admin-stat-qrs">84,290</div>
+            <div class="text-[11px] text-indigo-600 mt-1 font-medium">Across all tenants</div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Monthly MRR</span>
+              <i data-lucide="dollar-sign" class="w-4 h-4 text-emerald-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono">$14,280</div>
+            <div class="text-[11px] text-emerald-600 mt-1 font-medium">+31.2% MoM</div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Domain / SSL Status</span>
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+            </div>
+            <div class="text-sm font-bold text-emerald-600 mt-2 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              qrcode.automatixes.com
+            </div>
+            <div class="text-[11px] text-slate-400 mt-1">CNAME Active & Verified</div>
+          </div>
+        </div>
+
+        <!-- User Accounts & Subscription Manager -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">User Subscriptions & Tenant Control</h3>
+              <p class="text-xs text-slate-500">Manage client accounts, adjust QR quotas, and assign Enterprise roles.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="text" id="admin-user-search" placeholder="Search user by email or name..." class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-indigo-500 w-60">
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px]">
+                <tr>
+                  <th class="p-3">User / Organization</th>
+                  <th class="p-3">Plan Tier</th>
+                  <th class="p-3">Dynamic QRs</th>
+                  <th class="p-3">Monthly Scans</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3 text-right">Quick Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-tbody" class="divide-y divide-slate-100 font-medium">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- System Settings & DNS Config Info -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="sliders" class="w-4 h-4 text-indigo-600"></i>
+              System Config & Feature Flags
+            </h3>
+            
+            <div class="space-y-3 text-xs">
+              <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
+                <div>
+                  <div class="font-semibold text-slate-800">Dynamic Redirection Engine</div>
+                  <div class="text-[11px] text-slate-500">Enable real-time client-side redirection for scanned short codes.</div>
+                </div>
+                <input type="checkbox" checked id="toggle-dynamic-engine" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+              </label>
+
+              <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
+                <div>
+                  <div class="font-semibold text-slate-800">High-Resolution Vector SVG Export</div>
+                  <div class="text-[11px] text-slate-500">Allow users to export print-ready SVGs.</div>
+                </div>
+                <input type="checkbox" checked id="toggle-svg-export" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+              </label>
+
+              <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
+                <div>
+                  <div class="font-semibold text-slate-800">Bulk ZIP Generator</div>
+                  <div class="text-[11px] text-slate-500">Enable multi-QR batch archive packaging.</div>
+                </div>
+                <input type="checkbox" checked id="toggle-batch-gen" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+              </label>
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="globe" class="w-4 h-4 text-cyan-600"></i>
+              Domain Routing & Server Status
+            </h3>
+
+            <div class="space-y-2 text-xs">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                <span class="text-slate-600 font-medium">Primary SaaS Subdomain:</span>
+                <span class="font-mono font-bold text-indigo-600">qrcode.automatixes.com</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                <span class="text-slate-600 font-medium">Target GitHub CNAME:</span>
+                <span class="font-mono text-slate-800">abdulmoiz0portfolio.github.io</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                <span class="text-slate-600 font-medium">SSL / HTTPS Encryption:</span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[10px]">Active (Let's Encrypt)</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                <span class="text-slate-600 font-medium">Global CDN Edge Latency:</span>
+                <span class="font-mono text-emerald-600 font-bold">14ms (Fast)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
     </main>
 
   </div>
@@ -856,17 +1041,55 @@ qrCode.download({ extension: "png" });</code></pre>
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-600 font-medium mb-1" data-i18n="modal_campaign_label">Campaign Title</label>
-          <input type="text" id="dynamic-title-input" placeholder="e.g. Automatixes Promo 2026" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-cyan-500">
+          <input type="text" id="dynamic-title-input" placeholder="e.g. Summer Promo 2026" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-cyan-500">
         </div>
         <div>
           <label class="block text-slate-600 font-medium mb-1" data-i18n="modal_target_label">Destination Target URL</label>
           <input type="url" id="dynamic-url-input" placeholder="https://www.automatixes.com/services" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-cyan-500">
+        </div>
+        <div>
+          <label class="block text-slate-600 font-medium mb-1">Custom Short Code (Optional)</label>
+          <div class="flex items-center">
+            <span class="px-3 py-2.5 bg-slate-100 border border-r-0 border-slate-200 rounded-l-xl text-slate-500 font-mono text-xs">
+              qrcode.automatixes.com/r/
+            </span>
+            <input type="text" id="dynamic-slug-input" placeholder="promo" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-r-xl text-slate-900 focus:outline-none focus:border-cyan-500 font-mono text-xs">
+          </div>
         </div>
       </div>
 
       <div class="flex items-center justify-end gap-3 pt-2">
         <button id="cancel-modal-btn" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900" data-i18n="btn_cancel">Cancel</button>
         <button id="save-dynamic-btn" class="px-5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs rounded-xl transition" data-i18n="btn_create_link">Create Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for QR Preview on Dynamic Link -->
+  <div id="dynamic-qr-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 max-w-sm w-full shadow-2xl space-y-4 text-center">
+      <div class="flex items-center justify-between">
+        <h3 id="dyn-modal-title" class="text-sm font-bold text-slate-900 truncate">Dynamic QR Preview</h3>
+        <button id="close-dyn-qr-modal" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      
+      <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center">
+        <div id="dynamic-qr-modal-canvas"></div>
+      </div>
+
+      <div class="text-xs text-slate-500 font-mono" id="dyn-modal-target"></div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <button id="dyn-download-png-btn" class="py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          Download PNG
+        </button>
+        <button id="dyn-test-redirect-btn" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-1.5">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          Test Redirect
+        </button>
       </div>
     </div>
   </div>

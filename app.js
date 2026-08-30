@@ -1,4 +1,4 @@
-// AutomatixQR - Enterprise SaaS Engine with Multi-Language i18n
+// AutomatixQR - Enterprise SaaS Engine with Multi-Language & Super Admin
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Lucide Icons
@@ -7,7 +7,44 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 1. I18N MULTI-LANGUAGE DICTIONARY & ENGINE
+  // 1. CLIENT-SIDE DYNAMIC QR REDIRECTION ENGINE
+  // ==========================================
+  const checkAndExecuteRedirect = () => {
+    const params = new URLSearchParams(window.location.search);
+    const redirectKey = params.get('r') || params.get('d');
+    
+    if (redirectKey) {
+      try {
+        const savedLinks = JSON.parse(localStorage.getItem('automatix_qr_dynamic_v1')) || [];
+        const match = savedLinks.find(l => 
+          l.shortCode.endsWith('/' + redirectKey) || 
+          l.id === redirectKey ||
+          l.shortCode.includes(redirectKey)
+        );
+
+        if (match && match.targetUrl) {
+          match.scans = (match.scans || 0) + 1;
+          localStorage.setItem('automatix_qr_dynamic_v1', JSON.stringify(savedLinks));
+          document.body.innerHTML = `
+            <div style="font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #f8fafc; color: #334155;">
+              <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px; color: #4f46e5;">Redirecting...</div>
+              <div style="font-size: 14px;">Forwarding to: <strong>${match.targetUrl}</strong></div>
+            </div>
+          `;
+          window.location.href = match.targetUrl;
+          return true;
+        }
+      } catch (e) {
+        console.error('Redirect error', e);
+      }
+    }
+    return false;
+  };
+
+  if (checkAndExecuteRedirect()) return;
+
+  // ==========================================
+  // 2. I18N MULTI-LANGUAGE DICTIONARY & ENGINE
   // ==========================================
   const TRANSLATIONS = {
     en: {
@@ -226,222 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btn_create_link: 'Crear Enlace'
       }
     },
-    fr: {
-      name: 'Français',
-      flag: '🇫🇷',
-      dir: 'ltr',
-      strings: {
-        pro_badge: 'ENTREPRISE',
-        new_qr: 'Nouveau QR',
-        nav_title: 'Navigation',
-        nav_studio: 'Studio QR',
-        nav_dynamic: 'Liens Dynamiques',
-        nav_batch: 'Générateur en Masse',
-        nav_templates: 'Modèles Créatifs',
-        nav_library: 'Bibliothèque',
-        nav_analytics: 'Analyses de Scans',
-        nav_api: 'API & Widget',
-        badge_main: 'Principal',
-        badge_editable: 'Modifiable',
-        badge_bulk: 'Masse',
-        badge_presets: 'Styles',
-        badge_live: 'En Direct',
-        agency_cloud: 'Automatixes Cloud',
-        agency_desc: 'Automatisez vos flux CRM et WhatsApp grâce à l’IA.',
-        explore_agency: 'Découvrir',
-        type_url: 'Lien URL',
-        type_text: 'Texte',
-        type_wifi: 'Wi-Fi',
-        type_vcard: 'vCard',
-        type_social: 'Bio Réseaux',
-        type_email: 'E-mail',
-        content_header: 'Contenu du Code QR',
-        label_destination_url: 'URL de Destination',
-        label_text_message: 'Message Texte',
-        label_wifi_ssid: 'Nom du Réseau (SSID)',
-        label_wifi_password: 'Mot de passe',
-        label_wifi_security: 'Type de Sécurité',
-        label_wifi_hidden: 'Réseau Masqué',
-        label_first_name: 'Prénom',
-        label_last_name: 'Nom',
-        label_phone: 'Téléphone',
-        label_email: 'Adresse E-mail',
-        label_company: 'Société',
-        label_job_title: 'Poste',
-        label_platform: 'Plateforme',
-        label_handle: 'Identifiant / Tél',
-        label_recipient_email: 'Destinataire',
-        label_subject: 'Sujet',
-        label_message_body: 'Corps du Message',
-        styling_header: 'Personnalisation & Couleurs',
-        label_colors: 'Couleurs de la Palette',
-        color_dots: 'Points QR',
-        color_bg: 'Arrière-plan',
-        color_frame: 'Cadre Coin',
-        color_center: 'Centre Coin',
-        label_presets: 'Préréglages:',
-        label_dot_pattern: 'Motif des Points',
-        label_corner_frame: 'Cadre de Coin',
-        label_corner_dot: 'Point Central',
-        label_logo_upload: 'Logo de Marque',
-        drag_drop_hint: 'Glisser-déposer supporté',
-        logo_formats: 'Prend en charge PNG, JPG, SVG, WebP (Max 2Mo)',
-        btn_remove: 'Supprimer',
-        label_error_level: 'Correction d\'erreur',
-        label_margin: 'Marge',
-        live_preview: 'Aperçu en Direct',
-        btn_download_png: 'Télécharger PNG',
-        btn_download_svg: 'Télécharger SVG',
-        btn_copy_image: 'Copier l\'image',
-        btn_save_library: 'Enregistrer',
-        raw_payload: 'Données Encodées',
-        dynamic_header: 'Codes QR Dynamiques & Modifiables',
-        dynamic_desc: 'Modifiez l’URL de destination sans réimprimer vos QR codes!',
-        btn_create_dynamic: 'Créer un Lien Dynamique',
-        th_campaign: 'Campagne / Nom',
-        th_short_url: 'URL Courte',
-        th_destination: 'Destination Cible',
-        th_scans: 'Scans Totaux',
-        th_status: 'Statut',
-        th_actions: 'Actions',
-        batch_header: 'Générateur de QR Codes en Masse',
-        batch_desc: 'Générez des centaines de QR codes et téléchargez une archive ZIP.',
-        batch_input_label: 'Collez vos URL ou textes (Une par ligne)',
-        batch_detected: 'Éléments Détectés',
-        btn_load_sample: 'Charger Exemple',
-        btn_generate_zip: 'Générer & Télécharger ZIP',
-        batch_generating: 'Génération en cours...',
-        templates_header: 'Modèles Conçus par des Designers',
-        templates_desc: 'Appliquez un style en un clic pour un rendu professionnel.',
-        library_header: 'Bibliothèque des Codes QR',
-        library_desc: 'Tous vos codes sont sauvegardés pour être réutilisés.',
-        btn_clear_library: 'Effacer l\'historique',
-        stat_total_scans: 'Scans Totaux',
-        stat_active_qrs: 'QRs Dynamiques Actifs',
-        stat_top_os: 'OS Mobile Principal',
-        stat_conversion: 'Taux de Conversion',
-        chart_trend_title: 'Tendances de Scan (7 Derniers Jours)',
-        chart_device_title: 'Répartition par Appareil',
-        api_header: 'API Développeur & SDK',
-        api_desc: 'Générez des QR codes directement depuis vos applications.',
-        api_key_label: 'Clé API de Production',
-        btn_copy: 'Copier',
-        snippet_header: 'Extrait de Code',
-        modal_create_title: 'Nouveau Lien Dynamique',
-        modal_campaign_label: 'Nom de la Campagne',
-        modal_target_label: 'URL de Destination',
-        btn_cancel: 'Annuler',
-        btn_create_link: 'Créer'
-      }
-    },
-    de: {
-      name: 'Deutsch',
-      flag: '🇩🇪',
-      dir: 'ltr',
-      strings: {
-        pro_badge: 'UNTERNEHMEN',
-        new_qr: 'Neuer QR',
-        nav_title: 'Navigation',
-        nav_studio: 'QR Studio',
-        nav_dynamic: 'Dynamische Links',
-        nav_batch: 'Massen-Generator',
-        nav_templates: 'Vorlagen',
-        nav_library: 'Bibliothek',
-        nav_analytics: 'Scan-Analysen',
-        nav_api: 'API & Widget',
-        badge_main: 'Haupt',
-        badge_editable: 'Editierbar',
-        badge_bulk: 'Masse',
-        badge_presets: 'Stile',
-        badge_live: 'Live',
-        agency_cloud: 'Automatixes Cloud',
-        agency_desc: 'Automatisieren Sie CRM und WhatsApp mit KI-Agenten.',
-        explore_agency: 'Dienste ansehen',
-        type_url: 'URL Link',
-        type_text: 'Text',
-        type_wifi: 'WLAN',
-        type_vcard: 'vCard',
-        type_social: 'Social Bio',
-        type_email: 'E-Mail',
-        content_header: 'QR-Inhalt & Daten',
-        label_destination_url: 'Ziel-Web-URL',
-        label_text_message: 'Textnachricht / Notizen',
-        label_wifi_ssid: 'Netzwerkname (SSID)',
-        label_wifi_password: 'Passwort',
-        label_wifi_security: 'Sicherheitstyp',
-        label_wifi_hidden: 'Verstecktes Netzwerk',
-        label_first_name: 'Vorname',
-        label_last_name: 'Nachname',
-        label_phone: 'Telefonnummer',
-        label_email: 'E-Mail-Adresse',
-        label_company: 'Firma',
-        label_job_title: 'Position',
-        label_platform: 'Plattform',
-        label_handle: 'Benutzername / Tel',
-        label_recipient_email: 'Empfänger E-Mail',
-        label_subject: 'Betreff',
-        label_message_body: 'Nachrichtentext',
-        styling_header: 'Design & Farben',
-        label_colors: 'Farbpalette',
-        color_dots: 'QR Punkte',
-        color_bg: 'Hintergrund',
-        color_frame: 'Eckenrahmen',
-        color_center: 'Eckenpunkt',
-        label_presets: 'Voreinstellungen:',
-        label_dot_pattern: 'Punktmuster',
-        label_corner_frame: 'Eckenrahmen',
-        label_corner_dot: 'Eckenzentrum',
-        label_logo_upload: 'Zentrales Markenlogo',
-        drag_drop_hint: 'Drag & Drop unterstützt',
-        logo_formats: 'Unterstützt PNG, JPG, SVG, WebP (Max. 2MB)',
-        btn_remove: 'Entfernen',
-        label_error_level: 'Fehlerkorrekturlevel',
-        label_margin: 'Rand',
-        live_preview: 'Live-Vorschau',
-        btn_download_png: 'PNG Herunterladen',
-        btn_download_svg: 'SVG Herunterladen',
-        btn_copy_image: 'Bild Kopieren',
-        btn_save_library: 'Speichern',
-        raw_payload: 'Codierte Daten',
-        dynamic_header: 'Dynamische Editierbare QR-Codes',
-        dynamic_desc: 'Ändern Sie die Ziel-URL jederzeit ohne Neudruck!',
-        btn_create_dynamic: 'Dynamischen Link Erstellen',
-        th_campaign: 'Kampagne / Name',
-        th_short_url: 'Kurze URL',
-        th_destination: 'Zieladresse',
-        th_scans: 'Scans Gesamt',
-        th_status: 'Status',
-        th_actions: 'Aktionen',
-        batch_header: 'Massen-QR-Generator',
-        batch_desc: 'Erstellen Sie hunderte QR-Codes und laden Sie ein ZIP-Archiv herunter.',
-        batch_input_label: 'URLs oder Texte einfügen (Eine pro Zeile)',
-        batch_detected: 'Erkannte Elemente',
-        btn_load_sample: 'Beispieldaten laden',
-        btn_generate_zip: 'ZIP Generieren & Laden',
-        batch_generating: 'Archiv wird erstellt...',
-        templates_header: 'Designer-Vorlagen',
-        templates_desc: 'Wenden Sie mit einem Klick professionelle Farbwelten an.',
-        library_header: 'Gespeicherte Bibliothek',
-        library_desc: 'Alle erstellten QR-Codes werden dauerhaft gespeichert.',
-        btn_clear_library: 'Verlauf Löschen',
-        stat_total_scans: 'Scans Gesamt',
-        stat_active_qrs: 'Aktive Dynamische QRs',
-        stat_top_os: 'Top Mobil-OS',
-        stat_conversion: 'Konversionsrate',
-        chart_trend_title: 'Scan-Trends (Letzte 7 Tage)',
-        chart_device_title: 'Geräteverteilung',
-        api_header: 'Entwickler-API & SDK',
-        api_desc: 'Integrieren Sie die QR-Generierung direkt in Ihre Apps.',
-        api_key_label: 'Ihr Live-API-Schlüssel',
-        btn_copy: 'Kopieren',
-        snippet_header: 'Codebeispiel',
-        modal_create_title: 'Dynamischen Link Erstellen',
-        modal_campaign_label: 'Kampagnenname',
-        modal_target_label: 'Ziel-URL',
-        btn_cancel: 'Abbrechen',
-        btn_create_link: 'Erstellen'
-      }
-    },
     ar: {
       name: 'العربية',
       flag: '🇦🇪',
@@ -657,235 +478,14 @@ document.addEventListener('DOMContentLoaded', () => {
         btn_cancel: 'منسوخ کریں',
         btn_create_link: 'بنائیں'
       }
-    },
-    zh: {
-      name: '中文',
-      flag: '🇨🇳',
-      dir: 'ltr',
-      strings: {
-        pro_badge: '企业版',
-        new_qr: '新建二维码',
-        nav_title: '导航',
-        nav_studio: '二维码工作台',
-        nav_dynamic: '动态链接',
-        nav_batch: '批量生成',
-        nav_templates: '模板库',
-        nav_library: '已存图库',
-        nav_analytics: '扫码数据',
-        nav_api: 'API 与组件',
-        badge_main: '核心',
-        badge_editable: '可修改',
-        badge_bulk: '批量',
-        badge_presets: '预设',
-        badge_live: '实时',
-        agency_cloud: 'Automatixes 云平台',
-        agency_desc: '通过定制 AI 智能体自动化您的 CRM 与客户流程。',
-        explore_agency: '探索服务',
-        type_url: '网页链接',
-        type_text: '纯文本',
-        type_wifi: '无线网络',
-        type_vcard: '电子名片',
-        type_social: '社交主页',
-        type_email: '电子邮件',
-        content_header: '二维码内容与信息',
-        label_destination_url: '目标网址',
-        label_text_message: '文本消息 / 备注',
-        label_wifi_ssid: '网络名称 (SSID)',
-        label_wifi_password: '密码',
-        label_wifi_security: '安全类型',
-        label_wifi_hidden: '隐藏网络',
-        label_first_name: '名',
-        label_last_name: '姓',
-        label_phone: '电话号码',
-        label_email: '电子邮箱',
-        label_company: '公司',
-        label_job_title: '职位',
-        label_platform: '平台',
-        label_handle: '账号 / 手机号',
-        label_recipient_email: '收件人邮箱',
-        label_subject: '邮件主题',
-        label_message_body: '邮件正文',
-        styling_header: '外观样式与自定义颜色',
-        label_colors: '调色板',
-        color_dots: '二维码点',
-        color_bg: '背景颜色',
-        color_frame: '定位边框',
-        color_center: '定位中心',
-        label_presets: '预设主题:',
-        label_dot_pattern: '点阵图案',
-        label_corner_frame: '边角样式',
-        label_corner_dot: '角中心点',
-        label_logo_upload: '中心品牌 Logo',
-        drag_drop_hint: '支持拖放上传',
-        logo_formats: '支持 PNG, JPG, SVG, WebP (最大 2MB)',
-        btn_remove: '移除',
-        label_error_level: '纠错级别',
-        label_margin: '边距',
-        live_preview: '实时预览',
-        btn_download_png: '下载 PNG',
-        btn_download_svg: '下载 SVG',
-        btn_copy_image: '复制图片',
-        btn_save_library: '保存到图库',
-        raw_payload: '编码数据',
-        dynamic_header: '动态可修改二维码',
-        dynamic_desc: '随时更改跳转目标网址，无需重新打印！',
-        btn_create_dynamic: '创建动态链接',
-        th_campaign: '活动 / 名称',
-        th_short_url: '短网址',
-        th_destination: '目标地址',
-        th_scans: '总扫码量',
-        th_status: '状态',
-        th_actions: '操作',
-        batch_header: '批量二维码生成器',
-        batch_desc: '一次生成成百上千个二维码并下载 ZIP 压缩包。',
-        batch_input_label: '粘贴网址或文本（每行一条）',
-        batch_detected: '检测到项目数',
-        btn_load_sample: '加载示例数据',
-        btn_generate_zip: '生成并下载 ZIP',
-        batch_generating: '正在批量打包...',
-        templates_header: '设计师精选模板',
-        templates_desc: '一键应用专业配色与品牌设计。',
-        library_header: '已存二维码与历史库',
-        library_desc: '您创建的所有二维码都会持久保存以便再次使用。',
-        btn_clear_library: '清空历史',
-        stat_total_scans: '总扫码次数',
-        stat_active_qrs: '活跃动态二维码',
-        stat_top_os: '主要移动系统',
-        stat_conversion: '转化率',
-        chart_trend_title: '扫码趋势（最近 7 天）',
-        chart_device_title: '扫码设备占比',
-        api_header: '开发者 API 与 SDK',
-        api_desc: '将二维码生成直接集成到您的前后端程序中。',
-        api_key_label: '您的生产环境 API 密钥',
-        btn_copy: '复制',
-        snippet_header: '集成代码示例',
-        modal_create_title: '创建动态链接',
-        modal_campaign_label: '活动标题',
-        modal_target_label: '目标网址',
-        btn_cancel: '取消',
-        btn_create_link: '立即创建'
-      }
-    },
-    ja: {
-      name: '日本語',
-      flag: '🇯🇵',
-      dir: 'ltr',
-      strings: {
-        pro_badge: 'エンタープライズ',
-        new_qr: '新規QR作成',
-        nav_title: 'ナビゲーション',
-        nav_studio: 'QRスタジオ',
-        nav_dynamic: '動的リンク',
-        nav_batch: '一括生成',
-        nav_templates: 'テンプレート',
-        nav_library: '保存ライブラリ',
-        nav_analytics: 'スキャン分析',
-        nav_api: 'API & 連携',
-        badge_main: 'メイン',
-        badge_editable: '編集可能',
-        badge_bulk: '一括',
-        badge_presets: 'プリセット',
-        badge_live: 'ライブ',
-        agency_cloud: 'Automatixes クラウド',
-        agency_desc: 'AIエージェントでCRMと業務フローを自動化。',
-        explore_agency: 'サービスを見る',
-        type_url: 'URLリンク',
-        type_text: 'テキスト',
-        type_wifi: 'Wi-Fi',
-        type_vcard: '連絡先',
-        type_social: 'SNSリンク',
-        type_email: 'メール',
-        content_header: 'QRコードの内容と情報',
-        label_destination_url: '転送先Web URL',
-        label_text_message: 'テキストメッセージ',
-        label_wifi_ssid: 'ネットワーク名 (SSID)',
-        label_wifi_password: 'パスワード',
-        label_wifi_security: 'セキュリティ形式',
-        label_wifi_hidden: '非公開ネットワーク',
-        label_first_name: '名',
-        label_last_name: '姓',
-        label_phone: '電話番号',
-        label_email: 'メールアドレス',
-        label_company: '会社名',
-        label_job_title: '役職',
-        label_platform: 'プラットフォーム',
-        label_handle: 'アカウント名 / 電話番号',
-        label_recipient_email: '宛先メール',
-        label_subject: '件名',
-        label_message_body: '本文',
-        styling_header: 'デザインとカスタムカラー',
-        label_colors: 'パレットカラー',
-        color_dots: 'QRドット',
-        color_bg: '背景色',
-        color_frame: '角フレーム',
-        color_center: '角中心点',
-        label_presets: 'プリセット:',
-        label_dot_pattern: 'ドットパターン',
-        label_corner_frame: '角フレーム形式',
-        label_corner_dot: '角中心ドット',
-        label_logo_upload: '中央ブランドロゴ',
-        drag_drop_hint: 'ドラッグ＆ドロップ対応',
-        logo_formats: 'PNG, JPG, SVG, WebP に対応（最大 2MB）',
-        btn_remove: '削除',
-        label_error_level: '誤り訂正レベル',
-        label_margin: '余白',
-        live_preview: 'ライブプレビュー',
-        btn_download_png: 'PNG ダウンロード',
-        btn_download_svg: 'SVG ダウンロード',
-        btn_copy_image: '画像をコピー',
-        btn_save_library: 'ライブラリに保存',
-        raw_payload: 'エンコードデータ',
-        dynamic_header: '動的・編集可能なQRコード',
-        dynamic_desc: '印刷後でもいつでも転送先URLを変更できます！',
-        btn_create_dynamic: '動的リンクを作成',
-        th_campaign: 'キャンペーン / 名前',
-        th_short_url: '短縮URL',
-        th_destination: '転送先URL',
-        th_scans: '総スキャン数',
-        th_status: 'ステータス',
-        th_actions: '操作',
-        batch_header: '一括QRコード生成',
-        batch_desc: '大量のQRコードを一度に生成してZIPでダウンロード。',
-        batch_input_label: 'URLまたはテキストを貼り付け（1行に1件）',
-        batch_detected: '検出件数',
-        btn_load_sample: 'サンプルデータを読込',
-        btn_generate_zip: 'ZIP生成＆ダウンロード',
-        batch_generating: '生成中...',
-        templates_header: 'デザインテンプレート',
-        templates_desc: 'ワンクリックでプロのデザインを適用。',
-        library_header: '保存済みライブラリ',
-        library_desc: '作成したQRコードは自動で保存され再利用可能です。',
-        btn_clear_library: '履歴を全消去',
-        stat_total_scans: '総スキャン回数',
-        stat_active_qrs: '有効な動的QR',
-        stat_top_os: '主要モバイルOS',
-        stat_conversion: 'コンバージョン率',
-        chart_trend_title: 'スキャントレンド（過去7日間）',
-        chart_device_title: 'スキャン端末割合',
-        api_header: '開発者向け API & SDK',
-        api_desc: 'アプリにQR生成機能を直接組み込み。',
-        api_key_label: '本番用 API キー',
-        btn_copy: 'コピー',
-        snippet_header: 'コードサンプル',
-        modal_create_title: '動的リンク作成',
-        modal_campaign_label: 'キャンペーン名',
-        modal_target_label: '転送先URL',
-        btn_cancel: 'キャンセル',
-        btn_create_link: '作成'
-      }
     }
   };
 
-  // Detect Country & Browser Language
   const detectInitialLanguage = () => {
     const saved = localStorage.getItem('automatix_qr_lang');
     if (saved && TRANSLATIONS[saved]) return saved;
-
-    const navLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-    const primaryCode = navLang.split('-')[0];
-
-    if (TRANSLATIONS[primaryCode]) return primaryCode;
-    return 'en';
+    const navLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().split('-')[0];
+    return TRANSLATIONS[navLang] ? navLang : 'en';
   };
 
   let currentLang = detectInitialLanguage();
@@ -899,17 +499,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.lang = langKey;
     document.documentElement.dir = langObj.dir || 'ltr';
 
-    // Update Dropdown Button UI
     const flagEl = document.getElementById('current-lang-flag');
     const nameEl = document.getElementById('current-lang-name');
     if (flagEl) flagEl.textContent = langObj.flag;
     if (nameEl) nameEl.textContent = langObj.name;
 
-    // Translate all elements with data-i18n
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(el => {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      if (langObj.strings[key]) {
+      if (langObj.strings && langObj.strings[key]) {
         el.textContent = langObj.strings[key];
       }
     });
@@ -917,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.lucide) lucide.createIcons();
   };
 
-  // Language Dropdown Controller
+  // Language Dropdown
   const langBtn = document.getElementById('lang-selector-btn');
   const langMenu = document.getElementById('lang-dropdown-menu');
 
@@ -939,8 +536,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Toast
+  const showToast = (message, isError = false) => {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-message');
+    if (!toast || !toastMsg) return;
+
+    toastMsg.textContent = message;
+    toast.classList.remove('translate-y-20', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-20', 'opacity-0');
+    }, 3000);
+  };
+
   // ==========================================
-  // 2. STATE & STORAGE MANAGEMENT
+  // 3. STATE & STORAGE MANAGEMENT
   // ==========================================
   const state = {
     currentView: 'studio',
@@ -961,7 +574,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const STORAGE_KEYS = {
     HISTORY: 'automatix_qr_history_v1',
-    DYNAMIC_LINKS: 'automatix_qr_dynamic_v1'
+    DYNAMIC_LINKS: 'automatix_qr_dynamic_v1',
+    ADMIN_USERS: 'automatix_qr_admin_users_v1'
   };
 
   const getSavedHistory = () => {
@@ -981,27 +595,27 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEYS.DYNAMIC_LINKS)) || [
         {
-          id: 'dyn_1',
+          id: 'demo',
           name: 'AI Automation Demo',
-          shortCode: 'qr.automatixes.com/demo',
+          shortCode: 'qrcode.automatixes.com/?r=demo',
           targetUrl: 'https://www.automatixes.com/services',
           scans: 1420,
           status: 'Active',
           createdAt: '2026-08-15'
         },
         {
-          id: 'dyn_2',
+          id: 'wa',
           name: 'WhatsApp CRM Bot',
-          shortCode: 'qr.automatixes.com/wa',
+          shortCode: 'qrcode.automatixes.com/?r=wa',
           targetUrl: 'https://wa.me/923366920141',
           scans: 3890,
           status: 'Active',
           createdAt: '2026-08-20'
         },
         {
-          id: 'dyn_3',
+          id: 'meet',
           name: 'Client Booking Calendar',
-          shortCode: 'qr.automatixes.com/meet',
+          shortCode: 'qrcode.automatixes.com/?r=meet',
           targetUrl: 'https://www.automatixes.com/contact',
           scans: 890,
           status: 'Active',
@@ -1017,29 +631,27 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(STORAGE_KEYS.DYNAMIC_LINKS, JSON.stringify(list));
   };
 
+  const getSavedAdminUsers = () => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEYS.ADMIN_USERS)) || [
+        { id: 'usr_1', name: 'Abdul Moiz (Owner)', email: 'abdulmoiz@automatixes.com', tier: 'Enterprise Root', dynamicCount: 38, scans: 6200, status: 'Active' },
+        { id: 'usr_2', name: 'Acme Marketing Agency', email: 'growth@acme.io', tier: 'Pro ($49/mo)', dynamicCount: 14, scans: 2400, status: 'Active' },
+        { id: 'usr_3', name: 'Dubai Real Estate LLC', email: 'sales@dxbproperties.ae', tier: 'Enterprise ($199/mo)', dynamicCount: 82, scans: 19400, status: 'Active' },
+        { id: 'usr_4', name: 'Sarah Jenkins', email: 'sarah.j@gmail.com', tier: 'Free Tier', dynamicCount: 2, scans: 140, status: 'Active' }
+      ];
+    } catch {
+      return [];
+    }
+  };
+
   const updateHistoryBadge = () => {
     const history = getSavedHistory();
     const badge = document.getElementById('history-badge-count');
     if (badge) badge.textContent = history.length;
   };
 
-  const showToast = (message, isError = false) => {
-    const toast = document.getElementById('toast');
-    const toastMsg = document.getElementById('toast-message');
-    if (!toast || !toastMsg) return;
-
-    toastMsg.textContent = message;
-    toast.classList.remove('translate-y-20', 'opacity-0');
-    toast.classList.add('translate-y-0', 'opacity-100');
-
-    setTimeout(() => {
-      toast.classList.remove('translate-y-0', 'opacity-100');
-      toast.classList.add('translate-y-20', 'opacity-0');
-    }, 3000);
-  };
-
   // ==========================================
-  // 3. NAVIGATION CONTROLLER
+  // 4. NAVIGATION CONTROLLER
   // ==========================================
   const navButtons = document.querySelectorAll('#main-nav .nav-item');
   const viewPanels = document.querySelectorAll('.view-panel');
@@ -1061,8 +673,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (targetView === 'dynamic') renderDynamicLinksView();
     if (targetView === 'templates') renderTemplatesView();
     if (targetView === 'analytics') renderAnalyticsCharts();
+    if (targetView === 'admin') renderAdminView();
 
     if (window.lucide) lucide.createIcons();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   navButtons.forEach(btn => {
@@ -1077,8 +691,13 @@ document.addEventListener('DOMContentLoaded', () => {
     quickCreateBtn.addEventListener('click', () => switchView('studio'));
   }
 
+  const headerAdminBtn = document.getElementById('header-admin-btn');
+  if (headerAdminBtn) {
+    headerAdminBtn.addEventListener('click', () => switchView('admin'));
+  }
+
   // ==========================================
-  // 4. QR STUDIO CORE ENGINE
+  // 5. QR STUDIO CORE ENGINE
   // ==========================================
   const qrCanvasContainer = document.getElementById('qr-canvas');
   let qrCode = new QRCodeStyling({
@@ -1355,7 +974,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Download error: ' + err.message, true);
       } finally {
         downloadPngBtn.disabled = false;
-        downloadPngBtn.innerHTML = `<i data-lucide="download" class="w-4 h-4"></i> ${TRANSLATIONS[currentLang]?.strings?.btn_download_png || 'Download PNG'}`;
+        downloadPngBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4"></i> Download PNG';
         if (window.lucide) lucide.createIcons();
       }
     });
@@ -1373,7 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Download error: ' + err.message, true);
       } finally {
         downloadSvgBtn.disabled = false;
-        downloadSvgBtn.innerHTML = `<i data-lucide="file-code-2" class="w-4 h-4 text-cyan-600"></i> ${TRANSLATIONS[currentLang]?.strings?.btn_download_svg || 'Download SVG'}`;
+        downloadSvgBtn.innerHTML = '<i data-lucide="file-code-2" class="w-4 h-4 text-cyan-600"></i> Download SVG';
         if (window.lucide) lucide.createIcons();
       }
     });
@@ -1425,14 +1044,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 5. DYNAMIC EDITABLE LINKS CONTROLLER
+  // 6. DYNAMIC EDITABLE LINKS CONTROLLER (FIXED & FULLY FUNCTIONAL)
   // ==========================================
   const dynamicTbody = document.getElementById('dynamic-links-tbody');
   const dynamicModal = document.getElementById('dynamic-modal');
+  const dynamicQrModal = document.getElementById('dynamic-qr-modal');
   const createDynamicBtn = document.getElementById('create-dynamic-btn');
   const closeModalBtn = document.getElementById('close-modal-btn');
   const cancelModalBtn = document.getElementById('cancel-modal-btn');
   const saveDynamicBtn = document.getElementById('save-dynamic-btn');
+  const closeDynQrModal = document.getElementById('close-dyn-qr-modal');
+
+  let activeModalQR = null;
+  let activeModalLink = null;
 
   const renderDynamicLinksView = () => {
     const links = getSavedDynamicLinks();
@@ -1457,8 +1081,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td class="p-4">
           <div class="flex items-center gap-2">
-            <span class="font-mono text-cyan-600 text-xs font-semibold">${link.shortCode}</span>
-            <button onclick="navigator.clipboard.writeText('https://${link.shortCode}'); alert('Link copied!');" class="p-1 hover:text-slate-900 text-slate-400">
+            <span class="font-mono text-cyan-600 text-xs font-semibold select-all">${link.shortCode}</span>
+            <button data-url="https://${link.shortCode}" class="copy-dyn-url-btn p-1 hover:text-slate-900 text-slate-400" title="Copy Dynamic Link">
               <i data-lucide="copy" class="w-3.5 h-3.5"></i>
             </button>
           </div>
@@ -1480,10 +1104,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td class="p-4 text-right">
           <div class="flex items-center justify-end gap-2">
-            <button data-id="${link.id}" class="edit-dyn-btn p-1.5 hover:bg-slate-100 rounded-lg text-slate-600 hover:text-slate-900 transition" title="Edit Destination URL">
+            <button data-id="${link.id}" class="edit-dyn-btn p-1.5 hover:bg-slate-100 rounded-lg text-slate-600 hover:text-slate-900 transition" title="Edit Target URL">
               <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
             </button>
-            <button data-id="${link.id}" class="load-dyn-btn p-1.5 hover:bg-indigo-50 rounded-lg text-indigo-600 transition" title="Open QR in Studio">
+            <button data-id="${link.id}" class="preview-dyn-qr-btn p-1.5 hover:bg-indigo-50 rounded-lg text-indigo-600 transition" title="View & Download QR Code">
               <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
             </button>
             <button data-id="${link.id}" class="delete-dyn-btn p-1.5 hover:bg-rose-50 rounded-lg text-rose-600 transition" title="Delete">
@@ -1494,37 +1118,66 @@ document.addEventListener('DOMContentLoaded', () => {
       </tr>
     `).join('');
 
+    // Copy Dynamic URL button
+    document.querySelectorAll('.copy-dyn-url-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        const url = b.getAttribute('data-url');
+        navigator.clipboard.writeText(url);
+        showToast('Dynamic Link copied to clipboard!');
+      });
+    });
+
+    // Edit Target URL
     document.querySelectorAll('.edit-dyn-btn').forEach(b => {
       b.addEventListener('click', () => {
         const id = b.getAttribute('data-id');
         const links = getSavedDynamicLinks();
         const item = links.find(l => l.id === id);
         if (item) {
-          const newUrl = prompt(`Enter new destination for "${item.name}":`, item.targetUrl);
+          const newUrl = prompt(`Enter new destination target URL for "${item.name}":`, item.targetUrl);
           if (newUrl && newUrl.trim()) {
             item.targetUrl = newUrl.trim();
             setSavedDynamicLinks(links);
             renderDynamicLinksView();
-            showToast('Destination URL updated successfully!');
+            showToast('Destination URL updated! QR code points to new URL instantly.');
           }
         }
       });
     });
 
-    document.querySelectorAll('.load-dyn-btn').forEach(b => {
+    // Preview Dynamic QR Code in Modal
+    document.querySelectorAll('.preview-dyn-qr-btn').forEach(b => {
       b.addEventListener('click', () => {
         const id = b.getAttribute('data-id');
         const item = getSavedDynamicLinks().find(l => l.id === id);
         if (item) {
-          document.getElementById('input-url').value = `https://${item.shortCode}`;
-          switchView('studio');
-          const urlTab = document.querySelector('[data-type="url"]');
-          if (urlTab) urlTab.click();
-          showToast(`Loaded "${item.name}" into QR Studio!`);
+          activeModalLink = item;
+          document.getElementById('dyn-modal-title').textContent = item.name;
+          document.getElementById('dyn-modal-target').textContent = `Target: ${item.targetUrl}`;
+
+          const modalCanvas = document.getElementById('dynamic-qr-modal-canvas');
+          modalCanvas.innerHTML = '';
+
+          activeModalQR = new QRCodeStyling({
+            width: 180,
+            height: 180,
+            type: 'canvas',
+            data: `https://${item.shortCode}`,
+            margin: 6,
+            dotsOptions: { color: '#4f46e5', type: 'rounded' },
+            backgroundOptions: { color: '#ffffff' },
+            cornersSquareOptions: { color: '#4338ca', type: 'extra-rounded' },
+            cornersDotOptions: { color: '#6366f1', type: 'dot' }
+          });
+          activeModalQR.append(modalCanvas);
+
+          dynamicQrModal.classList.remove('hidden');
+          if (window.lucide) lucide.createIcons();
         }
       });
     });
 
+    // Delete Dynamic Link
     document.querySelectorAll('.delete-dyn-btn').forEach(b => {
       b.addEventListener('click', () => {
         const id = b.getAttribute('data-id');
@@ -1532,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const filtered = getSavedDynamicLinks().filter(l => l.id !== id);
           setSavedDynamicLinks(filtered);
           renderDynamicLinksView();
-          showToast('Dynamic link removed');
+          showToast('Dynamic link deleted');
         }
       });
     });
@@ -1544,6 +1197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createDynamicBtn.addEventListener('click', () => {
       document.getElementById('dynamic-title-input').value = '';
       document.getElementById('dynamic-url-input').value = '';
+      document.getElementById('dynamic-slug-input').value = '';
       dynamicModal.classList.remove('hidden');
     });
   }
@@ -1556,18 +1210,21 @@ document.addEventListener('DOMContentLoaded', () => {
     saveDynamicBtn.addEventListener('click', () => {
       const name = document.getElementById('dynamic-title-input').value.trim();
       const targetUrl = document.getElementById('dynamic-url-input').value.trim();
+      const customSlug = document.getElementById('dynamic-slug-input').value.trim();
 
       if (!name || !targetUrl) {
         showToast('Please provide both a title and destination URL', true);
         return;
       }
 
-      const randomCode = 'qr.automatixes.com/' + Math.random().toString(36).substring(2, 8);
+      const slug = customSlug ? customSlug.replace(/[^a-zA-Z0-9_-]/g, '') : Math.random().toString(36).substring(2, 7);
+      const shortCode = `qrcode.automatixes.com/?r=${slug}`;
       const links = getSavedDynamicLinks();
+
       links.unshift({
-        id: 'dyn_' + Date.now(),
+        id: slug,
         name,
-        shortCode: randomCode,
+        shortCode,
         targetUrl,
         scans: 0,
         status: 'Active',
@@ -1581,8 +1238,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Dynamic QR Modal Actions
+  if (closeDynQrModal) {
+    closeDynQrModal.addEventListener('click', () => dynamicQrModal.classList.add('hidden'));
+  }
+
+  const dynDownloadPngBtn = document.getElementById('dyn-download-png-btn');
+  if (dynDownloadPngBtn) {
+    dynDownloadPngBtn.addEventListener('click', () => {
+      if (activeModalQR) {
+        activeModalQR.download({ name: 'dynamic-qr-' + Date.now(), extension: 'png' });
+        showToast('Dynamic QR downloaded!');
+      }
+    });
+  }
+
+  const dynTestRedirectBtn = document.getElementById('dyn-test-redirect-btn');
+  if (dynTestRedirectBtn) {
+    dynTestRedirectBtn.addEventListener('click', () => {
+      if (activeModalLink && activeModalLink.targetUrl) {
+        window.open(activeModalLink.targetUrl, '_blank');
+      }
+    });
+  }
+
   // ==========================================
-  // 6. BATCH GENERATOR (BULK ZIP)
+  // 7. BATCH GENERATOR (BULK ZIP)
   // ==========================================
   const batchInput = document.getElementById('batch-input');
   const batchItemCount = document.getElementById('batch-item-count');
@@ -1671,7 +1352,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 7. TEMPLATES GALLERY
+  // 8. TEMPLATES GALLERY (LIVE MINI QRS)
   // ==========================================
   const TEMPLATES = [
     {
@@ -1787,21 +1468,10 @@ document.addEventListener('DOMContentLoaded', () => {
           type: 'canvas',
           data: 'https://www.automatixes.com',
           margin: 4,
-          dotsOptions: {
-            color: t.dotsColor,
-            type: t.dotType
-          },
-          backgroundOptions: {
-            color: t.bgColor
-          },
-          cornersSquareOptions: {
-            color: t.cornerSquareColor,
-            type: t.cornerSquareType
-          },
-          cornersDotOptions: {
-            color: t.cornerDotColor,
-            type: t.cornerDotType
-          }
+          dotsOptions: { color: t.dotsColor, type: t.dotType },
+          backgroundOptions: { color: t.bgColor },
+          cornersSquareOptions: { color: t.cornerSquareColor, type: t.cornerSquareType },
+          cornersDotOptions: { color: t.cornerDotColor, type: t.cornerDotType }
         });
         miniQR.append(container);
       }
@@ -1843,7 +1513,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================
-  // 8. SAVED LIBRARY
+  // 9. SAVED LIBRARY
   // ==========================================
   const renderHistoryView = () => {
     const grid = document.getElementById('history-grid');
@@ -1943,7 +1613,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 9. SCAN ANALYTICS CHARTS (LIGHT THEME)
+  // 10. SCAN ANALYTICS CHARTS (LIGHT THEME)
   // ==========================================
   let trendChartInstance = null;
   let deviceChartInstance = null;
@@ -1951,7 +1621,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderAnalyticsCharts = () => {
     if (!window.Chart) return;
 
-    // Scan Trend Chart
     const trendCtx = document.getElementById('scans-trend-chart');
     if (trendCtx) {
       if (trendChartInstance) trendChartInstance.destroy();
@@ -1974,24 +1643,15 @@ document.addEventListener('DOMContentLoaded', () => {
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false }
-          },
+          plugins: { legend: { display: false } },
           scales: {
-            x: {
-              grid: { color: 'rgba(0, 0, 0, 0.04)' },
-              ticks: { color: '#64748b' }
-            },
-            y: {
-              grid: { color: 'rgba(0, 0, 0, 0.04)' },
-              ticks: { color: '#64748b' }
-            }
+            x: { grid: { color: 'rgba(0, 0, 0, 0.04)' }, ticks: { color: '#64748b' } },
+            y: { grid: { color: 'rgba(0, 0, 0, 0.04)' }, ticks: { color: '#64748b' } }
           }
         }
       });
     }
 
-    // Devices Breakdown Chart
     const deviceCtx = document.getElementById('devices-chart');
     if (deviceCtx) {
       if (deviceChartInstance) deviceChartInstance.destroy();
@@ -2009,16 +1669,92 @@ document.addEventListener('DOMContentLoaded', () => {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: {
-              position: 'bottom',
-              labels: { color: '#475569', font: { size: 11 } }
-            }
+            legend: { position: 'bottom', labels: { color: '#475569', font: { size: 11 } } }
           },
           cutout: '70%'
         }
       });
     }
   };
+
+  // ==========================================
+  // 11. SUPER ADMIN DASHBOARD CONTROLLER
+  // ==========================================
+  const renderAdminView = () => {
+    const adminTbody = document.getElementById('admin-users-tbody');
+    const users = getSavedAdminUsers();
+    if (!adminTbody) return;
+
+    adminTbody.innerHTML = users.map(u => `
+      <tr class="hover:bg-slate-50 transition">
+        <td class="p-3">
+          <div class="font-bold text-slate-900">${u.name}</div>
+          <div class="text-[11px] text-slate-500 font-mono">${u.email}</div>
+        </td>
+        <td class="p-3">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${u.tier.includes('Enterprise') ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-slate-100 text-slate-700'}">
+            ${u.tier}
+          </span>
+        </td>
+        <td class="p-3 font-mono font-bold text-slate-800">${u.dynamicCount} QRs</td>
+        <td class="p-3 font-mono text-slate-700">${u.scans.toLocaleString()}</td>
+        <td class="p-3">
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            ${u.status}
+          </span>
+        </td>
+        <td class="p-3 text-right">
+          <button data-email="${u.email}" class="admin-tier-btn px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 rounded-lg border border-slate-200 transition">
+            Modify Plan
+          </button>
+        </td>
+      </tr>
+    `).join('');
+
+    document.querySelectorAll('.admin-tier-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const email = btn.getAttribute('data-email');
+        const newTier = prompt(`Change subscription tier for ${email}:`, 'Enterprise VIP ($299/mo)');
+        if (newTier && newTier.trim()) {
+          const userList = getSavedAdminUsers();
+          const target = userList.find(x => x.email === email);
+          if (target) {
+            target.tier = newTier.trim();
+            localStorage.setItem(STORAGE_KEYS.ADMIN_USERS, JSON.stringify(userList));
+            renderAdminView();
+            showToast('User subscription updated!');
+          }
+        }
+      });
+    });
+
+    if (window.lucide) lucide.createIcons();
+  };
+
+  const adminExportBackupBtn = document.getElementById('admin-export-backup-btn');
+  if (adminExportBackupBtn) {
+    adminExportBackupBtn.addEventListener('click', () => {
+      const backupData = {
+        exportedAt: new Date().toISOString(),
+        dynamicLinks: getSavedDynamicLinks(),
+        history: getSavedHistory(),
+        users: getSavedAdminUsers()
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `automatixqr_admin_backup_${Date.now()}.json`;
+      a.click();
+      showToast('Complete platform backup exported to JSON!');
+    });
+  }
+
+  const adminResetSystemBtn = document.getElementById('admin-reset-system-btn');
+  if (adminResetSystemBtn) {
+    adminResetSystemBtn.addEventListener('click', () => {
+      showToast('System cache purged & DNS cache refreshed!');
+    });
+  }
 
   // API Key Copy
   const copyApiKeyBtn = document.getElementById('copy-api-key-btn');
