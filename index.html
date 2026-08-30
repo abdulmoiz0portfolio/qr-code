@@ -44,6 +44,68 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ========================================================
+       HIGH-END SPRING PHYSICS MODAL KEYFRAMES (AWWWARDS-TIER)
+       ======================================================== */
+    @keyframes modalSpringIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.84) translateY(32px);
+        filter: blur(6px);
+      }
+      65% {
+        transform: scale(1.02) translateY(-2px);
+        filter: blur(0px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+      }
+    }
+
+    @keyframes backdropFadeIn {
+      0% {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+      }
+      100% {
+        opacity: 1;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+    }
+
+    /* Auto trigger animation when modal opens */
+    .modal-backdrop:not(.hidden) {
+      display: flex !important;
+      animation: backdropFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .modal-backdrop:not(.hidden) .modal-dialog {
+      animation: modalSpringIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .double-bezel-shell {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.88) 100%);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: 0 30px 80px -15px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+    }
+
+    .btn-magnetic {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-magnetic:hover {
+      transform: translateY(-1.5px);
+      box-shadow: 0 12px 25px -5px rgba(79, 70, 229, 0.35);
+    }
+    .btn-magnetic:active {
+      transform: scale(0.97);
+    }
+  </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-indigo-500 selection:text-white">
 
