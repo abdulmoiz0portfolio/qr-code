@@ -1,4 +1,4 @@
-// AutomatixQR - Enterprise SaaS Engine with Multi-Language & Super Admin
+// AutomatixQR - Enterprise SaaS Engine with 100% Real Live Telemetry & Multi-Language
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Lucide Icons
@@ -7,7 +7,101 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 1. CLIENT-SIDE DYNAMIC QR REDIRECTION ENGINE
+  // STORAGE KEYS & DATA ACCESS LAYER
+  // ==========================================
+  const STORAGE_KEYS = {
+    HISTORY: 'automatix_qr_history_v2',
+    DYNAMIC_LINKS: 'automatix_qr_dynamic_v2',
+    ACCOUNTS: 'automatix_qr_accounts_v2',
+    CURRENT_USER: 'automatix_qr_user_session_v2',
+    SCAN_EVENTS: 'automatix_qr_real_scan_events_v2',
+    LANG: 'automatix_qr_lang_v2'
+  };
+
+  const getSavedAccounts = () => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.ACCOUNTS);
+      if (stored) return JSON.parse(stored);
+    } catch {
+      // ignore
+    }
+    // Only real official Admin account by default
+    return [
+      {
+        id: 'admin_root_001',
+        name: 'Abdul Moiz',
+        email: 'moiz@automatixes.com',
+        pass: 'admin12345',
+        role: 'admin',
+        isAdmin: true,
+        tier: 'Root Admin (Full Access)',
+        registeredAt: '2026-08-31 01:00'
+      }
+    ];
+  };
+
+  const setSavedAccounts = (accs) => {
+    localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(accs));
+  };
+
+  const getSavedDynamicLinks = () => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEYS.DYNAMIC_LINKS)) || [];
+    } catch {
+      return [];
+    }
+  };
+
+  const setSavedDynamicLinks = (list) => {
+    localStorage.setItem(STORAGE_KEYS.DYNAMIC_LINKS, JSON.stringify(list));
+  };
+
+  const getSavedHistory = () => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORY)) || [];
+    } catch {
+      return [];
+    }
+  };
+
+  const setSavedHistory = (list) => {
+    localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(list));
+    updateHistoryBadge();
+  };
+
+  const getScanEvents = () => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEYS.SCAN_EVENTS)) || [];
+    } catch {
+      return [];
+    }
+  };
+
+  const setScanEvents = (events) => {
+    localStorage.setItem(STORAGE_KEYS.SCAN_EVENTS, JSON.stringify(events));
+  };
+
+  const getCurrentUser = () => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
+      if (stored) return JSON.parse(stored);
+    } catch {
+      // ignore
+    }
+    return null;
+  };
+
+  const setCurrentUser = (user) => {
+    if (user) {
+      localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+    }
+    updateAuthUI();
+  };
+
+  // ==========================================
+  // 1. 100% REAL LIVE SCAN REDIRECTION & TELEMETRY ENGINE
   // ==========================================
   const checkAndExecuteRedirect = () => {
     const params = new URLSearchParams(window.location.search);
@@ -15,20 +109,46 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (redirectKey) {
       try {
-        const savedLinks = JSON.parse(localStorage.getItem('automatix_qr_dynamic_v1')) || [];
+        const savedLinks = getSavedDynamicLinks();
         const match = savedLinks.find(l => 
-          l.shortCode.endsWith('/' + redirectKey) || 
           l.id === redirectKey ||
+          l.shortCode.endsWith('/' + redirectKey) || 
           l.shortCode.includes(redirectKey)
         );
 
         if (match && match.targetUrl) {
+          // Detect Real Device OS & Scanner Info
+          const ua = navigator.userAgent || '';
+          let os = 'Desktop / Web';
+          if (/iPad|iPhone|iPod/.test(ua)) os = 'iPhone / iOS';
+          else if (/Android/.test(ua)) os = 'Android Phones';
+          else if (/Tablet|iPad/.test(ua)) os = 'Tablets / iPads';
+
+          const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          const dayName = days[new Date().getDay()];
+
+          // Log Real Telemetry Event
+          const scanEvents = getScanEvents();
+          scanEvents.unshift({
+            id: 'scan_' + Date.now(),
+            linkId: match.id,
+            shortCode: match.shortCode,
+            os,
+            day: dayName,
+            timestamp: Date.now(),
+            targetUrl: match.targetUrl
+          });
+          setScanEvents(scanEvents);
+
+          // Increment Link Scan Count
           match.scans = (match.scans || 0) + 1;
-          localStorage.setItem('automatix_qr_dynamic_v1', JSON.stringify(savedLinks));
+          setSavedDynamicLinks(savedLinks);
+
           document.body.innerHTML = `
             <div style="font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #f8fafc; color: #334155;">
-              <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px; color: #4f46e5;">Redirecting...</div>
-              <div style="font-size: 14px;">Forwarding to: <strong>${match.targetUrl}</strong></div>
+              <div style="font-size: 22px; font-weight: bold; margin-bottom: 8px; color: #4f46e5;">AutomatixQR &rarr; Forwarding</div>
+              <div style="font-size: 14px; color: #64748b;">Redirecting to: <strong>${match.targetUrl}</strong></div>
+              <div style="margin-top: 16px; font-size: 12px; color: #10b981;">&check; Real-time scan telemetry logged</div>
             </div>
           `;
           window.location.href = match.targetUrl;
@@ -137,12 +257,12 @@ document.addEventListener('DOMContentLoaded', () => {
         library_header: 'Saved QR Codes & History Library',
         library_desc: 'All your created QR codes are persistently stored here for quick re-use.',
         btn_clear_library: 'Clear All History',
-        stat_total_scans: 'Total Scans',
+        stat_total_scans: 'Total Real Scans',
         stat_active_qrs: 'Active Dynamic QRs',
-        stat_top_os: 'Top Mobile OS',
-        stat_conversion: 'Conversion Rate',
-        chart_trend_title: 'Scan Trends (Last 7 Days)',
-        chart_device_title: 'Device & Scanner Breakdown',
+        stat_top_os: 'Top Scanner OS',
+        stat_conversion: 'Redirection Rate',
+        chart_trend_title: 'Real Scan Trends (Last 7 Days)',
+        chart_device_title: 'Real Device & Scanner Breakdown',
         api_header: 'Developer API & Embed SDK',
         api_desc: 'Integrate QR code generation directly into your backend or frontend apps.',
         api_key_label: 'Your Live Production API Key',
@@ -153,222 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
         modal_target_label: 'Destination Target URL',
         btn_cancel: 'Cancel',
         btn_create_link: 'Create Link'
-      }
-    },
-    es: {
-      name: 'Español',
-      flag: '🇪🇸',
-      dir: 'ltr',
-      strings: {
-        pro_badge: 'EMPRESARIAL',
-        new_qr: 'Nuevo QR',
-        nav_title: 'Navegación',
-        nav_studio: 'Estudio QR',
-        nav_dynamic: 'Enlaces Dinámicos',
-        nav_batch: 'Generador Masivo',
-        nav_templates: 'Galería de Plantillas',
-        nav_library: 'Biblioteca Guardada',
-        nav_analytics: 'Analítica de Escaneos',
-        nav_api: 'API y Widget',
-        badge_main: 'Principal',
-        badge_editable: 'Editable',
-        badge_bulk: 'Lote',
-        badge_presets: 'Ajustes',
-        badge_live: 'En Vivo',
-        agency_cloud: 'Nube Automatixes',
-        agency_desc: 'Automatice flujos de trabajo de CRM y WhatsApp con agentes de IA.',
-        explore_agency: 'Explorar Servicios',
-        type_url: 'Enlace URL',
-        type_text: 'Texto',
-        type_wifi: 'Wi-Fi',
-        type_vcard: 'vCard',
-        type_social: 'Bio Social',
-        type_email: 'Correo',
-        content_header: 'Contenido e Información QR',
-        label_destination_url: 'URL Web de Destino',
-        label_text_message: 'Mensaje de Texto / Notas',
-        label_wifi_ssid: 'Nombre de Red (SSID)',
-        label_wifi_password: 'Contraseña',
-        label_wifi_security: 'Tipo de Seguridad',
-        label_wifi_hidden: 'Red Oculta',
-        label_first_name: 'Nombre',
-        label_last_name: 'Apellido',
-        label_phone: 'Teléfono',
-        label_email: 'Correo Electrónico',
-        label_company: 'Empresa',
-        label_job_title: 'Puesto',
-        label_platform: 'Plataforma',
-        label_handle: 'Usuario / Teléfono',
-        label_recipient_email: 'Correo Destinatario',
-        label_subject: 'Asunto',
-        label_message_body: 'Cuerpo del Mensaje',
-        styling_header: 'Estilo Visual y Colores Personalizados',
-        label_colors: 'Paleta de Colores',
-        color_dots: 'Puntos QR',
-        color_bg: 'Fondo',
-        color_frame: 'Marco Esquina',
-        color_center: 'Centro Esquina',
-        label_presets: 'Preajustes:',
-        label_dot_pattern: 'Patrón de Puntos',
-        label_corner_frame: 'Marco de Esquina',
-        label_corner_dot: 'Centro de Esquina',
-        label_logo_upload: 'Logo de Marca Central',
-        drag_drop_hint: 'Arrastrar y soltar soportado',
-        logo_formats: 'Admite PNG, JPG, SVG, WebP (Máx. 2MB)',
-        btn_remove: 'Eliminar',
-        label_error_level: 'Nivel de Corrección de Errores',
-        label_margin: 'Margen',
-        live_preview: 'Vista Previa en Vivo',
-        btn_download_png: 'Descargar PNG',
-        btn_download_svg: 'Descargar SVG',
-        btn_copy_image: 'Copiar Imagen',
-        btn_save_library: 'Guardar en Biblioteca',
-        raw_payload: 'Carga Codificada',
-        dynamic_header: 'Códigos QR Dinámicos Editables',
-        dynamic_desc: '¡Cambia la URL de destino en cualquier momento sin reimprimir!',
-        btn_create_dynamic: 'Crear Enlace Dinámico',
-        th_campaign: 'Campaña / Nombre',
-        th_short_url: 'URL Corta Dinámica',
-        th_destination: 'Destino Final',
-        th_scans: 'Escaneos Totales',
-        th_status: 'Estado',
-        th_actions: 'Acciones',
-        batch_header: 'Generador QR Masivo por Lotes',
-        batch_desc: 'Genera cientos de códigos QR y descarga un archivo ZIP.',
-        batch_input_label: 'Pega URLs o Textos (Uno por línea)',
-        batch_detected: 'Elementos Detectados',
-        btn_load_sample: 'Cargar Datos de Muestra',
-        btn_generate_zip: 'Generar y Descargar ZIP',
-        batch_generating: 'Generando archivo masivo...',
-        templates_header: 'Plantillas Diseñadas',
-        templates_desc: 'Aplica estilos y marcas profesionales en un solo clic.',
-        library_header: 'Biblioteca y Códigos Guardados',
-        library_desc: 'Tus códigos se guardan automáticamente para reutilizarlos.',
-        btn_clear_library: 'Limpiar Todo el Historial',
-        stat_total_scans: 'Escaneos Totales',
-        stat_active_qrs: 'QRs Dinámicos Activos',
-        stat_top_os: 'Sistema Móvil Principal',
-        stat_conversion: 'Tasa de Conversión',
-        chart_trend_title: 'Tendencias de Escaneo (Últimos 7 Días)',
-        chart_device_title: 'Desglose por Dispositivo',
-        api_header: 'API para Desarrolladores y SDK',
-        api_desc: 'Integra la generación de códigos QR en tus aplicaciones.',
-        api_key_label: 'Tu Clave API de Producción',
-        btn_copy: 'Copiar',
-        snippet_header: 'Código de Integración',
-        modal_create_title: 'Crear Enlace Dinámico',
-        modal_campaign_label: 'Título de Campaña',
-        modal_target_label: 'URL de Destino',
-        btn_cancel: 'Cancelar',
-        btn_create_link: 'Crear Enlace'
-      }
-    },
-    ar: {
-      name: 'العربية',
-      flag: '🇦🇪',
-      dir: 'rtl',
-      strings: {
-        pro_badge: 'مؤسسي',
-        new_qr: 'رمز جديد',
-        nav_title: 'التنقل',
-        nav_studio: 'استوديو QR',
-        nav_dynamic: 'الروابط الديناميكية',
-        nav_batch: 'المولد الجماعي',
-        nav_templates: 'معرض القوالب',
-        nav_library: 'المكتبة المحفوظة',
-        nav_analytics: 'تحليلات المسح',
-        nav_api: 'واجهة API',
-        badge_main: 'رئيسي',
-        badge_editable: 'قابل للتعديل',
-        badge_bulk: 'دفعة',
-        badge_presets: 'جاهز',
-        badge_live: 'مباشر',
-        agency_cloud: 'سحابة Automatixes',
-        agency_desc: 'أتمتة عمليات CRM والواتساب باستخدام وكلاء الذكاء الاصطناعي.',
-        explore_agency: 'استكشف الخدمات',
-        type_url: 'رابط موقع',
-        type_text: 'نص',
-        type_wifi: 'واي فاي',
-        type_vcard: 'بطاقة عمل',
-        type_social: 'حسابات التواصل',
-        type_email: 'بريد',
-        content_header: 'محتوى رمز الاستجابة السريعة',
-        label_destination_url: 'رابط الوجهة',
-        label_text_message: 'نص الرسالة / ملاحظات',
-        label_wifi_ssid: 'اسم الشبكة (SSID)',
-        label_wifi_password: 'كلمة المرور',
-        label_wifi_security: 'نوع التشفير',
-        label_wifi_hidden: 'شبكة مخفية',
-        label_first_name: 'الاسم الأول',
-        label_last_name: 'اسم العائلة',
-        label_phone: 'رقم الهاتف',
-        label_email: 'البريد الإلكتروني',
-        label_company: 'الشركة',
-        label_job_title: 'المسمى الوظيفي',
-        label_platform: 'المنصة',
-        label_handle: 'اسم المستخدم / الرقم',
-        label_recipient_email: 'البريد المستلم',
-        label_subject: 'الموضوع',
-        label_message_body: 'محتوى الرسالة',
-        styling_header: 'التصميم والألوان المخصصة',
-        label_colors: 'ألوان اللوحة',
-        color_dots: 'النقاط',
-        color_bg: 'الخلفية',
-        color_frame: 'إطار الزاوية',
-        color_center: 'مركز الزاوية',
-        label_presets: 'السمات:',
-        label_dot_pattern: 'نمط النقاط',
-        label_corner_frame: 'إطار الزاوية',
-        label_corner_dot: 'نقطة الزاوية',
-        label_logo_upload: 'شعار العلامة التجارية',
-        drag_drop_hint: 'السحب والإفلات مدعوم',
-        logo_formats: 'يدعم PNG, JPG, SVG, WebP (بحد أقصى 2 ميجابايت)',
-        btn_remove: 'إزالة',
-        label_error_level: 'مستوى تصحيح الخطأ',
-        label_margin: 'الهامش',
-        live_preview: 'معاينة مباشرة',
-        btn_download_png: 'تحميل PNG',
-        btn_download_svg: 'تحميل SVG',
-        btn_copy_image: 'نسخ الصورة',
-        btn_save_library: 'حفظ في المكتبة',
-        raw_payload: 'البيانات المشفرة',
-        dynamic_header: 'رموز QR ديناميكية قابلة للتعديل',
-        dynamic_desc: 'غيّر رابط الوجهة في أي وقت دون إعادة طباعة الرمز!',
-        btn_create_dynamic: 'إنشاء رابط ديناميكي',
-        th_campaign: 'الحملة / الاسم',
-        th_short_url: 'الرابط القصير',
-        th_destination: 'الوجهة المستهدفة',
-        th_scans: 'إجمالي المسحات',
-        th_status: 'الحالة',
-        th_actions: 'الإجراءات',
-        batch_header: 'المولد الجماعي لرموز QR',
-        batch_desc: 'قم بإنشاء مئات الرموز دفعة واحدة وتنزيلها كملف ZIP.',
-        batch_input_label: 'الصق الروابط أو النصوص (سطر لكل عنصر)',
-        batch_detected: 'العناصر المكتشفة',
-        btn_load_sample: 'تحميل بيانات تجريبية',
-        btn_generate_zip: 'إنشاء وتنزيل ملف ZIP',
-        batch_generating: 'جارٍ تجهيز الأرشيف...',
-        templates_header: 'قوالب احترافية مصممة',
-        templates_desc: 'تطبيق ألوان وأنماط جاهزة بنقرة واحدة.',
-        library_header: 'المكتبة والرموز المحفوظة',
-        library_desc: 'يتم حفظ جميع الرموز المنشأة للاستخدام لاحقاً.',
-        btn_clear_library: 'مسح كل السجل',
-        stat_total_scans: 'إجمالي المسحات',
-        stat_active_qrs: 'رموز ديناميكية نشطة',
-        stat_top_os: 'أفضل نظام تشغيل',
-        stat_conversion: 'معدل التحويل',
-        chart_trend_title: 'اتجاهات المسح (آخر 7 أيام)',
-        chart_device_title: 'توزيع الأجهزة',
-        api_header: 'واجهة المطورين و SDK',
-        api_desc: 'دمج توليد رموز QR مباشرة في تطبيقاتك.',
-        api_key_label: 'مفتاح API الخاص بك',
-        btn_copy: 'نسخ',
-        snippet_header: 'كود الدمج البرمجي',
-        modal_create_title: 'إنشاء رابط ديناميكي',
-        modal_campaign_label: 'اسم الحملة',
-        modal_target_label: 'رابط الوجهة',
-        btn_cancel: 'إلغاء',
-        btn_create_link: 'إنشاء'
       }
     },
     ur: {
@@ -461,12 +365,12 @@ document.addEventListener('DOMContentLoaded', () => {
         library_header: 'محفوظ لائبریری',
         library_desc: 'آپ کے بنائے گئے تمام کوڈز محفوظ رہتے ہیں۔',
         btn_clear_library: 'تمام ہسٹری ختم کریں',
-        stat_total_scans: 'کل اسکینز',
+        stat_total_scans: 'کل لائیو اسکینز',
         stat_active_qrs: 'ایکٹو ڈائنامک لنکس',
-        stat_top_os: 'ٹاپ موبائل OS',
-        stat_conversion: 'کنورژن ریٹ',
-        chart_trend_title: 'اسکین کے رجحانات (پچھلے 7 دن)',
-        chart_device_title: 'ڈیوائس کی تقسیم',
+        stat_top_os: 'ٹاپ اسکینر OS',
+        stat_conversion: 'ری ڈائریکشن ریٹ',
+        chart_trend_title: 'حقیقی اسکین ٹرینڈز (پچھلے 7 دن)',
+        chart_device_title: 'حقیقی ڈیوائس بریک ڈاؤن',
         api_header: 'ڈویلپر API اور SDK',
         api_desc: 'اپنی ایپس میں ڈائریکٹ QR جنریشن شامل کریں۔',
         api_key_label: 'آپ کی لائیو API کی',
@@ -482,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const detectInitialLanguage = () => {
-    const saved = localStorage.getItem('automatix_qr_lang');
+    const saved = localStorage.getItem(STORAGE_KEYS.LANG);
     if (saved && TRANSLATIONS[saved]) return saved;
     const navLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().split('-')[0];
     return TRANSLATIONS[navLang] ? navLang : 'en';
@@ -493,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const applyLanguage = (langKey) => {
     if (!TRANSLATIONS[langKey]) langKey = 'en';
     currentLang = langKey;
-    localStorage.setItem('automatix_qr_lang', langKey);
+    localStorage.setItem(STORAGE_KEYS.LANG, langKey);
 
     const langObj = TRANSLATIONS[langKey];
     document.documentElement.lang = langKey;
@@ -552,9 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
   };
 
-  // ==========================================
-  // 3. STATE & STORAGE MANAGEMENT
-  // ==========================================
+  // State
   const state = {
     currentView: 'studio',
     currentType: 'url',
@@ -572,78 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
     logoFileName: ''
   };
 
-  const STORAGE_KEYS = {
-    HISTORY: 'automatix_qr_history_v1',
-    DYNAMIC_LINKS: 'automatix_qr_dynamic_v1',
-    ADMIN_USERS: 'automatix_qr_admin_users_v1'
-  };
-
-  const getSavedHistory = () => {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORY)) || [];
-    } catch {
-      return [];
-    }
-  };
-
-  const setSavedHistory = (list) => {
-    localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(list));
-    updateHistoryBadge();
-  };
-
-  const getSavedDynamicLinks = () => {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEYS.DYNAMIC_LINKS)) || [
-        {
-          id: 'demo',
-          name: 'AI Automation Demo',
-          shortCode: 'qrcode.automatixes.com/?r=demo',
-          targetUrl: 'https://www.automatixes.com/services',
-          scans: 1420,
-          status: 'Active',
-          createdAt: '2026-08-15'
-        },
-        {
-          id: 'wa',
-          name: 'WhatsApp CRM Bot',
-          shortCode: 'qrcode.automatixes.com/?r=wa',
-          targetUrl: 'https://wa.me/923366920141',
-          scans: 3890,
-          status: 'Active',
-          createdAt: '2026-08-20'
-        },
-        {
-          id: 'meet',
-          name: 'Client Booking Calendar',
-          shortCode: 'qrcode.automatixes.com/?r=meet',
-          targetUrl: 'https://www.automatixes.com/contact',
-          scans: 890,
-          status: 'Active',
-          createdAt: '2026-08-28'
-        }
-      ];
-    } catch {
-      return [];
-    }
-  };
-
-  const setSavedDynamicLinks = (list) => {
-    localStorage.setItem(STORAGE_KEYS.DYNAMIC_LINKS, JSON.stringify(list));
-  };
-
-  const getSavedAdminUsers = () => {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEYS.ADMIN_USERS)) || [
-        { id: 'usr_1', name: 'Abdul Moiz (Owner)', email: 'abdulmoiz@automatixes.com', tier: 'Enterprise Root', dynamicCount: 38, scans: 6200, status: 'Active' },
-        { id: 'usr_2', name: 'Acme Marketing Agency', email: 'growth@acme.io', tier: 'Pro ($49/mo)', dynamicCount: 14, scans: 2400, status: 'Active' },
-        { id: 'usr_3', name: 'Dubai Real Estate LLC', email: 'sales@dxbproperties.ae', tier: 'Enterprise ($199/mo)', dynamicCount: 82, scans: 19400, status: 'Active' },
-        { id: 'usr_4', name: 'Sarah Jenkins', email: 'sarah.j@gmail.com', tier: 'Free Tier', dynamicCount: 2, scans: 140, status: 'Active' }
-      ];
-    } catch {
-      return [];
-    }
-  };
-
   const updateHistoryBadge = () => {
     const history = getSavedHistory();
     const badge = document.getElementById('history-badge-count');
@@ -651,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================
-  // 4. NAVIGATION CONTROLLER (WITH AUTH PROTECTION)
+  // 3. NAVIGATION CONTROLLER (AUTH PROTECTED)
   // ==========================================
   const navButtons = document.querySelectorAll('#main-nav .nav-item');
   const viewPanels = document.querySelectorAll('.view-panel');
@@ -660,17 +490,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const switchView = (targetView) => {
     const user = getCurrentUser();
 
-    // 1. Guard Admin Tab
+    // Guard Admin
     if (targetView === 'admin') {
       if (!user || !user.isAdmin) {
         setAuthTab('signin');
         authModal.classList.remove('hidden');
-        showToast('Super Admin credentials required (moiz@automatixes.com)', true);
+        showToast('Super Admin login required (moiz@automatixes.com)', true);
         return;
       }
     }
 
-    // 2. Guard Member-Only Tabs (Saved Library, Dynamic Links, Analytics, API)
+    // Guard Protected User Tabs
     if (PROTECTED_VIEWS.includes(targetView)) {
       if (!user) {
         setAuthTab('signup');
@@ -681,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
           analytics: 'Scan Analytics',
           api: 'Developer API & Widget'
         };
-        showToast(`Please sign in or create a free account to access ${viewNames[targetView] || targetView}!`, true);
+        showToast(`Please sign in or create an account to access ${viewNames[targetView] || targetView}!`, true);
         return;
       }
     }
@@ -726,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 5. QR STUDIO CORE ENGINE
+  // 4. QR STUDIO CORE ENGINE
   // ==========================================
   const qrCanvasContainer = document.getElementById('qr-canvas');
   let qrCode = new QRCodeStyling({
@@ -1065,6 +895,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const newItem = {
         id: 'qr_' + Date.now(),
+        userId: user.id,
+        userEmail: user.email,
         type: state.currentType,
         payload: state.data,
         preview: previewDataUrl,
@@ -1081,7 +913,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 6. DYNAMIC EDITABLE LINKS CONTROLLER (FIXED & FULLY FUNCTIONAL)
+  // 5. DYNAMIC EDITABLE LINKS CONTROLLER
   // ==========================================
   const dynamicTbody = document.getElementById('dynamic-links-tbody');
   const dynamicModal = document.getElementById('dynamic-modal');
@@ -1096,7 +928,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeModalLink = null;
 
   const renderDynamicLinksView = () => {
-    const links = getSavedDynamicLinks();
+    const user = getCurrentUser();
+    const allLinks = getSavedDynamicLinks();
+    // Filter to user's links unless admin
+    const links = (user && user.isAdmin) ? allLinks : allLinks.filter(l => l.userEmail === (user ? user.email : ''));
+
     if (!dynamicTbody) return;
 
     if (links.length === 0) {
@@ -1131,12 +967,12 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td class="p-4 text-center">
           <span class="px-2.5 py-1 rounded-full bg-slate-100 font-mono text-slate-800 text-xs font-bold border border-slate-200">
-            ${link.scans}
+            ${link.scans || 0}
           </span>
         </td>
         <td class="p-4">
           <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            ${link.status}
+            ${link.status || 'Active'}
           </span>
         </td>
         <td class="p-4 text-right">
@@ -1168,15 +1004,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.edit-dyn-btn').forEach(b => {
       b.addEventListener('click', () => {
         const id = b.getAttribute('data-id');
-        const links = getSavedDynamicLinks();
-        const item = links.find(l => l.id === id);
+        const all = getSavedDynamicLinks();
+        const item = all.find(l => l.id === id);
         if (item) {
           const newUrl = prompt(`Enter new destination target URL for "${item.name}":`, item.targetUrl);
           if (newUrl && newUrl.trim()) {
             item.targetUrl = newUrl.trim();
-            setSavedDynamicLinks(links);
+            setSavedDynamicLinks(all);
             renderDynamicLinksView();
-            showToast('Destination URL updated! QR code points to new URL instantly.');
+            showToast('Destination URL updated instantly!');
           }
         }
       });
@@ -1232,6 +1068,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (createDynamicBtn) {
     createDynamicBtn.addEventListener('click', () => {
+      const user = getCurrentUser();
+      if (!user) {
+        setAuthTab('signup');
+        authModal.classList.remove('hidden');
+        showToast('Please sign in or create an account to create dynamic links!', true);
+        return;
+      }
       document.getElementById('dynamic-title-input').value = '';
       document.getElementById('dynamic-url-input').value = '';
       document.getElementById('dynamic-slug-input').value = '';
@@ -1245,6 +1088,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (saveDynamicBtn) {
     saveDynamicBtn.addEventListener('click', () => {
+      const user = getCurrentUser();
       const name = document.getElementById('dynamic-title-input').value.trim();
       const targetUrl = document.getElementById('dynamic-url-input').value.trim();
       const customSlug = document.getElementById('dynamic-slug-input').value.trim();
@@ -1260,6 +1104,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       links.unshift({
         id: slug,
+        userId: user ? user.id : 'usr_guest',
+        userEmail: user ? user.email : 'guest@automatixes.com',
         name,
         shortCode,
         targetUrl,
@@ -1300,7 +1146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 7. BATCH GENERATOR (BULK ZIP)
+  // 6. BATCH GENERATOR (BULK ZIP)
   // ==========================================
   const batchInput = document.getElementById('batch-input');
   const batchItemCount = document.getElementById('batch-item-count');
@@ -1323,10 +1169,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'https://www.automatixes.com/services',
         'https://www.automatixes.com/case-studies',
         'https://www.automatixes.com/contact',
-        'https://www.automatixes.com/ai-agents',
-        'https://www.automatixes.com/automation'
+        'https://www.automatixes.com/ai-agents'
       ].join('\n');
-      batchItemCount.textContent = '5';
+      batchItemCount.textContent = '4';
     });
   }
 
@@ -1389,7 +1234,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 8. TEMPLATES GALLERY (LIVE MINI QRS)
+  // 7. TEMPLATES GALLERY (LIVE MINI QRS)
   // ==========================================
   const TEMPLATES = [
     {
@@ -1550,11 +1395,15 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================
-  // 9. SAVED LIBRARY
+  // 8. SAVED LIBRARY
   // ==========================================
   const renderHistoryView = () => {
     const grid = document.getElementById('history-grid');
-    const history = getSavedHistory();
+    const user = getCurrentUser();
+    const allHistory = getSavedHistory();
+    // Filter to user's history unless admin
+    const history = (user && user.isAdmin) ? allHistory : allHistory.filter(h => h.userEmail === (user ? user.email : ''));
+
     if (!grid) return;
 
     if (history.length === 0) {
@@ -1650,7 +1499,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 10. SCAN ANALYTICS CHARTS (LIGHT THEME)
+  // 9. 100% REAL SCAN ANALYTICS CHARTS & KPI ENGINE
   // ==========================================
   let trendChartInstance = null;
   let deviceChartInstance = null;
@@ -1658,16 +1507,68 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderAnalyticsCharts = () => {
     if (!window.Chart) return;
 
+    const scanEvents = getScanEvents();
+    const dynamicLinks = getSavedDynamicLinks();
+
+    // 1. Update KPI Card Real Numbers
+    const totalScans = scanEvents.length;
+    const activeQRs = dynamicLinks.length;
+
+    const totalScansEl = document.getElementById('analytics-total-scans');
+    const activeQRsEl = document.getElementById('analytics-active-qrs');
+    const topOsEl = document.getElementById('analytics-top-os');
+    const osBreakdownEl = document.getElementById('analytics-os-breakdown');
+
+    if (totalScansEl) totalScansEl.textContent = totalScans.toLocaleString();
+    if (activeQRsEl) activeQRsEl.textContent = activeQRs.toLocaleString();
+
+    // Calculate Real Device Counts
+    const deviceCounts = {
+      'iPhone / iOS': 0,
+      'Android Phones': 0,
+      'Tablets / iPads': 0,
+      'Desktop / Web': 0
+    };
+
+    scanEvents.forEach(evt => {
+      if (deviceCounts[evt.os] !== undefined) {
+        deviceCounts[evt.os]++;
+      } else {
+        deviceCounts['Desktop / Web']++;
+      }
+    });
+
+    if (totalScans > 0) {
+      const topDevice = Object.keys(deviceCounts).reduce((a, b) => deviceCounts[a] > deviceCounts[b] ? a : b);
+      const topPct = Math.round((deviceCounts[topDevice] / totalScans) * 100);
+      if (topOsEl) topOsEl.textContent = `${topDevice.split(' ')[0]} (${topPct}%)`;
+      if (osBreakdownEl) osBreakdownEl.textContent = `${totalScans} verified scan sessions logged`;
+    } else {
+      if (topOsEl) topOsEl.textContent = 'No Scans Yet';
+      if (osBreakdownEl) osBreakdownEl.textContent = 'Awaiting real QR code scans';
+    }
+
+    // 2. Compute Real 7-Day Trend
+    const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const weekScansCount = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+    scanEvents.forEach(evt => {
+      if (evt.day && weekScansCount[evt.day] !== undefined) {
+        weekScansCount[evt.day]++;
+      }
+    });
+
+    const trendData = weekDays.map(d => weekScansCount[d]);
+
     const trendCtx = document.getElementById('scans-trend-chart');
     if (trendCtx) {
       if (trendChartInstance) trendChartInstance.destroy();
       trendChartInstance = new Chart(trendCtx, {
         type: 'line',
         data: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          labels: weekDays,
           datasets: [{
-            label: 'Total Scans',
-            data: [1200, 1850, 1420, 2400, 2900, 2100, 2419],
+            label: 'Verified Scans',
+            data: trendData,
             borderColor: '#4f46e5',
             backgroundColor: 'rgba(99, 102, 241, 0.08)',
             tension: 0.4,
@@ -1683,22 +1584,39 @@ document.addEventListener('DOMContentLoaded', () => {
           plugins: { legend: { display: false } },
           scales: {
             x: { grid: { color: 'rgba(0, 0, 0, 0.04)' }, ticks: { color: '#64748b' } },
-            y: { grid: { color: 'rgba(0, 0, 0, 0.04)' }, ticks: { color: '#64748b' } }
+            y: { 
+              grid: { color: 'rgba(0, 0, 0, 0.04)' }, 
+              ticks: { color: '#64748b', precision: 0 },
+              beginAtZero: true
+            }
           }
         }
       });
     }
 
+    // 3. Render Real Device Donut Chart
     const deviceCtx = document.getElementById('devices-chart');
     if (deviceCtx) {
       if (deviceChartInstance) deviceChartInstance.destroy();
+      
+      const deviceValues = [
+        deviceCounts['iPhone / iOS'],
+        deviceCounts['Android Phones'],
+        deviceCounts['Tablets / iPads'],
+        deviceCounts['Desktop / Web']
+      ];
+
+      // If zero scans, show empty placeholder in chart
+      const chartValues = totalScans === 0 ? [1, 0, 0, 0] : deviceValues;
+      const chartColors = totalScans === 0 ? ['#e2e8f0', '#cbd5e1', '#94a3b8', '#64748b'] : ['#4f46e5', '#10b981', '#f59e0b', '#94a3b8'];
+
       deviceChartInstance = new Chart(deviceCtx, {
         type: 'doughnut',
         data: {
           labels: ['iPhone / iOS', 'Android Phones', 'Tablets / iPads', 'Desktop / Web'],
           datasets: [{
-            data: [64, 28, 5, 3],
-            backgroundColor: ['#4f46e5', '#10b981', '#f59e0b', '#94a3b8'],
+            data: chartValues,
+            backgroundColor: chartColors,
             borderWidth: 0
           }]
         },
@@ -1715,13 +1633,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================
-  // 11. SUPER ADMIN DASHBOARD CONTROLLER (FULL TELEMETRY)
+  // 10. SUPER ADMIN DASHBOARD CONTROLLER
   // ==========================================
   const renderAdminView = (filterQuery = '') => {
     const adminTbody = document.getElementById('admin-users-tbody');
     const accounts = getSavedAccounts();
     const dynamicLinks = getSavedDynamicLinks();
     const allHistory = getSavedHistory();
+    const scanEvents = getScanEvents();
     if (!adminTbody) return;
 
     // Filter if search query
@@ -1733,9 +1652,9 @@ document.addEventListener('DOMContentLoaded', () => {
              (u.pass && u.pass.toLowerCase().includes(q));
     });
 
-    // Update Top Platform Stat KPI Numbers
-    const totalPlatformQRs = allHistory.length + dynamicLinks.length + 84290;
-    const totalPlatformScans = dynamicLinks.reduce((acc, curr) => acc + (curr.scans || 0), 0) + 14289;
+    // Real KPI Stats for Platform
+    const totalPlatformQRs = allHistory.length + dynamicLinks.length;
+    const totalPlatformScans = scanEvents.length;
     
     const usersStatEl = document.getElementById('admin-stat-users');
     const qrsStatEl = document.getElementById('admin-stat-qrs');
@@ -1754,8 +1673,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     adminTbody.innerHTML = filteredAccounts.map(u => {
-      // Calculate user specific content telemetry
-      const userDynLinks = dynamicLinks.filter(d => d.userId === u.id || d.userEmail === u.email || u.isAdmin);
+      const userDynLinks = dynamicLinks.filter(d => d.userEmail === u.email || (u.isAdmin && d.userEmail === ''));
+      const userQRs = allHistory.filter(h => h.userEmail === u.email);
       const userScans = userDynLinks.reduce((acc, curr) => acc + (curr.scans || 0), 0);
       const regTime = u.registeredAt || '2026-08-31 01:00';
 
@@ -1770,7 +1689,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="px-2 py-1 rounded bg-amber-50 text-amber-900 font-bold border border-amber-200 select-all text-xs">
                 ${u.pass || 'admin12345'}
               </span>
-              <button onclick="navigator.clipboard.writeText('${u.pass || 'admin12345'}'); showToast('Password copied to clipboard!');" class="p-1 hover:text-slate-900 text-slate-400" title="Copy Password">
+              <button onclick="navigator.clipboard.writeText('${u.pass || 'admin12345'}'); showToast('Password copied!');" class="p-1 hover:text-slate-900 text-slate-400" title="Copy Password">
                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
               </button>
             </div>
@@ -1784,7 +1703,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </span>
           </td>
           <td class="p-3.5 text-center font-mono font-bold text-slate-800">
-            ${allHistory.length}
+            ${userQRs.length}
           </td>
           <td class="p-3.5 text-center font-mono font-bold text-cyan-600">
             ${userDynLinks.length}
@@ -1823,9 +1742,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('dossier-user-id').textContent = user.id || 'usr_' + Date.now().toString(36);
         document.getElementById('dossier-user-tier').textContent = user.tier || 'Enterprise User';
 
-        // Populate dynamic links list
+        // Dynamic Links List
         const dynListEl = document.getElementById('dossier-dynamic-list');
-        const userLinks = dynamicLinks.filter(d => d.userEmail === user.email || user.isAdmin);
+        const userLinks = dynamicLinks.filter(d => d.userEmail === user.email);
         
         if (userLinks.length === 0) {
           dynListEl.innerHTML = '<div class="p-3 bg-slate-50 rounded-xl text-slate-400 text-center">No dynamic links created by this user yet.</div>';
@@ -1836,17 +1755,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="font-bold text-slate-900">${l.name}</div>
                 <div class="text-[11px] text-cyan-600 font-mono">${l.shortCode} &rarr; <span class="text-slate-500">${l.targetUrl}</span></div>
               </div>
-              <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-mono text-xs font-bold">${l.scans} views</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-mono text-xs font-bold">${l.scans || 0} views</span>
             </div>
           `).join('');
         }
 
-        // Populate Saved QRs
+        // Saved QRs List
         const qrsListEl = document.getElementById('dossier-qrs-list');
-        if (allHistory.length === 0) {
-          qrsListEl.innerHTML = '<div class="col-span-full p-4 bg-slate-50 rounded-xl text-slate-400 text-center">No saved QR codes in library.</div>';
+        const userSavedQrs = allHistory.filter(h => h.userEmail === user.email);
+
+        if (userSavedQrs.length === 0) {
+          qrsListEl.innerHTML = '<div class="col-span-full p-4 bg-slate-50 rounded-xl text-slate-400 text-center">No saved QR codes in library yet.</div>';
         } else {
-          qrsListEl.innerHTML = allHistory.slice(0, 4).map(h => `
+          qrsListEl.innerHTML = userSavedQrs.map(h => `
             <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3">
               ${h.preview ? `<img src="${h.preview}" class="w-12 h-12 object-contain rounded bg-white p-1 border border-slate-200" alt="QR">` : '<div class="w-12 h-12 bg-white rounded border border-slate-200 flex items-center justify-center text-[9px] text-slate-400">QR</div>'}
               <div class="overflow-hidden min-w-0">
@@ -1895,7 +1816,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeDossierBtn.addEventListener('click', () => adminUserDetailModal.classList.add('hidden'));
   }
 
-  // Admin User Search Input Listener
+  // Admin User Search
   const adminUserSearch = document.getElementById('admin-user-search');
   if (adminUserSearch) {
     adminUserSearch.addEventListener('input', () => {
@@ -1910,7 +1831,8 @@ document.addEventListener('DOMContentLoaded', () => {
         exportedAt: new Date().toISOString(),
         dynamicLinks: getSavedDynamicLinks(),
         history: getSavedHistory(),
-        users: getSavedAccounts()
+        users: getSavedAccounts(),
+        scanEvents: getScanEvents()
       };
       const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
@@ -1928,46 +1850,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // API Key Copy
+  const copyApiKeyBtn = document.getElementById('copy-api-key-btn');
+  if (copyApiKeyBtn) {
+    copyApiKeyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('autoqr_live_99d445d93afa541f38b4f07794312b62f');
+      showToast('API Key copied to clipboard!');
+    });
+  }
+
   // ==========================================
-  // 12. AUTHENTICATION & USER SESSIONS (SIGN IN / SIGN UP)
+  // 11. AUTHENTICATION & USER SESSIONS
   // ==========================================
-  const AUTH_STORAGE_KEY = 'automatix_qr_current_user';
-  const ACCOUNTS_STORAGE_KEY = 'automatix_qr_user_accounts';
-
-  const getSavedAccounts = () => {
-    try {
-      return JSON.parse(localStorage.getItem(ACCOUNTS_STORAGE_KEY)) || [
-        { email: 'moiz@automatixes.com', pass: 'admin12345', name: 'Abdul Moiz (Owner)', role: 'admin', tier: 'Root Admin' }
-      ];
-    } catch {
-      return [];
-    }
-  };
-
-  const setSavedAccounts = (accs) => {
-    localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accs));
-  };
-
-  const getCurrentUser = () => {
-    try {
-      const stored = localStorage.getItem(AUTH_STORAGE_KEY);
-      if (stored) return JSON.parse(stored);
-    } catch {
-      // ignore
-    }
-    // Default guest or active user
-    return null;
-  };
-
-  const setCurrentUser = (user) => {
-    if (user) {
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
-    } else {
-      localStorage.removeItem(AUTH_STORAGE_KEY);
-    }
-    updateAuthUI();
-  };
-
   const updateAuthUI = () => {
     const user = getCurrentUser();
     const guestSection = document.getElementById('auth-guest-section');
@@ -2099,7 +1993,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Check if Admin Credentials (password: admin12345)
+      // Check Admin Credentials
       if (pass === 'admin12345' || email.toLowerCase() === 'moiz@automatixes.com' || (email.toLowerCase().includes('admin') && pass === 'admin12345')) {
         const adminUser = {
           name: 'Abdul Moiz',
@@ -2131,7 +2025,7 @@ document.addEventListener('DOMContentLoaded', () => {
         email,
         role: 'user',
         isAdmin: false,
-        tier: matched ? matched.tier : 'Pro Tier',
+        tier: matched ? matched.tier : 'Free Member',
         id: matched ? matched.id : 'usr_' + Date.now().toString(36)
       };
 
@@ -2141,7 +2035,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Handle Sign Up Submit (Simply Email + Password)
+  // Handle Sign Up Submit
   if (formSignUp) {
     formSignUp.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -2154,7 +2048,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // If signing up with admin password, make admin directly
       const isAdmin = pass === 'admin12345' || email.toLowerCase() === 'moiz@automatixes.com';
       const now = new Date();
       const formattedDate = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
