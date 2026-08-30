@@ -651,12 +651,41 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================
-  // 4. NAVIGATION CONTROLLER
+  // 4. NAVIGATION CONTROLLER (WITH AUTH PROTECTION)
   // ==========================================
   const navButtons = document.querySelectorAll('#main-nav .nav-item');
   const viewPanels = document.querySelectorAll('.view-panel');
+  const PROTECTED_VIEWS = ['history', 'analytics', 'api', 'dynamic'];
 
   const switchView = (targetView) => {
+    const user = getCurrentUser();
+
+    // 1. Guard Admin Tab
+    if (targetView === 'admin') {
+      if (!user || !user.isAdmin) {
+        setAuthTab('signin');
+        authModal.classList.remove('hidden');
+        showToast('Super Admin credentials required (moiz@automatixes.com)', true);
+        return;
+      }
+    }
+
+    // 2. Guard Member-Only Tabs (Saved Library, Dynamic Links, Analytics, API)
+    if (PROTECTED_VIEWS.includes(targetView)) {
+      if (!user) {
+        setAuthTab('signup');
+        authModal.classList.remove('hidden');
+        const viewNames = {
+          history: 'Saved Library',
+          dynamic: 'Dynamic Links',
+          analytics: 'Scan Analytics',
+          api: 'Developer API & Widget'
+        };
+        showToast(`Please sign in or create a free account to access ${viewNames[targetView] || targetView}!`, true);
+        return;
+      }
+    }
+
     state.currentView = targetView;
 
     navButtons.forEach(btn => {
@@ -1018,10 +1047,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Save to Library
+  // Save to Library (Requires Account)
   const saveToLibraryBtn = document.getElementById('save-to-library-btn');
   if (saveToLibraryBtn) {
     saveToLibraryBtn.addEventListener('click', () => {
+      const user = getCurrentUser();
+      if (!user) {
+        setAuthTab('signup');
+        authModal.classList.remove('hidden');
+        showToast('Please sign in or create an account to save QR codes to your private library!', true);
+        return;
+      }
+
       const history = getSavedHistory();
       const canvas = document.querySelector('#qr-canvas canvas');
       const previewDataUrl = canvas ? canvas.toDataURL('image/png') : '';
