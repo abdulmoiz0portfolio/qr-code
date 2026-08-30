@@ -1756,16 +1756,212 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // API Key Copy
-  const copyApiKeyBtn = document.getElementById('copy-api-key-btn');
-  if (copyApiKeyBtn) {
-    copyApiKeyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText('autoqr_live_99d445d93afa541f38b4f07794312b62f');
-      showToast('API Key copied to clipboard!');
+  // ==========================================
+  // 12. AUTHENTICATION & USER SESSIONS (SIGN IN / SIGN UP)
+  // ==========================================
+  const AUTH_STORAGE_KEY = 'automatix_qr_current_user';
+
+  const getCurrentUser = () => {
+    try {
+      const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+      if (stored) return JSON.parse(stored);
+    } catch {
+      // ignore
+    }
+    // Default demo user if first time
+    return {
+      name: 'Abdul Moiz',
+      email: 'moiz@automatixes.com',
+      tier: 'Enterprise VIP',
+      id: 'usr_owner_101'
+    };
+  };
+
+  const setCurrentUser = (user) => {
+    if (user) {
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+    }
+    updateAuthUI();
+  };
+
+  const updateAuthUI = () => {
+    const user = getCurrentUser();
+    const guestSection = document.getElementById('auth-guest-section');
+    const userSection = document.getElementById('auth-user-section');
+
+    if (user) {
+      if (guestSection) guestSection.classList.add('hidden');
+      if (userSection) userSection.classList.remove('hidden');
+
+      const initialEl = document.getElementById('user-avatar-initial');
+      const nameEl = document.getElementById('user-display-name');
+      const tierEl = document.getElementById('user-display-tier');
+      const menuEmailEl = document.getElementById('menu-user-email');
+
+      if (initialEl) initialEl.textContent = (user.name || user.email || 'U')[0].toUpperCase();
+      if (nameEl) nameEl.textContent = user.name || user.email.split('@')[0];
+      if (tierEl) tierEl.textContent = user.tier || 'Pro Tier';
+      if (menuEmailEl) menuEmailEl.textContent = user.email;
+    } else {
+      if (guestSection) guestSection.classList.remove('hidden');
+      if (userSection) userSection.classList.add('hidden');
+    }
+    if (window.lucide) lucide.createIcons();
+  };
+
+  // Auth Modal Elements
+  const authModal = document.getElementById('auth-modal');
+  const closeAuthModalBtn = document.getElementById('close-auth-modal');
+  const headerSignInBtn = document.getElementById('header-signin-btn');
+  const headerSignUpBtn = document.getElementById('header-signup-btn');
+  const authTabSignIn = document.getElementById('auth-tab-signin');
+  const authTabSignUp = document.getElementById('auth-tab-signup');
+  const formSignIn = document.getElementById('form-signin');
+  const formSignUp = document.getElementById('form-signup');
+  const authAlert = document.getElementById('auth-alert');
+  const userMenuBtn = document.getElementById('user-menu-btn');
+  const userDropdownMenu = document.getElementById('user-dropdown-menu');
+  const signOutBtn = document.getElementById('signout-btn');
+
+  const setAuthTab = (tab) => {
+    if (authAlert) authAlert.classList.add('hidden');
+    if (tab === 'signin') {
+      authTabSignIn.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+      authTabSignIn.classList.remove('text-slate-500');
+      authTabSignUp.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+      authTabSignUp.classList.add('text-slate-500');
+      formSignIn.classList.remove('hidden');
+      formSignUp.classList.add('hidden');
+    } else {
+      authTabSignUp.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+      authTabSignUp.classList.remove('text-slate-500');
+      authTabSignIn.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+      authTabSignIn.classList.add('text-slate-500');
+      formSignUp.classList.remove('hidden');
+      formSignIn.classList.add('hidden');
+    }
+  };
+
+  if (headerSignInBtn) {
+    headerSignInBtn.addEventListener('click', () => {
+      setAuthTab('signin');
+      authModal.classList.remove('hidden');
+    });
+  }
+
+  if (headerSignUpBtn) {
+    headerSignUpBtn.addEventListener('click', () => {
+      setAuthTab('signup');
+      authModal.classList.remove('hidden');
+    });
+  }
+
+  if (authTabSignIn) authTabSignIn.addEventListener('click', () => setAuthTab('signin'));
+  if (authTabSignUp) authTabSignUp.addEventListener('click', () => setAuthTab('signup'));
+  if (closeAuthModalBtn) closeAuthModalBtn.addEventListener('click', () => authModal.classList.add('hidden'));
+
+  // User Profile Dropdown Menu
+  if (userMenuBtn && userDropdownMenu) {
+    userMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdownMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', () => userDropdownMenu.classList.add('hidden'));
+
+    document.querySelectorAll('.user-menu-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetView = btn.getAttribute('data-view');
+        userDropdownMenu.classList.add('hidden');
+        if (targetView) switchView(targetView);
+      });
+    });
+  }
+
+  if (signOutBtn) {
+    signOutBtn.addEventListener('click', () => {
+      setCurrentUser(null);
+      userDropdownMenu.classList.add('hidden');
+      showToast('Signed out successfully');
+    });
+  }
+
+  // Handle Sign In Submit
+  if (formSignIn) {
+    formSignIn.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value.trim();
+      const pass = document.getElementById('signin-password').value.trim();
+
+      if (!email || !pass) {
+        authAlert.textContent = 'Please enter both email and password';
+        authAlert.classList.remove('hidden');
+        return;
+      }
+
+      const user = {
+        name: email.split('@')[0],
+        email,
+        tier: 'Enterprise VIP',
+        id: 'usr_' + Date.now().toString(36)
+      };
+
+      setCurrentUser(user);
+      authModal.classList.add('hidden');
+      showToast(`Welcome back, ${user.name}!`);
+    });
+  }
+
+  // Handle Sign Up Submit
+  if (formSignUp) {
+    formSignUp.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const pass = document.getElementById('signup-password').value.trim();
+
+      if (!name || !email || !pass) {
+        authAlert.textContent = 'Please fill out all required fields';
+        authAlert.classList.remove('hidden');
+        return;
+      }
+
+      if (pass.length < 6) {
+        authAlert.textContent = 'Password must be at least 6 characters long';
+        authAlert.classList.remove('hidden');
+        return;
+      }
+
+      const newUser = {
+        name,
+        email,
+        tier: 'Enterprise Free Trial',
+        id: 'usr_' + Date.now().toString(36)
+      };
+
+      // Add to admin users list
+      const adminUsers = getSavedAdminUsers();
+      adminUsers.unshift({
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        tier: newUser.tier,
+        dynamicCount: 0,
+        scans: 0,
+        status: 'Active'
+      });
+      localStorage.setItem(STORAGE_KEYS.ADMIN_USERS, JSON.stringify(adminUsers));
+
+      setCurrentUser(newUser);
+      authModal.classList.add('hidden');
+      showToast(`Account created! Welcome to AutomatixQR, ${name}!`);
     });
   }
 
   // Initial Startup
+  updateAuthUI();
   applyLanguage(currentLang);
   updateHistoryBadge();
   updateQRCode();

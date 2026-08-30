@@ -125,15 +125,49 @@
           </div>
         </div>
 
-        <!-- Back to Main Site Link -->
-        <a href="https://www.automatixes.com/" target="_blank" class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200/80 border border-slate-200 rounded-xl transition">
-          <span>automatixes.com</span>
-          <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400"></i>
-        </a>
+        <!-- Auth Area: Sign In / Sign Up or Logged in User Profile -->
+        <div id="auth-guest-section" class="flex items-center gap-2">
+          <button id="header-signin-btn" class="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200/80 border border-slate-200 rounded-xl transition">
+            Sign In
+          </button>
+          <button id="header-signup-btn" class="px-3.5 py-1.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm shadow-indigo-600/20 transition">
+            Sign Up
+          </button>
+        </div>
+
+        <div id="auth-user-section" class="hidden relative">
+          <button id="user-menu-btn" class="flex items-center gap-2.5 p-1 pl-2.5 pr-3 bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 rounded-xl transition">
+            <div class="w-6 h-6 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center font-mono uppercase" id="user-avatar-initial">
+              M
+            </div>
+            <div class="text-left hidden sm:block">
+              <div class="text-xs font-bold text-slate-800 leading-tight" id="user-display-name">Abdul Moiz</div>
+              <div class="text-[10px] text-indigo-600 font-semibold" id="user-display-tier">Enterprise</div>
+            </div>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+          </button>
+
+          <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-52 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-50 text-xs">
+            <div class="px-3.5 py-2 border-b border-slate-100">
+              <div class="font-bold text-slate-800" id="menu-user-email">moiz@automatixes.com</div>
+              <div class="text-[10px] text-slate-400 font-mono">ID: usr_live_8902</div>
+            </div>
+            <button data-view="history" class="user-menu-item w-full px-3.5 py-2 text-left flex items-center gap-2 hover:bg-indigo-50 text-slate-700">
+              <i data-lucide="folder-clock" class="w-3.5 h-3.5 text-emerald-600"></i> My Saved QRs
+            </button>
+            <button data-view="admin" class="user-menu-item w-full px-3.5 py-2 text-left flex items-center gap-2 hover:bg-indigo-50 text-slate-700">
+              <i data-lucide="shield" class="w-3.5 h-3.5 text-indigo-600"></i> Admin Console
+            </button>
+            <div class="border-t border-slate-100 my-1"></div>
+            <button id="signout-btn" class="w-full px-3.5 py-2 text-left flex items-center gap-2 hover:bg-rose-50 text-rose-600 font-semibold">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Sign Out
+            </button>
+          </div>
+        </div>
 
         <!-- New QR Quick Action -->
-        <button id="quick-create-btn" class="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center gap-1.5 active:scale-95">
-          <i data-lucide="plus" class="w-4 h-4"></i>
+        <button id="quick-create-btn" class="px-3.5 py-1.5 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl shadow-sm transition-all flex items-center gap-1.5 active:scale-95">
+          <i data-lucide="plus" class="w-3.5 h-3.5"></i>
           <span data-i18n="new_qr">New QR</span>
         </button>
 
@@ -1092,6 +1126,98 @@ qrCode.download({ extension: "png" });</code></pre>
           <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
           Test Redirect
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Authentication (Sign In & Sign Up) -->
+  <div id="auth-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
+      
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">
+            <i data-lucide="qr-code" class="w-4 h-4"></i>
+          </div>
+          <span class="font-bold font-heading text-slate-900">Automatix<span class="text-indigo-600">QR</span></span>
+        </div>
+        <button id="close-auth-modal" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Auth Tabs: Sign In / Sign Up -->
+      <div class="flex rounded-xl bg-slate-100 p-1">
+        <button id="auth-tab-signin" class="flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-slate-900 shadow-sm">
+          Sign In
+        </button>
+        <button id="auth-tab-signup" class="flex-1 py-2 text-xs font-bold rounded-lg transition text-slate-500 hover:text-slate-900">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Form Error / Info Message -->
+      <div id="auth-alert" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"></div>
+
+      <!-- Sign In Form -->
+      <form id="form-signin" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Email Address</label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+            <input type="email" id="signin-email" placeholder="you@company.com" value="demo@automatixes.com" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-slate-700 font-semibold">Password</label>
+            <a href="#" onclick="alert('Demo reset link: Use any password to sign in!'); return false;" class="text-[11px] text-indigo-600 hover:underline">Forgot?</a>
+          </div>
+          <div class="relative">
+            <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+            <input type="password" id="signin-password" placeholder="••••••••" value="password123" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md shadow-indigo-600/25 transition">
+          Sign In to AutomatixQR
+        </button>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form id="form-signup" class="space-y-3.5 text-xs hidden">
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Full Name</label>
+          <div class="relative">
+            <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+            <input type="text" id="signup-name" placeholder="John Doe" class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Work Email Address</label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+            <input type="email" id="signup-email" placeholder="john@domain.com" class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Password</label>
+          <div class="relative">
+            <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+            <input type="password" id="signup-password" placeholder="At least 6 characters" class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md shadow-indigo-600/25 transition">
+          Create Free Account
+        </button>
+      </form>
+
+      <div class="text-center text-[11px] text-slate-400">
+        By continuing, you agree to Automatixes AI Terms & Privacy Policy.
       </div>
     </div>
   </div>
