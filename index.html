@@ -956,32 +956,39 @@ qrCode.download({ extension: "png" });</code></pre>
           </div>
         </div>
 
-        <!-- User Accounts & Subscription Manager -->
+        <!-- User Accounts, Passwords & Telemetry Control -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h3 class="text-sm font-bold text-slate-900">User Subscriptions & Tenant Control</h3>
-              <p class="text-xs text-slate-500">Manage client accounts, adjust QR quotas, and assign Enterprise roles.</p>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm font-bold text-slate-900">User Directory & Credentials Telemetry</h3>
+                <span class="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-[10px] font-bold border border-indigo-200">
+                  Live DB
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Complete real-time records: Email, Password, Registration Time, Created QRs, and Dynamic Links.</p>
             </div>
             <div class="flex items-center gap-2">
-              <input type="text" id="admin-user-search" placeholder="Search user by email or name..." class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-indigo-500 w-60">
+              <input type="text" id="admin-user-search" placeholder="Search by email, name or password..." class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-indigo-500 w-64">
             </div>
           </div>
 
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px]">
+              <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
                 <tr>
-                  <th class="p-3">User / Organization</th>
-                  <th class="p-3">Plan Tier</th>
-                  <th class="p-3">Dynamic QRs</th>
-                  <th class="p-3">Monthly Scans</th>
-                  <th class="p-3">Status</th>
-                  <th class="p-3 text-right">Quick Action</th>
+                  <th class="p-3.5">User Details</th>
+                  <th class="p-3.5">Account Password</th>
+                  <th class="p-3.5">Registration Time</th>
+                  <th class="p-3.5">Plan Tier</th>
+                  <th class="p-3.5 text-center">Saved QRs</th>
+                  <th class="p-3.5 text-center">Dynamic Links</th>
+                  <th class="p-3.5 text-center">Total Views</th>
+                  <th class="p-3.5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody id="admin-users-tbody" class="divide-y divide-slate-100 font-medium">
-                <!-- Populated by JS -->
+                <!-- Populated dynamically with full user telemetry -->
               </tbody>
             </table>
           </div>
@@ -1210,6 +1217,68 @@ qrCode.download({ extension: "png" });</code></pre>
 
       <div class="text-center text-[11px] text-slate-400">
         Protected by Automatixes Enterprise Cloud Security.
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Admin User Full Activity Dossier -->
+  <div id="admin-user-detail-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 max-w-2xl w-full shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-sm font-bold text-slate-900" id="dossier-user-title">User Activity & Credentials Dossier</h3>
+            <span id="dossier-user-tier" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700">Pro</span>
+          </div>
+          <p class="text-xs text-slate-500 font-mono mt-0.5" id="dossier-user-email">user@domain.com</p>
+        </div>
+        <button id="close-dossier-modal" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Credentials & Meta Card -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200">
+        <div>
+          <span class="text-slate-500 font-medium block">Plain Password:</span>
+          <span id="dossier-user-pass" class="font-mono font-bold text-indigo-700 select-all text-xs">••••••••</span>
+        </div>
+        <div>
+          <span class="text-slate-500 font-medium block">Registered At:</span>
+          <span id="dossier-user-created" class="font-mono text-slate-800 font-semibold text-xs">2026-08-31 01:20</span>
+        </div>
+        <div>
+          <span class="text-slate-500 font-medium block">Account ID:</span>
+          <span id="dossier-user-id" class="font-mono text-slate-500 text-xs">usr_891238</span>
+        </div>
+      </div>
+
+      <!-- Created Dynamic Links Section -->
+      <div class="space-y-2">
+        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-600"></i>
+          Created Dynamic Links & Views
+        </h4>
+        <div id="dossier-dynamic-list" class="space-y-2 max-h-40 overflow-y-auto pr-1 text-xs font-medium">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Created QR Codes Library Section -->
+      <div class="space-y-2">
+        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+          <i data-lucide="folder-clock" class="w-3.5 h-3.5 text-emerald-600"></i>
+          Saved QR Codes & Payloads
+        </h4>
+        <div id="dossier-qrs-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-56 overflow-y-auto pr-1 text-xs">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+        <button id="close-dossier-btn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-semibold">
+          Close Dossier
+        </button>
       </div>
     </div>
   </div>

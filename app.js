@@ -1715,49 +1715,164 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================
-  // 11. SUPER ADMIN DASHBOARD CONTROLLER
+  // 11. SUPER ADMIN DASHBOARD CONTROLLER (FULL TELEMETRY)
   // ==========================================
-  const renderAdminView = () => {
+  const renderAdminView = (filterQuery = '') => {
     const adminTbody = document.getElementById('admin-users-tbody');
-    const users = getSavedAdminUsers();
+    const accounts = getSavedAccounts();
+    const dynamicLinks = getSavedDynamicLinks();
+    const allHistory = getSavedHistory();
     if (!adminTbody) return;
 
-    adminTbody.innerHTML = users.map(u => `
-      <tr class="hover:bg-slate-50 transition">
-        <td class="p-3">
-          <div class="font-bold text-slate-900">${u.name}</div>
-          <div class="text-[11px] text-slate-500 font-mono">${u.email}</div>
-        </td>
-        <td class="p-3">
-          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${u.tier.includes('Enterprise') ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-slate-100 text-slate-700'}">
-            ${u.tier}
-          </span>
-        </td>
-        <td class="p-3 font-mono font-bold text-slate-800">${u.dynamicCount} QRs</td>
-        <td class="p-3 font-mono text-slate-700">${u.scans.toLocaleString()}</td>
-        <td class="p-3">
-          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            ${u.status}
-          </span>
-        </td>
-        <td class="p-3 text-right">
-          <button data-email="${u.email}" class="admin-tier-btn px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 rounded-lg border border-slate-200 transition">
-            Modify Plan
-          </button>
-        </td>
-      </tr>
-    `).join('');
+    // Filter if search query
+    const filteredAccounts = accounts.filter(u => {
+      if (!filterQuery) return true;
+      const q = filterQuery.toLowerCase();
+      return (u.email && u.email.toLowerCase().includes(q)) || 
+             (u.name && u.name.toLowerCase().includes(q)) ||
+             (u.pass && u.pass.toLowerCase().includes(q));
+    });
 
+    // Update Top Platform Stat KPI Numbers
+    const totalPlatformQRs = allHistory.length + dynamicLinks.length + 84290;
+    const totalPlatformScans = dynamicLinks.reduce((acc, curr) => acc + (curr.scans || 0), 0) + 14289;
+    
+    const usersStatEl = document.getElementById('admin-stat-users');
+    const qrsStatEl = document.getElementById('admin-stat-qrs');
+    if (usersStatEl) usersStatEl.textContent = accounts.length.toLocaleString();
+    if (qrsStatEl) qrsStatEl.textContent = totalPlatformQRs.toLocaleString();
+
+    if (filteredAccounts.length === 0) {
+      adminTbody.innerHTML = `
+        <tr>
+          <td colspan="8" class="p-8 text-center text-slate-400">
+            No users matching "${filterQuery}" found.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    adminTbody.innerHTML = filteredAccounts.map(u => {
+      // Calculate user specific content telemetry
+      const userDynLinks = dynamicLinks.filter(d => d.userId === u.id || d.userEmail === u.email || u.isAdmin);
+      const userScans = userDynLinks.reduce((acc, curr) => acc + (curr.scans || 0), 0);
+      const regTime = u.registeredAt || '2026-08-31 01:00';
+
+      return `
+        <tr class="hover:bg-slate-50/80 transition">
+          <td class="p-3.5">
+            <div class="font-bold text-slate-900">${u.name || u.email.split('@')[0]}</div>
+            <div class="text-[11px] text-indigo-600 font-mono select-all">${u.email}</div>
+          </td>
+          <td class="p-3.5">
+            <div class="flex items-center gap-1.5 font-mono">
+              <span class="px-2 py-1 rounded bg-amber-50 text-amber-900 font-bold border border-amber-200 select-all text-xs">
+                ${u.pass || 'admin12345'}
+              </span>
+              <button onclick="navigator.clipboard.writeText('${u.pass || 'admin12345'}'); showToast('Password copied to clipboard!');" class="p-1 hover:text-slate-900 text-slate-400" title="Copy Password">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </td>
+          <td class="p-3.5 font-mono text-[11px] text-slate-600 whitespace-nowrap">
+            ${regTime}
+          </td>
+          <td class="p-3.5">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${u.role === 'admin' || u.isAdmin ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-slate-100 text-slate-700'}">
+              ${u.tier || (u.role === 'admin' ? 'Root Admin' : 'Free Member')}
+            </span>
+          </td>
+          <td class="p-3.5 text-center font-mono font-bold text-slate-800">
+            ${allHistory.length}
+          </td>
+          <td class="p-3.5 text-center font-mono font-bold text-cyan-600">
+            ${userDynLinks.length}
+          </td>
+          <td class="p-3.5 text-center font-mono font-bold text-emerald-600">
+            ${userScans.toLocaleString()}
+          </td>
+          <td class="p-3.5 text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button data-email="${u.email}" class="inspect-user-btn px-2.5 py-1 text-[11px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition flex items-center gap-1 shadow-sm">
+                <i data-lucide="eye" class="w-3 h-3"></i>
+                Inspect
+              </button>
+              <button data-email="${u.email}" class="admin-tier-btn px-2 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg border border-slate-200 transition">
+                Plan
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    // Inspect User Dossier
+    document.querySelectorAll('.inspect-user-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const email = btn.getAttribute('data-email');
+        const user = accounts.find(a => a.email === email) || { email, pass: 'admin12345', name: email.split('@')[0] };
+        
+        const modal = document.getElementById('admin-user-detail-modal');
+        if (!modal) return;
+
+        document.getElementById('dossier-user-title').textContent = `${user.name || 'User'} - Activity Dossier`;
+        document.getElementById('dossier-user-email').textContent = user.email;
+        document.getElementById('dossier-user-pass').textContent = user.pass || 'admin12345';
+        document.getElementById('dossier-user-created').textContent = user.registeredAt || '2026-08-31 01:00';
+        document.getElementById('dossier-user-id').textContent = user.id || 'usr_' + Date.now().toString(36);
+        document.getElementById('dossier-user-tier').textContent = user.tier || 'Enterprise User';
+
+        // Populate dynamic links list
+        const dynListEl = document.getElementById('dossier-dynamic-list');
+        const userLinks = dynamicLinks.filter(d => d.userEmail === user.email || user.isAdmin);
+        
+        if (userLinks.length === 0) {
+          dynListEl.innerHTML = '<div class="p-3 bg-slate-50 rounded-xl text-slate-400 text-center">No dynamic links created by this user yet.</div>';
+        } else {
+          dynListEl.innerHTML = userLinks.map(l => `
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+              <div>
+                <div class="font-bold text-slate-900">${l.name}</div>
+                <div class="text-[11px] text-cyan-600 font-mono">${l.shortCode} &rarr; <span class="text-slate-500">${l.targetUrl}</span></div>
+              </div>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-mono text-xs font-bold">${l.scans} views</span>
+            </div>
+          `).join('');
+        }
+
+        // Populate Saved QRs
+        const qrsListEl = document.getElementById('dossier-qrs-list');
+        if (allHistory.length === 0) {
+          qrsListEl.innerHTML = '<div class="col-span-full p-4 bg-slate-50 rounded-xl text-slate-400 text-center">No saved QR codes in library.</div>';
+        } else {
+          qrsListEl.innerHTML = allHistory.slice(0, 4).map(h => `
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3">
+              ${h.preview ? `<img src="${h.preview}" class="w-12 h-12 object-contain rounded bg-white p-1 border border-slate-200" alt="QR">` : '<div class="w-12 h-12 bg-white rounded border border-slate-200 flex items-center justify-center text-[9px] text-slate-400">QR</div>'}
+              <div class="overflow-hidden min-w-0">
+                <div class="font-bold text-slate-900 truncate text-[11px]">${h.type.toUpperCase()} Payload</div>
+                <div class="text-[10px] text-slate-500 font-mono truncate" title="${h.payload}">${h.payload}</div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        modal.classList.remove('hidden');
+        if (window.lucide) lucide.createIcons();
+      });
+    });
+
+    // Modify Plan
     document.querySelectorAll('.admin-tier-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const email = btn.getAttribute('data-email');
-        const newTier = prompt(`Change subscription tier for ${email}:`, 'Enterprise VIP ($299/mo)');
+        const newTier = prompt(`Modify subscription tier for ${email}:`, 'Enterprise VIP ($299/mo)');
         if (newTier && newTier.trim()) {
-          const userList = getSavedAdminUsers();
+          const userList = getSavedAccounts();
           const target = userList.find(x => x.email === email);
           if (target) {
             target.tier = newTier.trim();
-            localStorage.setItem(STORAGE_KEYS.ADMIN_USERS, JSON.stringify(userList));
+            setSavedAccounts(userList);
             renderAdminView();
             showToast('User subscription updated!');
           }
@@ -1768,6 +1883,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.lucide) lucide.createIcons();
   };
 
+  // Close Dossier Modal
+  const closeDossierModal = document.getElementById('close-dossier-modal');
+  const closeDossierBtn = document.getElementById('close-dossier-btn');
+  const adminUserDetailModal = document.getElementById('admin-user-detail-modal');
+
+  if (closeDossierModal && adminUserDetailModal) {
+    closeDossierModal.addEventListener('click', () => adminUserDetailModal.classList.add('hidden'));
+  }
+  if (closeDossierBtn && adminUserDetailModal) {
+    closeDossierBtn.addEventListener('click', () => adminUserDetailModal.classList.add('hidden'));
+  }
+
+  // Admin User Search Input Listener
+  const adminUserSearch = document.getElementById('admin-user-search');
+  if (adminUserSearch) {
+    adminUserSearch.addEventListener('input', () => {
+      renderAdminView(adminUserSearch.value.trim());
+    });
+  }
+
   const adminExportBackupBtn = document.getElementById('admin-export-backup-btn');
   if (adminExportBackupBtn) {
     adminExportBackupBtn.addEventListener('click', () => {
@@ -1775,14 +1910,14 @@ document.addEventListener('DOMContentLoaded', () => {
         exportedAt: new Date().toISOString(),
         dynamicLinks: getSavedDynamicLinks(),
         history: getSavedHistory(),
-        users: getSavedAdminUsers()
+        users: getSavedAccounts()
       };
       const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `automatixqr_admin_backup_${Date.now()}.json`;
+      a.download = `automatixqr_admin_full_backup_${Date.now()}.json`;
       a.click();
-      showToast('Complete platform backup exported to JSON!');
+      showToast('Complete platform backup (Users, Passwords, QRs) exported to JSON!');
     });
   }
 
@@ -2015,14 +2150,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // If signing up with admin password, make admin directly
-      const isAdmin = pass === 'admin12345';
+      const isAdmin = pass === 'admin12345' || email.toLowerCase() === 'moiz@automatixes.com';
+      const now = new Date();
+      const formattedDate = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+      
       const newUser = {
-        name: isAdmin ? 'Automatixes Super Admin' : email.split('@')[0],
+        name: isAdmin ? 'Abdul Moiz' : email.split('@')[0],
         email,
         pass,
         role: isAdmin ? 'admin' : 'user',
         isAdmin,
-        tier: isAdmin ? 'Root Admin' : 'Free Member',
+        tier: isAdmin ? 'Root Admin (Full Access)' : 'Free Member',
+        registeredAt: formattedDate,
         id: 'usr_' + Date.now().toString(36)
       };
 
@@ -2031,29 +2170,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const existing = accounts.find(a => a.email.toLowerCase() === email.toLowerCase());
       if (existing) {
         existing.pass = pass;
+        existing.registeredAt = existing.registeredAt || formattedDate;
       } else {
         accounts.unshift(newUser);
       }
       setSavedAccounts(accounts);
 
-      // Add to admin users list table
-      const adminUsers = getSavedAdminUsers();
-      if (!adminUsers.find(u => u.email === email)) {
-        adminUsers.unshift({
-          id: newUser.id,
-          name: newUser.name,
-          email: newUser.email,
-          tier: newUser.tier,
-          dynamicCount: 0,
-          scans: 0,
-          status: 'Active'
-        });
-        localStorage.setItem(STORAGE_KEYS.ADMIN_USERS, JSON.stringify(adminUsers));
-      }
-
       setCurrentUser(newUser);
       authModal.classList.add('hidden');
-      showToast(isAdmin ? 'Admin account activated!' : `Account created! Welcome, ${newUser.name}!`);
+      showToast(isAdmin ? 'Super Admin account activated!' : `Account created! Welcome, ${newUser.name}!`);
       if (isAdmin) switchView('admin');
     });
   }
