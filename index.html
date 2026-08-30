@@ -80,8 +80,8 @@
       <!-- Right Header Actions -->
       <div class="flex items-center gap-3">
         
-        <!-- Admin Panel Switcher Button -->
-        <button id="header-admin-btn" class="px-3 py-1.5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white hover:from-slate-800 hover:to-indigo-900 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+        <!-- Admin Panel Switcher Button (Only visible for Admin) -->
+        <button id="header-admin-btn" class="hidden px-3 py-1.5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white hover:from-slate-800 hover:to-indigo-900 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
           <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400"></i>
           <span>Super Admin</span>
         </button>
@@ -227,8 +227,8 @@
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-mono">Dev</span>
           </button>
 
-          <!-- Admin Control Room Link in Nav -->
-          <div class="pt-2 border-t border-slate-100">
+          <!-- Admin Control Room Link in Nav (Only visible for Admin) -->
+          <div id="sidebar-admin-container" class="hidden pt-2 border-t border-slate-100">
             <button data-view="admin" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-indigo-900 bg-indigo-50/50 hover:bg-indigo-100/60 border border-indigo-100 transition-all">
               <i data-lucide="shield-check" class="w-4 h-4 text-indigo-600"></i>
               <span class="flex-1 text-left">Admin Console</span>

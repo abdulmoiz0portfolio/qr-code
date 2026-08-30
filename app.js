@@ -1972,6 +1972,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = getCurrentUser();
     const guestSection = document.getElementById('auth-guest-section');
     const userSection = document.getElementById('auth-user-section');
+    const headerAdminBtn = document.getElementById('header-admin-btn');
+    const sidebarAdminEl = document.getElementById('sidebar-admin-container');
 
     if (user) {
       if (guestSection) guestSection.classList.add('hidden');
@@ -1987,19 +1989,22 @@ document.addEventListener('DOMContentLoaded', () => {
       if (tierEl) tierEl.textContent = user.tier || (user.isAdmin ? 'Root Admin' : 'Free Member');
       if (menuEmailEl) menuEmailEl.textContent = user.email;
 
-      // Highlight admin badge if admin
-      const headerAdminBtn = document.getElementById('header-admin-btn');
-      if (headerAdminBtn) {
-        if (user.isAdmin) {
-          headerAdminBtn.classList.remove('opacity-70');
-          headerAdminBtn.innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i><span>Root Admin</span>';
-        } else {
-          headerAdminBtn.innerHTML = '<i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400"></i><span>Super Admin</span>';
+      // Show Admin button ONLY if user is verified Super Admin
+      if (user.isAdmin) {
+        if (headerAdminBtn) {
+          headerAdminBtn.classList.remove('hidden');
+          headerAdminBtn.innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i><span>Super Admin</span>';
         }
+        if (sidebarAdminEl) sidebarAdminEl.classList.remove('hidden');
+      } else {
+        if (headerAdminBtn) headerAdminBtn.classList.add('hidden');
+        if (sidebarAdminEl) sidebarAdminEl.classList.add('hidden');
       }
     } else {
       if (guestSection) guestSection.classList.remove('hidden');
       if (userSection) userSection.classList.add('hidden');
+      if (headerAdminBtn) headerAdminBtn.classList.add('hidden');
+      if (sidebarAdminEl) sidebarAdminEl.classList.add('hidden');
     }
     if (window.lucide) lucide.createIcons();
   };
