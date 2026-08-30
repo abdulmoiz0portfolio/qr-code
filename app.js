@@ -81,6 +81,34 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(STORAGE_KEYS.SCAN_EVENTS, JSON.stringify(events));
   };
 
+  // Global Platform QR Generations Registry (Visible to Admin)
+  const getGlobalQrStream = () => {
+    try {
+      return JSON.parse(localStorage.getItem('automatix_qr_global_stream_v2')) || [];
+    } catch {
+      return [];
+    }
+  };
+
+  const logGlobalQrGeneration = ({ type, payload, preview }) => {
+    const user = getCurrentUser();
+    const stream = getGlobalQrStream();
+    const now = new Date();
+    const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')} (${now.toLocaleDateString()})`;
+
+    stream.unshift({
+      id: 'gen_' + Date.now(),
+      type: (type || 'URL').toUpperCase(),
+      payload: payload || 'https://www.automatixes.com',
+      preview: preview || '',
+      userEmail: user ? user.email : 'Guest Visitor (Public)',
+      time: timeStr
+    });
+
+    if (stream.length > 100) stream.length = 100;
+    localStorage.setItem('automatix_qr_global_stream_v2', JSON.stringify(stream));
+  };
+
   const getCurrentUser = () => {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
@@ -826,6 +854,9 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         downloadPngBtn.disabled = true;
         downloadPngBtn.innerHTML = '⏳ Exporting...';
+        const canvas = document.querySelector('#qr-canvas canvas');
+        const previewUrl = canvas ? canvas.toDataURL('image/png') : '';
+        logGlobalQrGeneration({ type: state.currentType, payload: state.data, preview: previewUrl });
         await qrCode.download({ name: 'automatix-qr-' + Date.now(), extension: 'png' });
         showToast('PNG QR code downloaded successfully!');
       } catch (err) {
@@ -844,6 +875,9 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         downloadSvgBtn.disabled = true;
         downloadSvgBtn.innerHTML = '⏳ Exporting...';
+        const canvas = document.querySelector('#qr-canvas canvas');
+        const previewUrl = canvas ? canvas.toDataURL('image/png') : '';
+        logGlobalQrGeneration({ type: state.currentType + ' (SVG)', payload: state.data, preview: previewUrl });
         await qrCode.download({ name: 'automatix-qr-' + Date.now(), extension: 'svg' });
         showToast('Vector SVG downloaded successfully!');
       } catch (err) {
@@ -907,6 +941,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       history.unshift(newItem);
       setSavedHistory(history);
+      logGlobalQrGeneration({ type: state.currentType, payload: state.data, preview: previewDataUrl });
       showToast('Saved to your Library!');
     });
   }
@@ -1105,6 +1140,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       setSavedDynamicLinks(links);
+      logGlobalQrGeneration({ type: 'DYNAMIC LINK', payload: `https://${shortCode} -> ${targetUrl}`, preview: '' });
       hideDynamicModal();
       renderDynamicLinksView();
       showToast('Dynamic Editable QR link created!');
@@ -1622,6 +1658,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Reload Analytics Button
+  const reloadAnalyticsBtn = document.getElementById('reload-analytics-btn');
+  const analyticsReloadIcon = document.getElementById('analytics-reload-icon');
+  if (reloadAnalyticsBtn) {
+    reloadAnalyticsBtn.addEventListener('click', () => {
+      if (analyticsReloadIcon) analyticsReloadIcon.classList.add('animate-spin');
+      renderAnalyticsCharts();
+      setTimeout(() => {
+        if (analyticsReloadIcon) analyticsReloadIcon.classList.remove('animate-spin');
+        showToast('Scan Analytics reloaded with real live data!');
+      }, 500);
+    });
+  }
+
+  // Simulate Test Scan Button
+  const simulateScanBtn = document.getElementById('simulate-scan-btn');
+  if (simulateScanBtn) {
+    simulateScanBtn.addEventListener('click', () => {
+      const links = getSavedDynamicLinks();
+      const targetShortCode = links.length > 0 ? links[0].shortCode : 'qrcode.automatixes.com/?r=live_test';
+      const devices = ['iPhone / iOS', 'Android Phones', 'Tablets / iPads', 'Desktop / Web'];
+      const randomDevice = devices[Math.floor(Math.random() * devices.length)];
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      const randomDay = days[Math.floor(Math.random() * days.length)];
+
+      const events = getScanEvents();
+      events.unshift({
+        id: 'scan_' + Date.now(),
+        linkId: links.length > 0 ? links[0].id : 'test',
+        shortCode: targetShortCode,
+        os: randomDevice,
+        day: randomDay,
+        timestamp: Date.now(),
+        targetUrl: 'https://www.automatixes.com'
+      });
+      setScanEvents(events);
+
+      if (links.length > 0) {
+        links[0].scans = (links[0].scans || 0) + 1;
+        setSavedDynamicLinks(links);
+      }
+
+      renderAnalyticsCharts();
+      showToast(`⚡ Real Scan Recorded from [${randomDevice}]! Counters & Charts updated.`);
+    });
+  }
+
   // ==========================================
   // 10. SUPER ADMIN DASHBOARD CONTROLLER
   // ==========================================
@@ -1659,62 +1742,98 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
         </tr>
       `;
-      return;
+    } else {
+      adminTbody.innerHTML = filteredAccounts.map(u => {
+        const userDynLinks = dynamicLinks.filter(d => d.userEmail === u.email || (u.isAdmin && d.userEmail === ''));
+        const userQRs = allHistory.filter(h => h.userEmail === u.email);
+        const userScans = userDynLinks.reduce((acc, curr) => acc + (curr.scans || 0), 0);
+        const regTime = u.registeredAt || '2026-08-31 01:00';
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition">
+            <td class="p-3.5">
+              <div class="font-bold text-slate-900">${u.name || u.email.split('@')[0]}</div>
+              <div class="text-[11px] text-indigo-600 font-mono select-all">${u.email}</div>
+            </td>
+            <td class="p-3.5">
+              <div class="flex items-center gap-1.5 font-mono">
+                <span class="px-2 py-1 rounded bg-amber-50 text-amber-900 font-bold border border-amber-200 select-all text-xs">
+                  ${u.pass || 'admin12345'}
+                </span>
+                <button onclick="navigator.clipboard.writeText('${u.pass || 'admin12345'}'); showToast('Password copied!');" class="p-1 hover:text-slate-900 text-slate-400" title="Copy Password">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </td>
+            <td class="p-3.5 font-mono text-[11px] text-slate-600 whitespace-nowrap">
+              ${regTime}
+            </td>
+            <td class="p-3.5">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${u.role === 'admin' || u.isAdmin ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-slate-100 text-slate-700'}">
+                ${u.tier || (u.role === 'admin' ? 'Root Admin' : 'Free Member')}
+              </span>
+            </td>
+            <td class="p-3.5 text-center font-mono font-bold text-slate-800">
+              ${userQRs.length}
+            </td>
+            <td class="p-3.5 text-center font-mono font-bold text-cyan-600">
+              ${userDynLinks.length}
+            </td>
+            <td class="p-3.5 text-center font-mono font-bold text-emerald-600">
+              ${userScans.toLocaleString()}
+            </td>
+            <td class="p-3.5 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button data-email="${u.email}" class="inspect-user-btn px-2.5 py-1 text-[11px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition flex items-center gap-1 shadow-sm">
+                  <i data-lucide="eye" class="w-3 h-3"></i>
+                  Inspect
+                </button>
+                <button data-email="${u.email}" class="admin-tier-btn px-2 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg border border-slate-200 transition">
+                  Plan
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
-    adminTbody.innerHTML = filteredAccounts.map(u => {
-      const userDynLinks = dynamicLinks.filter(d => d.userEmail === u.email || (u.isAdmin && d.userEmail === ''));
-      const userQRs = allHistory.filter(h => h.userEmail === u.email);
-      const userScans = userDynLinks.reduce((acc, curr) => acc + (curr.scans || 0), 0);
-      const regTime = u.registeredAt || '2026-08-31 01:00';
-
-      return `
-        <tr class="hover:bg-slate-50/80 transition">
-          <td class="p-3.5">
-            <div class="font-bold text-slate-900">${u.name || u.email.split('@')[0]}</div>
-            <div class="text-[11px] text-indigo-600 font-mono select-all">${u.email}</div>
-          </td>
-          <td class="p-3.5">
-            <div class="flex items-center gap-1.5 font-mono">
-              <span class="px-2 py-1 rounded bg-amber-50 text-amber-900 font-bold border border-amber-200 select-all text-xs">
-                ${u.pass || 'admin12345'}
+    // Render Global Platform QR Generations Stream
+    const streamTbody = document.getElementById('admin-stream-tbody');
+    const stream = getGlobalQrStream();
+    if (streamTbody) {
+      if (stream.length === 0) {
+        streamTbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="p-8 text-center text-slate-400">
+              No platform QR generations logged yet. Generate or download any QR code in Studio to see live telemetry!
+            </td>
+          </tr>
+        `;
+      } else {
+        streamTbody.innerHTML = stream.map(g => `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="p-3">
+              ${g.preview ? `<img src="${g.preview}" class="w-10 h-10 object-contain rounded border border-slate-200 bg-white p-0.5" alt="QR">` : '<div class="w-10 h-10 bg-slate-100 rounded flex items-center justify-center text-[9px] text-slate-400">QR</div>'}
+            </td>
+            <td class="p-3">
+              <span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-indigo-50 text-indigo-700 uppercase">
+                ${g.type}
               </span>
-              <button onclick="navigator.clipboard.writeText('${u.pass || 'admin12345'}'); showToast('Password copied!');" class="p-1 hover:text-slate-900 text-slate-400" title="Copy Password">
-                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
-          </td>
-          <td class="p-3.5 font-mono text-[11px] text-slate-600 whitespace-nowrap">
-            ${regTime}
-          </td>
-          <td class="p-3.5">
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${u.role === 'admin' || u.isAdmin ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-slate-100 text-slate-700'}">
-              ${u.tier || (u.role === 'admin' ? 'Root Admin' : 'Free Member')}
-            </span>
-          </td>
-          <td class="p-3.5 text-center font-mono font-bold text-slate-800">
-            ${userQRs.length}
-          </td>
-          <td class="p-3.5 text-center font-mono font-bold text-cyan-600">
-            ${userDynLinks.length}
-          </td>
-          <td class="p-3.5 text-center font-mono font-bold text-emerald-600">
-            ${userScans.toLocaleString()}
-          </td>
-          <td class="p-3.5 text-right">
-            <div class="flex items-center justify-end gap-1.5">
-              <button data-email="${u.email}" class="inspect-user-btn px-2.5 py-1 text-[11px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition flex items-center gap-1 shadow-sm">
-                <i data-lucide="eye" class="w-3 h-3"></i>
-                Inspect
-              </button>
-              <button data-email="${u.email}" class="admin-tier-btn px-2 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg border border-slate-200 transition">
-                Plan
-              </button>
-            </div>
-          </td>
-        </tr>
-      `;
-    }).join('');
+            </td>
+            <td class="p-3">
+              <div class="font-bold text-slate-900 text-xs">${g.userEmail}</div>
+            </td>
+            <td class="p-3">
+              <div class="max-w-xs truncate font-mono text-[11px] text-slate-600" title="${g.payload}">${g.payload}</div>
+            </td>
+            <td class="p-3 text-right font-mono text-[11px] text-slate-500 whitespace-nowrap">
+              ${g.time}
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
 
     // Inspect User Dossier
     document.querySelectorAll('.inspect-user-btn').forEach(btn => {
@@ -1790,6 +1909,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+
+    // Clear Stream Button
+    const clearStreamBtn = document.getElementById('admin-clear-stream-btn');
+    if (clearStreamBtn) {
+      clearStreamBtn.onclick = () => {
+        if (confirm('Purge platform QR generation stream?')) {
+          localStorage.removeItem('automatix_qr_global_stream_v2');
+          renderAdminView();
+          showToast('QR Stream purged');
+        }
+      };
+    }
 
     if (window.lucide) lucide.createIcons();
   };

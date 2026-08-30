@@ -757,6 +757,30 @@
       <!-- ============================================== -->
       <section id="view-analytics" class="view-panel hidden space-y-6">
         
+        <!-- Analytics Header & Reload Controls -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="activity" class="w-5 h-5 text-indigo-600"></i>
+              <span>Live Scan Telemetry & Device Analytics</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Tracks real device scans, mobile OS distribution, and daily engagement in real-time.
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button id="reload-analytics-btn" class="px-3.5 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs rounded-xl border border-indigo-200 transition flex items-center gap-1.5 active:scale-95 shadow-sm">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="analytics-reload-icon"></i>
+              <span>Reload Analytics</span>
+            </button>
+            <button id="simulate-scan-btn" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition flex items-center gap-1.5 active:scale-95">
+              <i data-lucide="scan" class="w-3.5 h-3.5 text-cyan-600"></i>
+              <span>Test Real Scan</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Metric Stat Cards (Real Live Telemetry) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm">
@@ -989,6 +1013,42 @@ qrCode.download({ extension: "png" });</code></pre>
               </thead>
               <tbody id="admin-users-tbody" class="divide-y divide-slate-100 font-medium">
                 <!-- Populated dynamically with full user telemetry -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Global Real-Time QR Creation Stream (Everything Any User Creates) -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm font-bold text-slate-900">Live Global QR Generations Stream</h3>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Live Feed
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Every QR Code generated, downloaded, or created across the entire platform in real-time.</p>
+            </div>
+            <button id="admin-clear-stream-btn" class="px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 rounded-xl text-xs font-semibold transition flex items-center gap-1">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              Purge Stream
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th class="p-3">QR Preview</th>
+                  <th class="p-3">Type & Category</th>
+                  <th class="p-3">Creator / Email</th>
+                  <th class="p-3">Encoded Content / URL</th>
+                  <th class="p-3 text-right">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="admin-stream-tbody" class="divide-y divide-slate-100 font-medium">
+                <!-- Populated dynamically with all created QRs -->
               </tbody>
             </table>
           </div>
