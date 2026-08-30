@@ -1254,10 +1254,7 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-600 font-medium mb-1" data-i18n="modal_campaign_label">Campaign Title</label>
-          <input type="text" id="dynamic-title-input" placeholder="e.g. Summer Promo 2026" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-cyan-500">
-        </div>
-        <div>
-          <label class="block text-slate-600 font-medium mb-1" data-i18n="modal_target_label">Destination Target URL</label>
+          <input type="text" id="dynamic-title-input" placeholder="e.g. Summer Promo 2026" class="w-full           <label class="block text-slate-600 font-medium mb-1" data-i18n="modal_target_label">Destination Target URL</label>
           <input type="url" id="dynamic-url-input" placeholder="https://www.automatixes.com/services" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-cyan-500">
         </div>
         <div>
@@ -1266,7 +1263,7 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
             <span class="px-3 py-2.5 bg-slate-100 border border-r-0 border-slate-200 rounded-l-xl text-slate-500 font-mono text-xs">
               qrcode.automatixes.com/r/
             </span>
-            <input type="text" id="dynamic-slug-input" placeholder="promo" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-r-xl text-slate-900 focus:outline-none focus:border-cyan-500 font-mono text-xs">
+            <input type="text" id="dynamic-slug-input" placeholder="promo" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-r-xl text-slate-900 focus:outline-none focus:border-cyan-500 font-mono text-xs">
           </div>
         </div>
       </div>
@@ -1279,176 +1276,194 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
   </div>
 
   <!-- Modal for QR Preview on Dynamic Link -->
-  <div id="dynamic-qr-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white border border-slate-200 rounded-3xl p-6 max-w-sm w-full shadow-2xl space-y-4 text-center">
-      <div class="flex items-center justify-between">
-        <h3 id="dyn-modal-title" class="text-sm font-bold text-slate-900 truncate">Dynamic QR Preview</h3>
-        <button id="close-dyn-qr-modal" class="text-slate-400 hover:text-slate-700">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-      
-      <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center">
-        <div id="dynamic-qr-modal-canvas"></div>
-      </div>
+  <div id="dynamic-qr-modal" class="fixed inset-0 z-50 bg-slate-950/60 modal-backdrop hidden flex items-center justify-center p-4">
+    <div class="double-bezel-shell modal-dialog p-1.5 rounded-[2rem] max-w-sm w-full">
+      <div class="bg-white/95 backdrop-blur-xl rounded-[calc(2rem-0.375rem)] p-6 space-y-4 text-center border border-white">
+        <div class="flex items-center justify-between">
+          <h3 id="dyn-modal-title" class="text-sm font-bold text-slate-900 truncate">Dynamic QR Preview</h3>
+          <button id="close-dyn-qr-modal" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        
+        <div class="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl flex items-center justify-center shadow-inner">
+          <div id="dynamic-qr-modal-canvas"></div>
+        </div>
 
-      <div class="text-xs text-slate-500 font-mono" id="dyn-modal-target"></div>
+        <div class="text-xs text-slate-500 font-mono select-all truncate" id="dyn-modal-target"></div>
 
-      <div class="grid grid-cols-2 gap-2">
-        <button id="dyn-download-png-btn" class="py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5">
-          <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          Download PNG
-        </button>
-        <button id="dyn-test-redirect-btn" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-1.5">
-          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-          Test Redirect
-        </button>
+        <div class="grid grid-cols-2 gap-2">
+          <button id="dyn-download-png-btn" class="py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition btn-magnetic flex items-center justify-center gap-1.5 shadow-sm">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            Download PNG
+          </button>
+          <button id="dyn-test-redirect-btn" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-1.5">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            Test Redirect
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal for Authentication (Sign In & Sign Up) -->
-  <div id="auth-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white border border-slate-200 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
-      
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">
-            <i data-lucide="qr-code" class="w-4 h-4"></i>
+  <!-- Modal for Authentication (Sign In & Sign Up - Awwwards High-End Motion Architecture) -->
+  <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-950/60 modal-backdrop hidden flex items-center justify-center p-4 sm:p-6">
+    <div class="double-bezel-shell modal-dialog p-1.5 rounded-[2.25rem] max-w-md w-full">
+      <div class="bg-white/95 backdrop-blur-xl rounded-[calc(2.25rem-0.375rem)] p-7 space-y-5 border border-white">
+        
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 shadow-md shadow-indigo-500/25 flex items-center justify-center text-white font-bold">
+              <i data-lucide="qr-code" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="font-bold font-heading text-slate-900 text-base">Automatix<span class="text-indigo-600">QR</span></span>
+              <span class="block text-[10px] text-slate-400 font-mono font-medium -mt-0.5">Cloud Auth Node</span>
+            </div>
           </div>
-          <span class="font-bold font-heading text-slate-900">Automatix<span class="text-indigo-600">QR</span></span>
-        </div>
-        <button id="close-auth-modal" class="text-slate-400 hover:text-slate-700">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <!-- Auth Tabs: Sign In / Sign Up -->
-      <div class="flex rounded-xl bg-slate-100 p-1">
-        <button id="auth-tab-signin" class="flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-slate-900 shadow-sm">
-          Sign In
-        </button>
-        <button id="auth-tab-signup" class="flex-1 py-2 text-xs font-bold rounded-lg transition text-slate-500 hover:text-slate-900">
-          Create Account
-        </button>
-      </div>
-
-      <!-- Form Error / Info Message -->
-      <div id="auth-alert" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"></div>
-
-      <!-- Sign In Form -->
-      <form id="form-signin" class="space-y-3.5 text-xs">
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Email Address</label>
-          <div class="relative">
-            <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
-            <input type="email" id="signin-email" placeholder="you@company.com" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
-          </div>
+          <button id="close-auth-modal" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition active:scale-95">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
         </div>
 
-        <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block text-slate-700 font-semibold">Password</label>
-            <a href="#" onclick="alert('Please contact support or enter your account password.'); return false;" class="text-[11px] text-indigo-600 hover:underline">Forgot?</a>
-          </div>
-          <div class="relative">
-            <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
-            <input type="password" id="signin-password" placeholder="••••••••" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
-          </div>
+        <!-- Auth Tabs: Sign In / Sign Up (Pill Architecture) -->
+        <div class="flex rounded-2xl bg-slate-100/90 p-1.5 border border-slate-200/60">
+          <button id="auth-tab-signin" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all duration-300 bg-white text-slate-900 shadow-sm">
+            Sign In
+          </button>
+          <button id="auth-tab-signup" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-900">
+            Create Account
+          </button>
         </div>
 
-        <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md shadow-indigo-600/25 transition">
-          Sign In to AutomatixQR
-        </button>
-      </form>
+        <!-- Form Error / Info Message -->
+        <div id="auth-alert" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"></div>
 
-      <!-- Sign Up Form (Super Simple Email + Password) -->
-      <form id="form-signup" class="space-y-3.5 text-xs hidden">
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Email Address</label>
-          <div class="relative">
-            <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
-            <input type="email" id="signup-email" placeholder="you@company.com" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
+        <!-- Sign In Form -->
+        <form id="form-signin" class="space-y-4 text-xs">
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Email Address</label>
+            <div class="relative">
+              <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+              <input type="email" id="signin-email" placeholder="you@company.com" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-600 focus:bg-white transition">
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Password</label>
-          <div class="relative">
-            <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
-            <input type="password" id="signup-password" placeholder="Enter your password" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-500">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-slate-700 font-semibold">Password</label>
+              <a href="#" onclick="alert('Please enter your account password or create a new account.'); return false;" class="text-[11px] text-indigo-600 hover:underline">Forgot?</a>
+            </div>
+            <div class="relative">
+              <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+              <input type="password" id="signin-password" placeholder="••••••••" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-600 focus:bg-white transition">
+            </div>
           </div>
+
+          <!-- Button-in-Button Trailing Icon -->
+          <button type="submit" class="w-full py-3.5 px-5 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs rounded-2xl shadow-lg shadow-indigo-600/25 btn-magnetic flex items-center justify-center gap-2 group">
+            <span>Sign In to AutomatixQR</span>
+            <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center transition-transform group-hover:translate-x-0.5">
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </span>
+          </button>
+        </form>
+
+        <!-- Sign Up Form (Super Simple Email + Password) -->
+        <form id="form-signup" class="space-y-4 text-xs hidden">
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Email Address</label>
+            <div class="relative">
+              <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+              <input type="email" id="signup-email" placeholder="you@company.com" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-600 focus:bg-white transition">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Password</label>
+            <div class="relative">
+              <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+              <input type="password" id="signup-password" placeholder="Create a secure password" required class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-indigo-600 focus:bg-white transition">
+            </div>
+          </div>
+
+          <!-- Button-in-Button Trailing Icon -->
+          <button type="submit" class="w-full py-3.5 px-5 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs rounded-2xl shadow-lg shadow-indigo-600/25 btn-magnetic flex items-center justify-center gap-2 group">
+            <span>Create Account Instantly</span>
+            <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center transition-transform group-hover:translate-x-0.5">
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </span>
+          </button>
+        </form>
+
+        <div class="text-center text-[11px] text-slate-400 flex items-center justify-center gap-1.5 pt-1">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-500"></i>
+          <span>Protected by Automatixes Enterprise Cloud Security.</span>
         </div>
-
-        <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md shadow-indigo-600/25 transition">
-          Create Account Instantly
-        </button>
-      </form>
-
-      <div class="text-center text-[11px] text-slate-400">
-        Protected by Automatixes Enterprise Cloud Security.
       </div>
     </div>
   </div>
 
   <!-- Modal for Admin User Full Activity Dossier -->
-  <div id="admin-user-detail-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white border border-slate-200 rounded-3xl p-6 max-w-2xl w-full shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <div>
-          <div class="flex items-center gap-2">
-            <h3 class="text-sm font-bold text-slate-900" id="dossier-user-title">User Activity & Credentials Dossier</h3>
-            <span id="dossier-user-tier" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700">Pro</span>
+  <div id="admin-user-detail-modal" class="fixed inset-0 z-50 bg-slate-950/60 modal-backdrop hidden flex items-center justify-center p-4">
+    <div class="double-bezel-shell modal-dialog p-1.5 rounded-[2.25rem] max-w-2xl w-full">
+      <div class="bg-white/95 backdrop-blur-xl rounded-[calc(2.25rem-0.375rem)] p-6 space-y-5 max-h-[85vh] overflow-y-auto border border-white">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-bold text-slate-900" id="dossier-user-title">User Activity & Credentials Dossier</h3>
+              <span id="dossier-user-tier" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">Pro</span>
+            </div>
+            <p class="text-xs text-slate-500 font-mono mt-0.5" id="dossier-user-email">user@domain.com</p>
           </div>
-          <p class="text-xs text-slate-500 font-mono mt-0.5" id="dossier-user-email">user@domain.com</p>
+          <button id="close-dossier-modal" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
         </div>
-        <button id="close-dossier-modal" class="text-slate-400 hover:text-slate-700">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
 
-      <!-- Credentials & Meta Card -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200">
-        <div>
-          <span class="text-slate-500 font-medium block">Plain Password:</span>
-          <span id="dossier-user-pass" class="font-mono font-bold text-indigo-700 select-all text-xs">••••••••</span>
+        <!-- Credentials & Meta Card -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div>
+            <span class="text-slate-500 font-medium block">Plain Password:</span>
+            <span id="dossier-user-pass" class="font-mono font-bold text-indigo-700 select-all text-xs">••••••••</span>
+          </div>
+          <div>
+            <span class="text-slate-500 font-medium block">Registered At:</span>
+            <span id="dossier-user-created" class="font-mono text-slate-800 font-semibold text-xs">2026-08-31 01:20</span>
+          </div>
+          <div>
+            <span class="text-slate-500 font-medium block">Account ID:</span>
+            <span id="dossier-user-id" class="font-mono text-slate-500 text-xs">usr_891238</span>
+          </div>
         </div>
-        <div>
-          <span class="text-slate-500 font-medium block">Registered At:</span>
-          <span id="dossier-user-created" class="font-mono text-slate-800 font-semibold text-xs">2026-08-31 01:20</span>
-        </div>
-        <div>
-          <span class="text-slate-500 font-medium block">Account ID:</span>
-          <span id="dossier-user-id" class="font-mono text-slate-500 text-xs">usr_891238</span>
-        </div>
-      </div>
 
-      <!-- Created Dynamic Links Section -->
-      <div class="space-y-2">
-        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-          <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-600"></i>
-          Created Dynamic Links & Views
-        </h4>
-        <div id="dossier-dynamic-list" class="space-y-2 max-h-40 overflow-y-auto pr-1 text-xs font-medium">
-          <!-- Populated by JS -->
+        <!-- Created Dynamic Links Section -->
+        <div class="space-y-2">
+          <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-600"></i>
+            Created Dynamic Links & Views
+          </h4>
+          <div id="dossier-dynamic-list" class="space-y-2 max-h-40 overflow-y-auto pr-1 text-xs font-medium">
+            <!-- Populated by JS -->
+          </div>
         </div>
-      </div>
 
-      <!-- Created QR Codes Library Section -->
-      <div class="space-y-2">
-        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-          <i data-lucide="folder-clock" class="w-3.5 h-3.5 text-emerald-600"></i>
-          Saved QR Codes & Payloads
-        </h4>
-        <div id="dossier-qrs-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-56 overflow-y-auto pr-1 text-xs">
-          <!-- Populated by JS -->
+        <!-- Created QR Codes Library Section -->
+        <div class="space-y-2">
+          <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="folder-clock" class="w-3.5 h-3.5 text-emerald-600"></i>
+            Saved QR Codes & Payloads
+          </h4>
+          <div id="dossier-qrs-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-56 overflow-y-auto pr-1 text-xs">
+            <!-- Populated by JS -->
+          </div>
         </div>
-      </div>
 
-      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
-        <button id="close-dossier-btn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-semibold">
-          Close Dossier
-        </button>
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <button id="close-dossier-btn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-semibold">
+            Close Dossier
+          </button>
+        </div>
       </div>
     </div>
   </div>

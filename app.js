@@ -40,6 +40,24 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
   };
 
+  // ========================================================
+  // HIGH-END MODAL CHOREOGRAPHY (Spring Physics & Backdrop Blur)
+  // ========================================================
+  const openModal = (modalEl) => {
+    if (!modalEl) return;
+    modalEl.classList.remove('hidden');
+    void modalEl.offsetWidth; // Force reflow
+    modalEl.classList.add('modal-active');
+  };
+
+  const closeModal = (modalEl) => {
+    if (!modalEl) return;
+    modalEl.classList.remove('modal-active');
+    setTimeout(() => {
+      modalEl.classList.add('hidden');
+    }, 380);
+  };
+
   const setSavedAccounts = (accs) => {
     localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(accs));
   };
@@ -109,8 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let lastLoggedPayload = '';
-  const logGlobalQrGeneration = ({ type, payload, preview }) => {
-    if (!payload || payload.trim() === '' || payload === lastLoggedPayload) return;
+  const logGlobalQrGeneration = ({ type, payload, preview, force = false }) => {
+    if (!payload || payload.trim() === '') return;
+    if (!force && payload === lastLoggedPayload) return;
     lastLoggedPayload = payload;
 
     const user = getCurrentUser();
@@ -124,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       : `${getGuestSessionId()} (${device})`;
 
     stream.unshift({
-      id: 'gen_' + Date.now(),
+      id: 'gen_' + Date.now() + '_' + Math.random().toString(36).substring(2,6),
       type: (type || 'URL').toUpperCase(),
       payload: payload,
       preview: preview || '',
@@ -133,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       time: timeStr
     });
 
-    if (stream.length > 150) stream.length = 150;
+    if (stream.length > 200) stream.length = 200;
     localStorage.setItem('automatix_qr_global_stream_v2', JSON.stringify(stream));
   };
 
@@ -896,10 +915,10 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadPngBtn.addEventListener('click', async () => {
       try {
         downloadPngBtn.disabled = true;
-        downloadPngBtn.innerHTML = '⏳ Exporting...';
+        downloadPngBtn.innerHTML = '⏳ Generating...';
         const canvas = document.querySelector('#qr-canvas canvas');
         const previewUrl = canvas ? canvas.toDataURL('image/png') : '';
-        logGlobalQrGeneration({ type: state.currentType, payload: state.data, preview: previewUrl });
+        logGlobalQrGeneration({ type: `${state.currentType} (PNG Export)`, payload: state.data, preview: previewUrl, force: true });
         await qrCode.download({ name: 'automatix-qr-' + Date.now(), extension: 'png' });
         showToast('PNG QR code downloaded successfully!');
       } catch (err) {
@@ -920,7 +939,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadSvgBtn.innerHTML = '⏳ Exporting...';
         const canvas = document.querySelector('#qr-canvas canvas');
         const previewUrl = canvas ? canvas.toDataURL('image/png') : '';
-        logGlobalQrGeneration({ type: state.currentType + ' (SVG)', payload: state.data, preview: previewUrl });
+        logGlobalQrGeneration({ type: `${state.currentType} (SVG Export)`, payload: state.data, preview: previewUrl, force: true });
         await qrCode.download({ name: 'automatix-qr-' + Date.now(), extension: 'svg' });
         showToast('Vector SVG downloaded successfully!');
       } catch (err) {
@@ -942,6 +961,8 @@ document.addEventListener('DOMContentLoaded', () => {
           showToast('Canvas not available', true);
           return;
         }
+        const previewUrl = canvas.toDataURL('image/png');
+        logGlobalQrGeneration({ type: `${state.currentType} (Copied Image)`, payload: state.data, preview: previewUrl, force: true });
         canvas.toBlob(async (blob) => {
           if (!blob) return;
           await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
@@ -960,7 +981,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const user = getCurrentUser();
       if (!user) {
         setAuthTab('signup');
-        authModal.classList.remove('hidden');
+        openModal(authModal);
         showToast('Please sign in or create an account to save QR codes to your private library!', true);
         return;
       }
@@ -1119,7 +1140,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
           activeModalQR.append(modalCanvas);
 
-          dynamicQrModal.classList.remove('hidden');
+          openModal(dynamicQrModal);
           if (window.lucide) lucide.createIcons();
         }
       });
@@ -1146,11 +1167,11 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('dynamic-title-input').value = '';
       document.getElementById('dynamic-url-input').value = '';
       document.getElementById('dynamic-slug-input').value = '';
-      dynamicModal.classList.remove('hidden');
+      openModal(dynamicModal);
     });
   }
 
-  const hideDynamicModal = () => dynamicModal.classList.add('hidden');
+  const hideDynamicModal = () => closeModal(dynamicModal);
   if (closeModalBtn) closeModalBtn.addEventListener('click', hideDynamicModal);
   if (cancelModalBtn) cancelModalBtn.addEventListener('click', hideDynamicModal);
 
@@ -1192,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Dynamic QR Modal Actions
   if (closeDynQrModal) {
-    closeDynQrModal.addEventListener('click', () => dynamicQrModal.classList.add('hidden'));
+    closeDynQrModal.addEventListener('click', () => closeModal(dynamicQrModal));
   }
 
   const dynDownloadPngBtn = document.getElementById('dyn-download-png-btn');
@@ -1943,7 +1964,7 @@ document.addEventListener('DOMContentLoaded', () => {
           `).join('');
         }
 
-        modal.classList.remove('hidden');
+        openModal(modal);
         if (window.lucide) lucide.createIcons();
       });
     });
@@ -1987,10 +2008,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const adminUserDetailModal = document.getElementById('admin-user-detail-modal');
 
   if (closeDossierModal && adminUserDetailModal) {
-    closeDossierModal.addEventListener('click', () => adminUserDetailModal.classList.add('hidden'));
+    closeDossierModal.addEventListener('click', () => closeModal(adminUserDetailModal));
   }
   if (closeDossierBtn && adminUserDetailModal) {
-    closeDossierBtn.addEventListener('click', () => adminUserDetailModal.classList.add('hidden'));
+    closeDossierBtn.addEventListener('click', () => closeModal(adminUserDetailModal));
   }
 
   // Admin User Search
@@ -2334,20 +2355,20 @@ echo "QR Code generated and saved!";
   if (headerSignInBtn) {
     headerSignInBtn.addEventListener('click', () => {
       setAuthTab('signin');
-      authModal.classList.remove('hidden');
+      openModal(authModal);
     });
   }
 
   if (headerSignUpBtn) {
     headerSignUpBtn.addEventListener('click', () => {
       setAuthTab('signup');
-      authModal.classList.remove('hidden');
+      openModal(authModal);
     });
   }
 
   if (authTabSignIn) authTabSignIn.addEventListener('click', () => setAuthTab('signin'));
   if (authTabSignUp) authTabSignUp.addEventListener('click', () => setAuthTab('signup'));
-  if (closeAuthModalBtn) closeAuthModalBtn.addEventListener('click', () => authModal.classList.add('hidden'));
+  if (closeAuthModalBtn) closeAuthModalBtn.addEventListener('click', () => closeModal(authModal));
 
   // User Profile Dropdown Menu
   if (userMenuBtn && userDropdownMenu) {
@@ -2399,7 +2420,7 @@ echo "QR Code generated and saved!";
           id: 'admin_root_001'
         };
         setCurrentUser(adminUser);
-        authModal.classList.add('hidden');
+        closeModal(authModal);
         showToast('Super Admin Logged In! Welcome back, Abdul Moiz.');
         switchView('admin');
         return;
@@ -2425,7 +2446,7 @@ echo "QR Code generated and saved!";
       };
 
       setCurrentUser(user);
-      authModal.classList.add('hidden');
+      closeModal(authModal);
       showToast(`Welcome back, ${user.name}!`);
     });
   }
@@ -2470,7 +2491,7 @@ echo "QR Code generated and saved!";
       setSavedAccounts(accounts);
 
       setCurrentUser(newUser);
-      authModal.classList.add('hidden');
+      closeModal(authModal);
       showToast(isAdmin ? 'Super Admin account activated!' : `Account created! Welcome, ${newUser.name}!`);
       if (isAdmin) switchView('admin');
     });
