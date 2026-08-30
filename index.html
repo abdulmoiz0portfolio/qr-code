@@ -95,15 +95,56 @@
       box-shadow: 0 30px 80px -15px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
     }
 
-    .btn-magnetic {
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Universal Button Haptic Micro-Interactions & Magnetic Physics */
+    button, .btn, .tab-btn, .nav-item, .preset-pill, input[type="submit"] {
+      transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease;
+      will-change: transform;
+      user-select: none;
     }
-    .btn-magnetic:hover {
-      transform: translateY(-1.5px);
-      box-shadow: 0 12px 25px -5px rgba(79, 70, 229, 0.35);
+
+    button:active, .btn:active, .tab-btn:active, .nav-item:active, .preset-pill:active {
+      transform: scale(0.94) translateY(1px) !important;
     }
-    .btn-magnetic:active {
-      transform: scale(0.97);
+
+    button:hover, .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    /* Elegant Luxury Ripple Wave on Every Click */
+    .ripple-wave {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleAnimation 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      background-color: rgba(255, 255, 255, 0.45);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes rippleAnimation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* View Panel Dynamic Entry Slide & Fade */
+    .view-panel:not(.hidden) {
+      animation: viewPanelIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes viewPanelIn {
+      0% {
+        opacity: 0;
+        transform: translateY(16px) scale(0.992);
+        filter: blur(4px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+      }
     }
   </style>
 </head>

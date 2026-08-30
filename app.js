@@ -2497,6 +2497,44 @@ echo "QR Code generated and saved!";
     });
   }
 
+  // ========================================================
+  // UNIVERSAL CLICK RIPPLE WAVE & BUTTON CHOREOGRAPHER
+  // ========================================================
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button, .btn-magnetic, .tab-btn, .nav-item, .preset-pill, .sdk-tab');
+    if (!btn) return;
+
+    const style = window.getComputedStyle(btn);
+    if (style.position === 'static') {
+      btn.style.position = 'relative';
+    }
+    if (style.overflow !== 'hidden' && !btn.classList.contains('overflow-visible')) {
+      btn.style.overflow = 'hidden';
+    }
+
+    const circle = document.createElement('span');
+    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+    const radius = diameter / 2;
+    const rect = btn.getBoundingClientRect();
+
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${e.clientX - rect.left - radius}px`;
+    circle.style.top = `${e.clientY - rect.top - radius}px`;
+    circle.classList.add('ripple-wave');
+
+    // Dynamic wave tone
+    const isLight = btn.classList.contains('bg-white') || btn.classList.contains('bg-slate-100') || btn.classList.contains('bg-slate-50');
+    if (isLight) {
+      circle.style.backgroundColor = 'rgba(79, 70, 229, 0.2)';
+    }
+
+    const prevRipple = btn.querySelector('.ripple-wave');
+    if (prevRipple) prevRipple.remove();
+
+    btn.appendChild(circle);
+    setTimeout(() => circle.remove(), 600);
+  });
+
   // Initial Startup
   updateAuthUI();
   applyLanguage(currentLang);
