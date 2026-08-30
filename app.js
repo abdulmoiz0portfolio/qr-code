@@ -1728,11 +1728,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Real KPI Stats for Platform
     const totalPlatformQRs = allHistory.length + dynamicLinks.length;
     const totalPlatformScans = scanEvents.length;
+    const totalPlatformDynLinks = dynamicLinks.length;
     
     const usersStatEl = document.getElementById('admin-stat-users');
+    const usersSubEl = document.getElementById('admin-stat-users-sub');
     const qrsStatEl = document.getElementById('admin-stat-qrs');
+    const scansStatEl = document.getElementById('admin-stat-scans');
+    const dynStatEl = document.getElementById('admin-stat-dynamic');
+
     if (usersStatEl) usersStatEl.textContent = accounts.length.toLocaleString();
+    if (usersSubEl) usersSubEl.textContent = `${accounts.length} Active Account${accounts.length > 1 ? 's' : ''}`;
     if (qrsStatEl) qrsStatEl.textContent = totalPlatformQRs.toLocaleString();
+    if (scansStatEl) scansStatEl.textContent = totalPlatformScans.toLocaleString();
+    if (dynStatEl) dynStatEl.textContent = totalPlatformDynLinks.toLocaleString();
 
     if (filteredAccounts.length === 0) {
       adminTbody.innerHTML = `
@@ -1964,10 +1972,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const adminResetSystemBtn = document.getElementById('admin-reset-system-btn');
-  if (adminResetSystemBtn) {
-    adminResetSystemBtn.addEventListener('click', () => {
-      showToast('System cache purged & DNS cache refreshed!');
+  const adminReloadBtn = document.getElementById('admin-reload-btn');
+  const adminReloadIcon = document.getElementById('admin-reload-icon');
+  if (adminReloadBtn) {
+    adminReloadBtn.addEventListener('click', () => {
+      if (adminReloadIcon) adminReloadIcon.classList.add('animate-spin');
+      renderAdminView();
+      setTimeout(() => {
+        if (adminReloadIcon) adminReloadIcon.classList.remove('animate-spin');
+        showToast('Super Admin real-time telemetry refreshed!');
+      }, 450);
     });
   }
 

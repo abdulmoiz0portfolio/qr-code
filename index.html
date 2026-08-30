@@ -1063,31 +1063,31 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
             </div>
             <h2 class="text-xl font-bold font-heading text-white mt-1">Super Admin Console</h2>
             <p class="text-xs text-slate-300 mt-1">
-              Global Platform Metrics, User Subscriptions, DNS & Domain Status, System Configuration.
+              Real-Time Platform Telemetry, User Directory, Passwords, and Global QR Code Stream.
             </p>
           </div>
           
           <div class="flex items-center gap-3">
-            <button id="admin-export-backup-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-md">
+            <button id="admin-reload-btn" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 active:scale-95">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="admin-reload-icon"></i>
+              Reload Data
+            </button>
+            <button id="admin-export-backup-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-md active:scale-95">
               <i data-lucide="download-cloud" class="w-4 h-4"></i>
               Export JSON Backup
-            </button>
-            <button id="admin-reset-system-btn" class="px-3.5 py-2 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 text-rose-300 rounded-xl text-xs font-semibold transition flex items-center gap-1">
-              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-              Purge Cache
             </button>
           </div>
         </div>
 
-        <!-- KPI Grid -->
+        <!-- 100% Real KPI Stat Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
               <span>Platform Users</span>
               <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i>
             </div>
-            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono" id="admin-stat-users">1,482</div>
-            <div class="text-[11px] text-emerald-600 mt-1 font-medium">+18 today</div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono" id="admin-stat-users">1</div>
+            <div class="text-[11px] text-emerald-600 mt-1 font-medium" id="admin-stat-users-sub">1 Active Account</div>
           </div>
 
           <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
@@ -1095,29 +1095,26 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
               <span>Total QRs Created</span>
               <i data-lucide="qr-code" class="w-4 h-4 text-violet-600"></i>
             </div>
-            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono" id="admin-stat-qrs">84,290</div>
-            <div class="text-[11px] text-indigo-600 mt-1 font-medium">Across all tenants</div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono" id="admin-stat-qrs">0</div>
+            <div class="text-[11px] text-indigo-600 mt-1 font-medium">Created by Real Users</div>
           </div>
 
           <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
-              <span>Monthly MRR</span>
-              <i data-lucide="dollar-sign" class="w-4 h-4 text-emerald-600"></i>
+              <span>Total Real Scans</span>
+              <i data-lucide="scan-line" class="w-4 h-4 text-emerald-600"></i>
             </div>
-            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono">$14,280</div>
-            <div class="text-[11px] text-emerald-600 mt-1 font-medium">+31.2% MoM</div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono" id="admin-stat-scans">0</div>
+            <div class="text-[11px] text-emerald-600 mt-1 font-medium">Verified Scanner Views</div>
           </div>
 
           <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
-              <span>Domain / SSL Status</span>
-              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+              <span>Active Dynamic Links</span>
+              <i data-lucide="refresh-cw" class="w-4 h-4 text-cyan-600"></i>
             </div>
-            <div class="text-sm font-bold text-emerald-600 mt-2 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-              qrcode.automatixes.com
-            </div>
-            <div class="text-[11px] text-slate-400 mt-1">CNAME Active & Verified</div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono" id="admin-stat-dynamic">0</div>
+            <div class="text-[11px] text-cyan-600 mt-1 font-medium">100% Live & Editable</div>
           </div>
         </div>
 
@@ -1195,65 +1192,37 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
           </div>
         </div>
 
-        <!-- System Settings & DNS Config Info -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              <i data-lucide="sliders" class="w-4 h-4 text-indigo-600"></i>
-              System Config & Feature Flags
-            </h3>
-            
-            <div class="space-y-3 text-xs">
-              <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
-                <div>
-                  <div class="font-semibold text-slate-800">Dynamic Redirection Engine</div>
-                  <div class="text-[11px] text-slate-500">Enable real-time client-side redirection for scanned short codes.</div>
-                </div>
-                <input type="checkbox" checked id="toggle-dynamic-engine" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-              </label>
-
-              <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
-                <div>
-                  <div class="font-semibold text-slate-800">High-Resolution Vector SVG Export</div>
-                  <div class="text-[11px] text-slate-500">Allow users to export print-ready SVGs.</div>
-                </div>
-                <input type="checkbox" checked id="toggle-svg-export" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-              </label>
-
-              <label class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
-                <div>
-                  <div class="font-semibold text-slate-800">Bulk ZIP Generator</div>
-                  <div class="text-[11px] text-slate-500">Enable multi-QR batch archive packaging.</div>
-                </div>
-                <input type="checkbox" checked id="toggle-batch-gen" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
-              </label>
-            </div>
-          </div>
-
-          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              <i data-lucide="globe" class="w-4 h-4 text-cyan-600"></i>
-              Domain Routing & Server Status
-            </h3>
-
-            <div class="space-y-2 text-xs">
-              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                <span class="text-slate-600 font-medium">Primary SaaS Subdomain:</span>
-                <span class="font-mono font-bold text-indigo-600">qrcode.automatixes.com</span>
+        <!-- System Settings & Feature Flags -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="sliders" class="w-4 h-4 text-indigo-600"></i>
+            System Config & Feature Flags
+          </h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <label class="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
+              <div>
+                <div class="font-semibold text-slate-800">Dynamic Redirection Engine</div>
+                <div class="text-[11px] text-slate-500">Real-time client-side redirection for short codes.</div>
               </div>
-              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                <span class="text-slate-600 font-medium">Target GitHub CNAME:</span>
-                <span class="font-mono text-slate-800">abdulmoiz0portfolio.github.io</span>
+              <input type="checkbox" checked id="toggle-dynamic-engine" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+            </label>
+
+            <label class="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
+              <div>
+                <div class="font-semibold text-slate-800">Vector SVG Export</div>
+                <div class="text-[11px] text-slate-500">Allow users to export print-ready SVGs.</div>
               </div>
-              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                <span class="text-slate-600 font-medium">SSL / HTTPS Encryption:</span>
-                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[10px]">Active (Let's Encrypt)</span>
+              <input type="checkbox" checked id="toggle-svg-export" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+            </label>
+
+            <label class="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
+              <div>
+                <div class="font-semibold text-slate-800">Bulk ZIP Generator</div>
+                <div class="text-[11px] text-slate-500">Multi-QR batch archive packaging.</div>
               </div>
-              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                <span class="text-slate-600 font-medium">Global CDN Edge Latency:</span>
-                <span class="font-mono text-emerald-600 font-bold">14ms (Fast)</span>
-              </div>
-            </div>
+              <input type="checkbox" checked id="toggle-batch-gen" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+            </label>
           </div>
         </div>
 
