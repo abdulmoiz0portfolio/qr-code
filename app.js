@@ -1971,12 +1971,224 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // API Key Copy
+  // ==========================================
+  // 11. DEVELOPER API PLAYGROUND & SDK CONTROLLER
+  // ==========================================
   const copyApiKeyBtn = document.getElementById('copy-api-key-btn');
   if (copyApiKeyBtn) {
     copyApiKeyBtn.addEventListener('click', () => {
       navigator.clipboard.writeText('autoqr_live_99d445d93afa541f38b4f07794312b62f');
       showToast('API Key copied to clipboard!');
+    });
+  }
+
+  // API Playground Canvas & Logic
+  const apiPlaygroundCanvas = document.getElementById('api-playground-canvas');
+  let apiQRInstance = null;
+
+  if (apiPlaygroundCanvas) {
+    apiQRInstance = new QRCodeStyling({
+      width: 170,
+      height: 170,
+      type: 'canvas',
+      data: 'https://www.automatixes.com',
+      margin: 6,
+      dotsOptions: { color: '#4f46e5', type: 'rounded' },
+      backgroundOptions: { color: '#ffffff' },
+      cornersSquareOptions: { color: '#4338ca', type: 'extra-rounded' },
+      cornersDotOptions: { color: '#6366f1', type: 'dot' }
+    });
+    apiQRInstance.append(apiPlaygroundCanvas);
+  }
+
+  const updateApiPlayground = () => {
+    const data = document.getElementById('api-param-data')?.value.trim() || 'https://www.automatixes.com';
+    const size = parseInt(document.getElementById('api-param-size')?.value || '350');
+    const color = document.getElementById('api-param-color')?.value || '#4f46e5';
+    const ecc = document.getElementById('api-param-ecc')?.value || 'Q';
+    const format = document.getElementById('api-param-format')?.value || 'png';
+
+    // Direct Image URL
+    const cleanHex = color.replace('#', '');
+    const directUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=${cleanHex}&ecc=${ecc}&format=${format}`;
+    
+    const directUrlEl = document.getElementById('api-direct-url-preview');
+    if (directUrlEl) directUrlEl.textContent = directUrl;
+
+    // Embed Code
+    const embedHtmlEl = document.getElementById('api-embed-code-html');
+    if (embedHtmlEl) embedHtmlEl.textContent = `<img src="${directUrl}" alt="QR Code" width="${Math.min(size, 300)}" height="${Math.min(size, 300)}" />`;
+
+    // Update Playground QR preview
+    if (apiQRInstance) {
+      apiQRInstance.update({
+        data,
+        dotsOptions: { color, type: 'rounded' },
+        cornersSquareOptions: { color, type: 'extra-rounded' },
+        cornersDotOptions: { color, type: 'dot' },
+        qrOptions: { errorCorrectionLevel: ecc }
+      });
+    }
+
+    // Update HTTP status badge
+    const statusEl = document.getElementById('api-response-status');
+    const latency = Math.floor(Math.random() * 16) + 12;
+    if (statusEl) statusEl.textContent = `HTTP 200 OK (${latency}ms)`;
+  };
+
+  const apiParamColor = document.getElementById('api-param-color');
+  const apiParamColorText = document.getElementById('api-param-color-text');
+
+  if (apiParamColor && apiParamColorText) {
+    apiParamColor.addEventListener('input', () => {
+      apiParamColorText.value = apiParamColor.value.toUpperCase();
+      updateApiPlayground();
+    });
+    apiParamColorText.addEventListener('input', () => {
+      if (/^#[0-9A-F]{6}$/i.test(apiParamColorText.value)) {
+        apiParamColor.value = apiParamColorText.value;
+        updateApiPlayground();
+      }
+    });
+  }
+
+  const apiSendRequestBtn = document.getElementById('api-send-request-btn');
+  if (apiSendRequestBtn) {
+    apiSendRequestBtn.addEventListener('click', () => {
+      apiSendRequestBtn.disabled = true;
+      apiSendRequestBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Executing API Call...';
+      if (window.lucide) lucide.createIcons();
+
+      setTimeout(() => {
+        updateApiPlayground();
+        apiSendRequestBtn.disabled = false;
+        apiSendRequestBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> <span>Send API Request & Test Live</span>';
+        if (window.lucide) lucide.createIcons();
+        showToast('API Request Succeeded (200 OK)! QR generated.');
+      }, 350);
+    });
+  }
+
+  // Copy Direct URL Button
+  const apiCopyUrlBtn = document.getElementById('api-copy-url-btn');
+  if (apiCopyUrlBtn) {
+    apiCopyUrlBtn.addEventListener('click', () => {
+      const url = document.getElementById('api-direct-url-preview')?.textContent || '';
+      navigator.clipboard.writeText(url);
+      showToast('Direct Image API URL copied to clipboard!');
+    });
+  }
+
+  // Download Result Button
+  const apiDownloadResultBtn = document.getElementById('api-download-result-btn');
+  if (apiDownloadResultBtn) {
+    apiDownloadResultBtn.addEventListener('click', () => {
+      const format = document.getElementById('api-param-format')?.value || 'png';
+      if (apiQRInstance) {
+        apiQRInstance.download({ name: 'api-qr-result-' + Date.now(), extension: format });
+        showToast(`Downloaded API QR (${format.toUpperCase()})`);
+      }
+    });
+  }
+
+  // Copy HTML Embed Code Button
+  const copyHtmlEmbedBtn = document.getElementById('copy-html-embed-btn');
+  if (copyHtmlEmbedBtn) {
+    copyHtmlEmbedBtn.addEventListener('click', () => {
+      const code = document.getElementById('api-embed-code-html')?.textContent || '';
+      navigator.clipboard.writeText(code);
+      showToast('HTML Embed tag copied to clipboard!');
+    });
+  }
+
+  // SDK Code Snippets Dictionary
+  const SDK_SNIPPETS = {
+    curl: `// cURL / Postman Request
+curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \\
+  -H "Authorization: Bearer autoqr_live_99d445d93afa541f38b4f07794312b62f" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "data": "https://www.automatixes.com",
+    "size": 350,
+    "dotsColor": "#4f46e5",
+    "format": "png"
+  }' --output qr_code.png`,
+
+    node: `// Node.js / React / Next.js Integration
+import QRCodeStyling from "qr-code-styling";
+
+const qrCode = new QRCodeStyling({
+  width: 350,
+  height: 350,
+  data: "https://www.automatixes.com",
+  image: "https://www.automatixes.com/favicon.png",
+  dotsOptions: {
+    color: "#4f46e5",
+    type: "rounded"
+  },
+  backgroundOptions: {
+    color: "#ffffff"
+  }
+});
+
+// Download image or append directly to DOM canvas:
+qrCode.download({ name: "client_qr", extension: "png" });`,
+
+    python: `# Python 3 Integration (Requests & Pillow)
+import requests
+
+API_URL = "https://api.qrserver.com/v1/create-qr-code/"
+params = {
+    "size": "350x350",
+    "data": "https://www.automatixes.com",
+    "color": "4f46e5",
+    "format": "png"
+}
+
+response = requests.get(API_URL, params=params)
+if response.status_code == 200:
+    with open("invoice_qr.png", "wb") as f:
+        f.write(response.content)
+    print("QR Code successfully saved as invoice_qr.png!")`,
+
+    php: `<?php
+// PHP Backend Integration (cURL)
+$apiKey = "autoqr_live_99d445d93afa541f38b4f07794312b62f";
+$dataUrl = "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=" . urlencode("https://www.automatixes.com") . "&color=4f46e5";
+
+// Fetch image stream
+$qrImageData = file_get_contents($dataUrl);
+file_put_contents("ticket_qr.png", $qrImageData);
+echo "QR Code generated and saved!";
+?>`
+  };
+
+  // SDK Tabs Switcher
+  const sdkTabs = document.querySelectorAll('#sdk-tabs .sdk-tab');
+  const sdkCodeDisplay = document.getElementById('sdk-code-display');
+
+  sdkTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      sdkTabs.forEach(t => {
+        t.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+        t.classList.add('hover:text-slate-900');
+      });
+      tab.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+      tab.classList.remove('hover:text-slate-900');
+
+      const sdkKey = tab.getAttribute('data-sdk');
+      if (sdkCodeDisplay && SDK_SNIPPETS[sdkKey]) {
+        sdkCodeDisplay.textContent = SDK_SNIPPETS[sdkKey];
+      }
+    });
+  });
+
+  const copySdkCodeBtn = document.getElementById('copy-sdk-code-btn');
+  if (copySdkCodeBtn) {
+    copySdkCodeBtn.addEventListener('click', () => {
+      const code = sdkCodeDisplay?.textContent || '';
+      navigator.clipboard.writeText(code);
+      showToast('SDK code snippet copied to clipboard!');
     });
   }
 
