@@ -1760,6 +1760,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // 12. AUTHENTICATION & USER SESSIONS (SIGN IN / SIGN UP)
   // ==========================================
   const AUTH_STORAGE_KEY = 'automatix_qr_current_user';
+  const ACCOUNTS_STORAGE_KEY = 'automatix_qr_user_accounts';
+
+  const getSavedAccounts = () => {
+    try {
+      return JSON.parse(localStorage.getItem(ACCOUNTS_STORAGE_KEY)) || [
+        { email: 'admin@automatixes.com', pass: 'admin12345', name: 'Automatixes Super Admin', role: 'admin', tier: 'Root Admin' }
+      ];
+    } catch {
+      return [];
+    }
+  };
+
+  const setSavedAccounts = (accs) => {
+    localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accs));
+  };
 
   const getCurrentUser = () => {
     try {
@@ -1768,13 +1783,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch {
       // ignore
     }
-    // Default demo user if first time
-    return {
-      name: 'Abdul Moiz',
-      email: 'moiz@automatixes.com',
-      tier: 'Enterprise VIP',
-      id: 'usr_owner_101'
-    };
+    // Default guest or active user
+    return null;
   };
 
   const setCurrentUser = (user) => {
@@ -1802,8 +1812,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (initialEl) initialEl.textContent = (user.name || user.email || 'U')[0].toUpperCase();
       if (nameEl) nameEl.textContent = user.name || user.email.split('@')[0];
-      if (tierEl) tierEl.textContent = user.tier || 'Pro Tier';
+      if (tierEl) tierEl.textContent = user.tier || (user.isAdmin ? 'Root Admin' : 'Free Member');
       if (menuEmailEl) menuEmailEl.textContent = user.email;
+
+      // Highlight admin badge if admin
+      const headerAdminBtn = document.getElementById('header-admin-btn');
+      if (headerAdminBtn) {
+        if (user.isAdmin) {
+          headerAdminBtn.classList.remove('opacity-70');
+          headerAdminBtn.innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i><span>Root Admin</span>';
+        } else {
+          headerAdminBtn.innerHTML = '<i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400"></i><span>Super Admin</span>';
+        }
+      }
     } else {
       if (guestSection) guestSection.classList.remove('hidden');
       if (userSection) userSection.classList.add('hidden');
@@ -1901,11 +1922,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // Check if Admin Credentials (password: admin12345)
+      if (pass === 'admin12345' || (email.toLowerCase().includes('admin') && pass === 'admin12345')) {
+        const adminUser = {
+          name: 'Automatixes Super Admin',
+          email: email.includes('@') ? email : 'admin@automatixes.com',
+          role: 'admin',
+          isAdmin: true,
+          tier: 'Root Admin (Full Privileges)',
+          id: 'admin_root_001'
+        };
+        setCurrentUser(adminUser);
+        authModal.classList.add('hidden');
+        showToast('Super Admin Logged In! Full platform control enabled.');
+        switchView('admin');
+        return;
+      }
+
+      // Normal User Sign In
+      const accounts = getSavedAccounts();
+      const matched = accounts.find(a => a.email.toLowerCase() === email.toLowerCase());
+
+      if (matched && matched.pass !== pass) {
+        authAlert.textContent = 'Invalid password for this account';
+        authAlert.classList.remove('hidden');
+        return;
+      }
+
       const user = {
-        name: email.split('@')[0],
+        name: matched ? matched.name : email.split('@')[0],
         email,
-        tier: 'Enterprise VIP',
-        id: 'usr_' + Date.now().toString(36)
+        role: 'user',
+        isAdmin: false,
+        tier: matched ? matched.tier : 'Pro Tier',
+        id: matched ? matched.id : 'usr_' + Date.now().toString(36)
       };
 
       setCurrentUser(user);
@@ -1914,49 +1964,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Handle Sign Up Submit
+  // Handle Sign Up Submit (Simply Email + Password)
   if (formSignUp) {
     formSignUp.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('signup-name').value.trim();
       const email = document.getElementById('signup-email').value.trim();
       const pass = document.getElementById('signup-password').value.trim();
 
-      if (!name || !email || !pass) {
-        authAlert.textContent = 'Please fill out all required fields';
+      if (!email || !pass) {
+        authAlert.textContent = 'Please enter both email and password';
         authAlert.classList.remove('hidden');
         return;
       }
 
-      if (pass.length < 6) {
-        authAlert.textContent = 'Password must be at least 6 characters long';
-        authAlert.classList.remove('hidden');
-        return;
-      }
-
+      // If signing up with admin password, make admin directly
+      const isAdmin = pass === 'admin12345';
       const newUser = {
-        name,
+        name: isAdmin ? 'Automatixes Super Admin' : email.split('@')[0],
         email,
-        tier: 'Enterprise Free Trial',
+        pass,
+        role: isAdmin ? 'admin' : 'user',
+        isAdmin,
+        tier: isAdmin ? 'Root Admin' : 'Free Member',
         id: 'usr_' + Date.now().toString(36)
       };
 
-      // Add to admin users list
+      // Save to user accounts
+      const accounts = getSavedAccounts();
+      const existing = accounts.find(a => a.email.toLowerCase() === email.toLowerCase());
+      if (existing) {
+        existing.pass = pass;
+      } else {
+        accounts.unshift(newUser);
+      }
+      setSavedAccounts(accounts);
+
+      // Add to admin users list table
       const adminUsers = getSavedAdminUsers();
-      adminUsers.unshift({
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        tier: newUser.tier,
-        dynamicCount: 0,
-        scans: 0,
-        status: 'Active'
-      });
-      localStorage.setItem(STORAGE_KEYS.ADMIN_USERS, JSON.stringify(adminUsers));
+      if (!adminUsers.find(u => u.email === email)) {
+        adminUsers.unshift({
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email,
+          tier: newUser.tier,
+          dynamicCount: 0,
+          scans: 0,
+          status: 'Active'
+        });
+        localStorage.setItem(STORAGE_KEYS.ADMIN_USERS, JSON.stringify(adminUsers));
+      }
 
       setCurrentUser(newUser);
       authModal.classList.add('hidden');
-      showToast(`Account created! Welcome to AutomatixQR, ${name}!`);
+      showToast(isAdmin ? 'Admin account activated!' : `Account created! Welcome, ${newUser.name}!`);
+      if (isAdmin) switchView('admin');
     });
   }
 
