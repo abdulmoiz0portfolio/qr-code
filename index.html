@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutomatixQR - Enterprise QR SaaS by Automatixes</title>
+  <link rel="canonical" href="https://qrcode.automatixes.com/">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Plus Jakarta Sans', 'sans-serif'],
+            heading: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- QR Code Styling Library -->
+  <script src="https://unpkg.com/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+  <!-- Chart.js for SaaS Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- JSZip for Bulk/Batch ZIP Downloads -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Light Ambient Background Accents -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+    <div class="absolute -top-40 left-1/4 w-[600px] h-[600px] bg-indigo-100/60 rounded-full blur-[140px]"></div>
+    <div class="absolute top-1/3 -right-20 w-[500px] h-[500px] bg-violet-100/50 rounded-full blur-[140px]"></div>
+    <div class="absolute -bottom-20 left-1/3 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-[140px]"></div>
+  </div>
+
+  <!-- Top SaaS Header Navigation -->
+  <header class="border-b border-slate-200/90 bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo linking to Automatixes -->
+      <div class="flex items-center space-x-3">
+        <a href="https://www.automatixes.com/" target="_blank" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 flex items-center justify-center shadow-md shadow-indigo-600/20 ring-1 ring-black/5 group-hover:scale-105 transition-transform">
+            <i data-lucide="qr-code" class="w-5 h-5 text-white"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-base font-bold font-heading text-slate-900 tracking-tight">Automatix<span class="text-indigo-600">QR</span></span>
+              <span class="px-2 py-0.5 text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-full flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3 text-indigo-600"></i>
+                <span data-i18n="pro_badge">ENTERPRISE</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium">By Automatixes AI Solutions</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Right Header Actions (Language Switcher, Quota & Main Site Link) -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Language Switcher Dropdown (Auto-Detect + Manual) -->
+        <div class="relative">
+          <button id="lang-selector-btn" class="px-3 py-1.5 bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 flex items-center gap-2 transition shadow-sm">
+            <span id="current-lang-flag">🇺🇸</span>
+            <span id="current-lang-name">English</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+          </button>
+          
+          <div id="lang-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-50 text-xs">
+            <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">
+              Select Language
+            </div>
+            <button data-lang="en" data-flag="🇺🇸" data-name="English" class="lang-opt w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-50 hover:text-indigo-600 font-medium text-slate-700">
+              <span>🇺🇸</span> English (Default)
+            </button>
+            <button data-lang="es" data-flag="🇪🇸" data-name="Español" class="lang-opt w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-50 hover:text-indigo-600 font-medium text-slate-700">
+              <span>🇪🇸</span> Español (Spanish)
+            </button>
+            <button data-lang="fr" data-flag="🇫🇷" data-name="Français" class="lang-opt w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-50 hover:text-indigo-600 font-medium text-slate-700">
+              <span>🇫🇷</span> Français (French)
+            </button>
+            <button data-lang="de" data-flag="🇩🇪" data-name="Deutsch" class="lang-opt w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-50 hover:text-indigo-600 font-medium text-slate-700">
+              <span>🇩🇪</span> Deutsch (German)
+            </button>
+            <button data-lang="ar" data-flag="🇦🇪" data-name="العربية" class="lang-opt w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-50 hover:text-indigo-600 font-medium text-slate-700">
+              <span>🇦🇪</span> العربية (Arabic)
+            </button>
+            <button data-lang="ur" data-flag="🇵🇰" data-name="اردو" class="lang-opt w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-50 hover:text-indigo-600 font-medium text-slate-700">
+              <span>🇵🇰</span> اردو (Urdu)
+            </button>
+            <button data-lang="zh" data-flag="🇨🇳" data-name="中文" class="lang-opt w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-50 hover:text-indigo-600 font-medium text-slate-700">
+              <span>🇨🇳</span> 中文 (Chinese)
+            </button>
+            <button data-lang="ja" data-flag="🇯🇵" data-name="日本語" class="lang-opt w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-50 hover:text-indigo-600 font-medium text-slate-700">
+              <span>🇯🇵</span> 日本語 (Japanese)
+            </button>
+          </div>
+        </div>
+
+        <!-- Back to Main Site Link -->
+        <a href="https://www.automatixes.com/" target="_blank" class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200/80 border border-slate-200 rounded-xl transition">
+          <span>automatixes.com</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400"></i>
+        </a>
+
+        <!-- New QR Quick Action -->
+        <button id="quick-create-btn" class="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center gap-1.5 active:scale-95">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span data-i18n="new_qr">New QR</span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- App Layout -->
+  <div class="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-64 shrink-0 space-y-5">
+      
+      <div class="bg-white border border-slate-200/90 rounded-2xl p-3 shadow-sm">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-2" data-i18n="nav_title">Navigation</div>
+        
+        <nav class="space-y-1" id="main-nav">
+          <button data-view="studio" class="nav-item active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+            <i data-lucide="wand-2" class="w-4 h-4 text-indigo-600"></i>
+            <span class="flex-1 text-left" data-i18n="nav_studio">QR Studio</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-mono" data-i18n="badge_main">Main</span>
+          </button>
+
+          <button data-view="dynamic" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+            <i data-lucide="refresh-cw" class="w-4 h-4 text-cyan-600"></i>
+            <span class="flex-1 text-left" data-i18n="nav_dynamic">Dynamic Links</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-cyan-50 text-cyan-700 font-mono" data-i18n="badge_editable">Editable</span>
+          </button>
+
+          <button data-view="batch" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+            <i data-lucide="layers" class="w-4 h-4 text-violet-600"></i>
+            <span class="flex-1 text-left" data-i18n="nav_batch">Batch Generator</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-50 text-violet-700 font-mono" data-i18n="badge_bulk">Bulk</span>
+          </button>
+
+          <button data-view="templates" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i>
+            <span class="flex-1 text-left" data-i18n="nav_templates">Templates Gallery</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 font-mono" data-i18n="badge_presets">Presets</span>
+          </button>
+
+          <button data-view="history" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+            <i data-lucide="folder-clock" class="w-4 h-4 text-emerald-600"></i>
+            <span class="flex-1 text-left" data-i18n="nav_library">Saved Library</span>
+            <span id="history-badge-count" class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-mono font-bold">0</span>
+          </button>
+
+          <button data-view="analytics" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+            <i data-lucide="bar-chart-3" class="w-4 h-4 text-rose-600"></i>
+            <span class="flex-1 text-left" data-i18n="nav_analytics">Scan Analytics</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 font-mono" data-i18n="badge_live">Live</span>
+          </button>
+
+          <button data-view="api" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+            <i data-lucide="code-2" class="w-4 h-4 text-blue-600"></i>
+            <span class="flex-1 text-left" data-i18n="nav_api">API & Widget</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-mono">Dev</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Automatixes Cloud Banner -->
+      <div class="bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100 rounded-2xl p-4 text-xs space-y-2.5 shadow-sm">
+        <div class="flex items-center gap-2 text-indigo-900 font-bold">
+          <i data-lucide="zap" class="w-4 h-4 text-indigo-600"></i>
+          <span data-i18n="agency_cloud">Automatixes Cloud</span>
+        </div>
+        <p class="text-slate-600 leading-relaxed text-[11px]" data-i18n="agency_desc">
+          Automate CRM, WhatsApp & customer workflows with custom AI agents.
+        </p>
+        <a href="https://www.automatixes.com/" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-600 hover:text-indigo-800">
+          <span data-i18n="explore_agency">Explore Services</span> &rarr;
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-1 min-w-0">
+      
+      <!-- ============================================== -->
+      <!-- VIEW 1: QR STUDIO (CREATOR & DESIGNER)        -->
+      <!-- ============================================== -->
+      <section id="view-studio" class="view-panel space-y-6">
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          
+          <!-- Controls (7 Cols) -->
+          <div class="xl:col-span-7 space-y-6">
+            
+            <!-- QR Type Tabs -->
+            <div class="bg-white border border-slate-200/90 rounded-2xl p-2 shadow-sm">
+              <div class="grid grid-cols-2 sm:grid-cols-6 gap-1.5" id="type-tabs">
+                <button data-type="url" class="tab-btn active flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-semibold transition-all">
+                  <i data-lucide="link" class="w-4 h-4"></i>
+                  <span data-i18n="type_url">URL Link</span>
+                </button>
+                <button data-type="text" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-semibold transition-all">
+                  <i data-lucide="type" class="w-4 h-4"></i>
+                  <span data-i18n="type_text">Text</span>
+                </button>
+                <button data-type="wifi" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-semibold transition-all">
+                  <i data-lucide="wifi" class="w-4 h-4"></i>
+                  <span data-i18n="type_wifi">Wi-Fi</span>
+                </button>
+                <button data-type="vcard" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-semibold transition-all">
+                  <i data-lucide="contact-2" class="w-4 h-4"></i>
+                  <span data-i18n="type_vcard">vCard</span>
+                </button>
+                <button data-type="social" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-semibold transition-all">
+                  <i data-lucide="share-2" class="w-4 h-4"></i>
+                  <span data-i18n="type_social">Social Bio</span>
+                </button>
+                <button data-type="email" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-semibold transition-all">
+                  <i data-lucide="mail" class="w-4 h-4"></i>
+                  <span data-i18n="type_email">Email</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Content Inputs -->
+            <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+              <h2 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <i data-lucide="edit-3" class="w-4 h-4 text-indigo-600"></i>
+                <span data-i18n="content_header">QR Content & Information</span>
+              </h2>
+
+              <!-- URL Form -->
+              <div id="form-url" class="type-form space-y-4">
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_destination_url">Destination Web URL</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                      <i data-lucide="globe" class="w-4 h-4"></i>
+                    </div>
+                    <input type="url" id="input-url" placeholder="https://www.automatixes.com" value="https://www.automatixes.com" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-slate-900 placeholder-slate-400 transition">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Plain Text Form -->
+              <div id="form-text" class="type-form space-y-4 hidden">
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_text_message">Text Message / Notes</label>
+                  <textarea id="input-text" rows="4" placeholder="Enter any text, code, message, or notes..." class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 placeholder-slate-400 transition">Hello from AutomatixQR Studio!</textarea>
+                </div>
+              </div>
+
+              <!-- WiFi Form -->
+              <div id="form-wifi" class="type-form space-y-4 hidden">
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_wifi_ssid">Network Name (SSID)</label>
+                  <input type="text" id="wifi-ssid" placeholder="Office_Guest_WiFi" value="Office_Guest_WiFi" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_wifi_password">Password</label>
+                    <input type="text" id="wifi-password" placeholder="WiFi Password" value="ConnectFast2026" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_wifi_security">Security Type</label>
+                    <select id="wifi-encryption" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                      <option value="WPA">WPA / WPA2 / WPA3</option>
+                      <option value="WEP">WEP</option>
+                      <option value="nopass">None (Open Network)</option>
+                    </select>
+                  </div>
+                </div>
+                <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-600">
+                  <input type="checkbox" id="wifi-hidden" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                  <span data-i18n="label_wifi_hidden">Hidden Network</span>
+                </label>
+              </div>
+
+              <!-- vCard Form -->
+              <div id="form-vcard" class="type-form space-y-4 hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_first_name">First Name</label>
+                    <input type="text" id="vcard-first" placeholder="Moiz" value="Moiz" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_last_name">Last Name</label>
+                    <input type="text" id="vcard-last" placeholder="Baig" value="Baig" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_phone">Phone Number</label>
+                    <input type="tel" id="vcard-phone" placeholder="+92 336 6920141" value="+92 336 6920141" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_email">Email Address</label>
+                    <input type="email" id="vcard-email" placeholder="contact@automatixes.com" value="contact@automatixes.com" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_company">Company</label>
+                    <input type="text" id="vcard-org" placeholder="Automatixes" value="Automatixes" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_job_title">Job Title</label>
+                    <input type="text" id="vcard-title" placeholder="Lead Engineer" value="Solutions Architect" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social Media Form -->
+              <div id="form-social" class="type-form space-y-4 hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_platform">Platform</label>
+                    <select id="social-platform" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                      <option value="instagram">Instagram Profile</option>
+                      <option value="whatsapp">WhatsApp Direct Chat</option>
+                      <option value="youtube">YouTube Channel</option>
+                      <option value="linkedin">LinkedIn Profile</option>
+                      <option value="twitter">X (Twitter)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_handle">Handle / Phone / URL</label>
+                    <input type="text" id="social-handle" placeholder="@automatixes or phone number" value="automatixes" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email Form -->
+              <div id="form-email" class="type-form space-y-4 hidden">
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_recipient_email">Recipient Email</label>
+                  <input type="email" id="email-to" placeholder="contact@automatixes.com" value="contact@automatixes.com" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_subject">Subject</label>
+                  <input type="text" id="email-subject" placeholder="Project Inquiry" value="Automation Partnership Inquiry" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_message_body">Message Body</label>
+                  <textarea id="email-body" rows="3" placeholder="Write message..." class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-900 transition">Let's connect soon!</textarea>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Visual Customizer -->
+            <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm space-y-6">
+              <h2 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                <i data-lucide="palette" class="w-4 h-4 text-violet-600"></i>
+                <span data-i18n="styling_header">Visual Styling & Custom Colors</span>
+              </h2>
+
+              <!-- Color Pickers -->
+              <div class="space-y-3">
+                <label class="block text-xs font-medium text-slate-600" data-i18n="label_colors">Palette Colors</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl flex items-center gap-2.5 hover:border-slate-300 transition">
+                    <input type="color" id="qr-dots-color" value="#4f46e5" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                    <div class="overflow-hidden">
+                      <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_dots">QR Dots</div>
+                      <div id="qr-dots-color-val" class="text-xs font-mono font-bold text-slate-800 uppercase">#4F46E5</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl flex items-center gap-2.5 hover:border-slate-300 transition">
+                    <input type="color" id="qr-bg-color" value="#ffffff" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                    <div class="overflow-hidden">
+                      <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_bg">Background</div>
+                      <div id="qr-bg-color-val" class="text-xs font-mono font-bold text-slate-800 uppercase">#FFFFFF</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl flex items-center gap-2.5 hover:border-slate-300 transition">
+                    <input type="color" id="qr-corner-square-color" value="#4338ca" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                    <div class="overflow-hidden">
+                      <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_frame">Corner Frame</div>
+                      <div id="qr-corner-square-color-val" class="text-xs font-mono font-bold text-slate-800 uppercase">#4338CA</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl flex items-center gap-2.5 hover:border-slate-300 transition">
+                    <input type="color" id="qr-corner-dot-color" value="#6366f1" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                    <div class="overflow-hidden">
+                      <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_center">Corner Center</div>
+                      <div id="qr-corner-dot-color-val" class="text-xs font-mono font-bold text-slate-800 uppercase">#6366F1</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Palette Pills -->
+                <div class="flex flex-wrap items-center gap-2 pt-1">
+                  <span class="text-xs text-slate-500 font-medium" data-i18n="label_presets">Presets:</span>
+                  <button data-dots="#4f46e5" data-bg="#ffffff" class="preset-pill active px-2.5 py-1 text-xs rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 font-medium hover:border-indigo-400 transition">Automatix Purple</button>
+                  <button data-dots="#000000" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white hover:border-slate-400 transition">Classic B&W</button>
+                  <button data-dots="#059669" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white hover:border-slate-400 transition">Emerald</button>
+                  <button data-dots="#db2777" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white hover:border-slate-400 transition">Ruby Pink</button>
+                  <button data-dots="#0284c7" data-bg="#f0fdf4" class="preset-pill px-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white hover:border-slate-400 transition">Ocean Mint</button>
+                  <button data-dots="#0f172a" data-bg="#f8fafc" class="preset-pill px-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white hover:border-slate-400 transition">Slate Pure</button>
+                </div>
+              </div>
+
+              <!-- Pattern Shapes -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_dot_pattern">Dot Pattern</label>
+                  <select id="qr-dot-type" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:border-indigo-500 focus:outline-none transition">
+                    <option value="square">Square</option>
+                    <option value="dots">Circular Dots</option>
+                    <option value="rounded" selected>Rounded Curves</option>
+                    <option value="extra-rounded">Smooth Extra-Rounded</option>
+                    <option value="classy">Classy Edge</option>
+                    <option value="classy-rounded">Classy Rounded</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_corner_frame">Corner Frame</label>
+                  <select id="qr-corner-square-type" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:border-indigo-500 focus:outline-none transition">
+                    <option value="square">Square</option>
+                    <option value="dot">Circle</option>
+                    <option value="extra-rounded" selected>Extra Rounded</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_corner_dot">Corner Center</label>
+                  <select id="qr-corner-dot-type" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:border-indigo-500 focus:outline-none transition">
+                    <option value="square">Square</option>
+                    <option value="dot" selected>Circle Dot</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Drag & Drop Logo Upload -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <label class="block text-xs font-medium text-slate-600" data-i18n="label_logo_upload">Center Brand Logo</label>
+                  <span class="text-[11px] text-indigo-600 font-medium" data-i18n="drag_drop_hint">Drag & Drop supported</span>
+                </div>
+                
+                <div id="drop-zone" class="relative group cursor-pointer border-2 border-dashed border-slate-300 hover:border-indigo-500 bg-slate-50/80 hover:bg-indigo-50/30 rounded-2xl p-4 transition-all flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                  <input type="file" id="logo-upload" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                  
+                  <div id="logo-preview-box" class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-400 overflow-hidden shrink-0 group-hover:border-indigo-500/50 transition shadow-sm">
+                    <i data-lucide="image-plus" id="default-logo-icon" class="w-6 h-6 text-indigo-600 group-hover:scale-110 transition-transform"></i>
+                    <img id="logo-preview-img" class="w-full h-full object-contain hidden" alt="Logo preview">
+                  </div>
+
+                  <div class="flex-1 min-w-0 pointer-events-none">
+                    <p id="logo-file-label" class="text-xs font-semibold text-slate-700 truncate">
+                      Drag & drop your logo here, or <span class="text-indigo-600 underline">browse</span>
+                    </p>
+                    <p class="text-[11px] text-slate-500 mt-0.5" data-i18n="logo_formats">Supports PNG, JPG, SVG, WebP (Max 2MB)</p>
+                  </div>
+
+                  <button type="button" id="remove-logo-btn" class="hidden relative z-20 px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-xl transition flex items-center gap-1.5">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    <span data-i18n="btn_remove">Remove</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Error Correction & Margin -->
+              <div class="pt-2 border-t border-slate-200/90 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5" data-i18n="label_error_level">Error Correction Level</label>
+                  <select id="qr-error-level" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:border-indigo-500 focus:outline-none transition">
+                    <option value="L">Low (7% recovery)</option>
+                    <option value="M">Medium (15% recovery)</option>
+                    <option value="Q" selected>Quartile (25% - Recommended)</option>
+                    <option value="H">High (30% recovery)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1.5"><span data-i18n="label_margin">Margin</span>: <span id="margin-val">10</span>px</label>
+                  <input type="range" id="qr-margin" min="0" max="40" value="10" class="w-full accent-indigo-600 cursor-pointer">
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Live Preview Card (5 Cols Sticky) -->
+          <div class="xl:col-span-5 xl:sticky xl:top-24 space-y-6">
+            <div class="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xl shadow-slate-200/50 flex flex-col items-center">
+              
+              <div class="w-full flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span data-i18n="live_preview">Live Preview</span>
+                </span>
+                <span class="px-2 py-0.5 text-[10px] font-mono bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-full font-bold">
+                  Ultra HD
+                </span>
+              </div>
+
+              <!-- Canvas Container Box -->
+              <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-inner flex items-center justify-center w-full min-h-[310px] overflow-hidden relative group">
+                <div id="qr-canvas" class="transition-transform duration-300 group-hover:scale-105 rounded-xl overflow-hidden shadow-lg bg-white p-2"></div>
+              </div>
+
+              <!-- Download & Save Buttons -->
+              <div class="w-full grid grid-cols-2 gap-3 mt-6">
+                <button id="download-png-btn" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center justify-center gap-2 transform active:scale-95">
+                  <i data-lucide="download" class="w-4 h-4"></i>
+                  <span data-i18n="btn_download_png">Download PNG</span>
+                </button>
+                <button id="download-svg-btn" class="w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 font-semibold text-xs rounded-xl transition-all flex items-center justify-center gap-2 transform active:scale-95">
+                  <i data-lucide="file-code-2" class="w-4 h-4 text-cyan-600"></i>
+                  <span data-i18n="btn_download_svg">Download SVG</span>
+                </button>
+              </div>
+
+              <div class="w-full grid grid-cols-2 gap-3 mt-3">
+                <button id="copy-clipboard-btn" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900 font-medium text-xs rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  <span data-i18n="btn_copy_image">Copy Image</span>
+                </button>
+                <button id="save-to-library-btn" class="py-2.5 px-3 bg-indigo-50 hover:bg-indigo-100/80 border border-indigo-200 text-indigo-700 font-semibold text-xs rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95">
+                  <i data-lucide="bookmark-plus" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span data-i18n="btn_save_library">Save to Library</span>
+                </button>
+              </div>
+
+              <!-- Encoded Data Box -->
+              <div class="w-full mt-6 pt-4 border-t border-slate-100">
+                <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5">
+                  <span class="font-medium" data-i18n="raw_payload">Raw Encoded Payload</span>
+                  <span id="char-count" class="font-mono text-[10px]">26 chars</span>
+                </div>
+                <div id="raw-payload" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-mono text-slate-600 break-all max-h-20 overflow-y-auto">
+                  https://www.automatixes.com
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 2: DYNAMIC LINKS (URL SHORTENER & EDIT)   -->
+      <!-- ============================================== -->
+      <section id="view-dynamic" class="view-panel hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="refresh-cw" class="w-5 h-5 text-cyan-600"></i>
+              <span data-i18n="dynamic_header">Dynamic Editable QR Codes</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-1" data-i18n="dynamic_desc">
+              Change the destination URL anytime without reprinting your QR codes!
+            </p>
+          </div>
+          <button id="create-dynamic-btn" class="px-4 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs rounded-xl shadow-md shadow-cyan-600/20 transition flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span data-i18n="btn_create_dynamic">Create Dynamic Link</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Links Table -->
+        <div class="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th class="p-4" data-i18n="th_campaign">Campaign / Name</th>
+                  <th class="p-4" data-i18n="th_short_url">Short Dynamic URL</th>
+                  <th class="p-4" data-i18n="th_destination">Target Destination</th>
+                  <th class="p-4 text-center" data-i18n="th_scans">Total Scans</th>
+                  <th class="p-4" data-i18n="th_status">Status</th>
+                  <th class="p-4 text-right" data-i18n="th_actions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="dynamic-links-tbody" class="divide-y divide-slate-100 font-medium">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 3: BATCH / BULK QR GENERATOR (CSV)       -->
+      <!-- ============================================== -->
+      <section id="view-batch" class="view-panel hidden space-y-6">
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-9 h-9 rounded-xl bg-violet-50 text-violet-700 flex items-center justify-center">
+              <i data-lucide="layers" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-slate-900" data-i18n="batch_header">Bulk Batch QR Generator</h2>
+              <p class="text-xs text-slate-500" data-i18n="batch_desc">Generate dozens or hundreds of QR codes at once and download as a ZIP archive.</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1.5" data-i18n="batch_input_label">
+                Paste URLs or Text items (One per line)
+              </label>
+              <textarea id="batch-input" rows="6" placeholder="https://www.automatixes.com/services&#10;https://www.automatixes.com/case-studies&#10;https://www.automatixes.com/contact" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-violet-500 text-slate-900 placeholder-slate-400 transition"></textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+              <div class="text-xs text-slate-500">
+                <span data-i18n="batch_detected">Total Items Detected</span>: <span id="batch-item-count" class="font-bold text-violet-600 font-mono">0</span>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button id="batch-sample-btn" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition" data-i18n="btn_load_sample">
+                  Load Sample Data
+                </button>
+                <button id="batch-generate-btn" class="px-5 py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs rounded-xl shadow-md shadow-violet-600/20 transition flex items-center gap-2">
+                  <i data-lucide="archive" class="w-4 h-4"></i>
+                  <span data-i18n="btn_generate_zip">Generate & Download ZIP</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="batch-progress-card" class="hidden bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="flex items-center justify-between text-xs font-medium text-slate-700 mb-2">
+            <span data-i18n="batch_generating">Generating Bulk Archive...</span>
+            <span id="batch-progress-text" class="font-mono text-violet-600">0%</span>
+          </div>
+          <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+            <div id="batch-progress-bar" class="h-full bg-gradient-to-r from-violet-500 to-indigo-600 transition-all duration-200" style="width: 0%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 4: TEMPLATES GALLERY                     -->
+      <!-- ============================================== -->
+      <section id="view-templates" class="view-panel hidden space-y-6">
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i>
+            <span data-i18n="templates_header">Designer Curated Templates</span>
+          </h2>
+          <p class="text-xs text-slate-500 mt-1" data-i18n="templates_desc">
+            One-click apply professional branding and aesthetic presets for instant standout codes.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="templates-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 5: SAVED LIBRARY & HISTORY               -->
+      <!-- ============================================== -->
+      <section id="view-history" class="view-panel hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="folder-clock" class="w-5 h-5 text-emerald-600"></i>
+              <span data-i18n="library_header">Saved QR Codes & History Library</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-1" data-i18n="library_desc">All your created QR codes are persistently stored here for quick re-use.</p>
+          </div>
+          <button id="clear-history-btn" class="px-3.5 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-xl transition flex items-center gap-1.5">
+            <i data-lucide="trash" class="w-3.5 h-3.5"></i>
+            <span data-i18n="btn_clear_library">Clear All History</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="history-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 6: SCAN ANALYTICS & TELEMETRY            -->
+      <!-- ============================================== -->
+      <section id="view-analytics" class="view-panel hidden space-y-6">
+        
+        <!-- Metric Stat Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 text-xs">
+              <span data-i18n="stat_total_scans">Total Scans</span>
+              <i data-lucide="scan-line" class="w-4 h-4 text-indigo-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono">14,289</div>
+            <div class="text-[11px] text-emerald-600 mt-1 font-medium flex items-center gap-1">
+              <i data-lucide="trending-up" class="w-3 h-3"></i> +24.8% this week
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 text-xs">
+              <span data-i18n="stat_active_qrs">Active Dynamic QRs</span>
+              <i data-lucide="refresh-cw" class="w-4 h-4 text-cyan-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono">38</div>
+            <div class="text-[11px] text-cyan-600 mt-1 font-medium">100% Uptime</div>
+          </div>
+
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 text-xs">
+              <span data-i18n="stat_top_os">Top Mobile OS</span>
+              <i data-lucide="smartphone" class="w-4 h-4 text-emerald-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 mt-2">iOS (64%)</div>
+            <div class="text-[11px] text-slate-500 mt-1">Android (36%)</div>
+          </div>
+
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 text-xs">
+              <span data-i18n="stat_conversion">Conversion Rate</span>
+              <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 mt-2 font-mono">88.4%</div>
+            <div class="text-[11px] text-amber-600 mt-1 font-medium">Instant Redirects</div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <i data-lucide="line-chart" class="w-4 h-4 text-indigo-600"></i>
+              <span data-i18n="chart_trend_title">Scan Trends (Last 7 Days)</span>
+            </h3>
+            <div class="h-64">
+              <canvas id="scans-trend-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <i data-lucide="pie-chart" class="w-4 h-4 text-violet-600"></i>
+              <span data-i18n="chart_device_title">Device & Scanner Breakdown</span>
+            </h3>
+            <div class="h-64 flex items-center justify-center">
+              <canvas id="devices-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 7: DEVELOPER API & EMBED WIDGET          -->
+      <!-- ============================================== -->
+      <section id="view-api" class="view-panel hidden space-y-6">
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="code-2" class="w-5 h-5 text-blue-600"></i>
+                <span data-i18n="api_header">Developer API & Embed SDK</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-1" data-i18n="api_desc">Integrate QR code generation directly into your backend or frontend apps.</p>
+            </div>
+            <span class="px-3 py-1 text-xs font-mono bg-blue-50 text-blue-700 border border-blue-200 rounded-full font-bold">
+              REST v2.0
+            </span>
+          </div>
+        </div>
+
+        <!-- API Key Manager Box -->
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm space-y-3">
+          <label class="block text-xs font-medium text-slate-700" data-i18n="api_key_label">Your Live Production API Key</label>
+          <div class="flex items-center gap-3">
+            <div class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-indigo-700 select-all font-semibold">
+              autoqr_live_99d445d93afa541f38b4f07794312b62f
+            </div>
+            <button id="copy-api-key-btn" class="px-4 py-3 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition flex items-center gap-1.5">
+              <i data-lucide="copy" class="w-4 h-4"></i>
+              <span data-i18n="btn_copy">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Code Snippets -->
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm space-y-4">
+          <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider" data-i18n="snippet_header">Integration Code Snippet</h3>
+          
+          <pre class="bg-slate-900 p-4 rounded-xl text-xs font-mono text-emerald-400 overflow-x-auto"><code>// Node.js / Browser SDK for AutomatixQR
+import QRCodeStyling from "qr-code-styling";
+
+const qrCode = new QRCodeStyling({
+  width: 300,
+  height: 300,
+  data: "https://www.automatixes.com",
+  image: "https://www.automatixes.com/favicon.png",
+  dotsOptions: {
+    color: "#4f46e5",
+    type: "rounded"
+  },
+  backgroundOptions: {
+    color: "#ffffff",
+  }
+});
+
+qrCode.download({ extension: "png" });</code></pre>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2.5 px-4 py-3 bg-slate-900 text-white rounded-xl shadow-2xl text-xs font-medium pointer-events-none border border-slate-800">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">Operation successful!</span>
+  </div>
+
+  <!-- Modal for Creating Dynamic Link -->
+  <div id="dynamic-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-4 h-4 text-cyan-600"></i>
+          <span data-i18n="modal_create_title">Create Dynamic Link</span>
+        </h3>
+        <button id="close-modal-btn" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-600 font-medium mb-1" data-i18n="modal_campaign_label">Campaign Title</label>
+          <input type="text" id="dynamic-title-input" placeholder="e.g. Automatixes Promo 2026" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-cyan-500">
+        </div>
+        <div>
+          <label class="block text-slate-600 font-medium mb-1" data-i18n="modal_target_label">Destination Target URL</label>
+          <input type="url" id="dynamic-url-input" placeholder="https://www.automatixes.com/services" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-cyan-500">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button id="cancel-modal-btn" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900" data-i18n="btn_cancel">Cancel</button>
+        <button id="save-dynamic-btn" class="px-5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs rounded-xl transition" data-i18n="btn_create_link">Create Link</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

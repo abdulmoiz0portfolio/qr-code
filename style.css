@@ -1,0 +1,118 @@
+/* AutomatixQR - SaaS Platform Styles (Light Theme) */
+
+/* Custom Clean Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Sidebar Navigation Items (Light Mode) */
+.nav-item {
+  color: #475569;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+.nav-item.active {
+  color: #4338ca;
+  background: #ede9fe;
+  border-color: #c4b5fd;
+  box-shadow: 0 1px 4px rgba(99, 102, 241, 0.1);
+}
+
+/* Tab button active & hover states inside Studio */
+.tab-btn {
+  color: #64748b;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.tab-btn:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+.tab-btn.active {
+  color: #4338ca;
+  background: #f5f3ff;
+  border-color: #ddd6fe;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+}
+
+/* Preset pill active styles */
+.preset-pill.active {
+  border-color: #6366f1 !important;
+  background-color: #ede9fe !important;
+  color: #4338ca !important;
+  font-weight: 600;
+}
+
+/* Form input focus glow */
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* QR Code Canvas container */
+#qr-canvas svg, #qr-canvas canvas {
+  max-width: 100%;
+  height: auto !important;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Color picker styling */
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+/* Drag & Drop Zone Dragover Active State */
+#drop-zone.drag-active {
+  border-color: #6366f1 !important;
+  background-color: #f5f3ff !important;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+  transform: scale(1.01);
+}
+
+/* Template Card Hover Effects */
+.template-card {
+  transition: all 0.2s ease-in-out;
+}
+.template-card:hover {
+  transform: translateY(-3px);
+  border-color: #818cf8;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+/* RTL Support for Arabic and Urdu */
+[dir="rtl"] {
+  text-align: right;
+}
+[dir="rtl"] .text-left {
+  text-align: right !important;
+}
+[dir="rtl"] .text-right {
+  text-align: left !important;
+}
+[dir="rtl"] #lang-dropdown-menu {
+  right: auto;
+  left: 0;
+}
