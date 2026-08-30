@@ -90,22 +90,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const getGuestSessionId = () => {
+    let sid = sessionStorage.getItem('automatix_guest_sid');
+    if (!sid) {
+      sid = 'Guest_' + Math.random().toString(36).substring(2, 6).toUpperCase();
+      sessionStorage.setItem('automatix_guest_sid', sid);
+    }
+    return sid;
+  };
+
+  const getDevicePlatform = () => {
+    const ua = navigator.userAgent || '';
+    if (/iPhone|iPad|iPod/.test(ua)) return 'iOS';
+    if (/Android/.test(ua)) return 'Android';
+    if (/Macintosh/.test(ua)) return 'Mac OS';
+    if (/Windows/.test(ua)) return 'Windows PC';
+    return 'Web Client';
+  };
+
+  let lastLoggedPayload = '';
   const logGlobalQrGeneration = ({ type, payload, preview }) => {
+    if (!payload || payload.trim() === '' || payload === lastLoggedPayload) return;
+    lastLoggedPayload = payload;
+
     const user = getCurrentUser();
     const stream = getGlobalQrStream();
     const now = new Date();
     const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')} (${now.toLocaleDateString()})`;
 
+    const device = getDevicePlatform();
+    const creatorLabel = user 
+      ? `${user.name || user.email.split('@')[0]} (${user.email})` 
+      : `${getGuestSessionId()} (${device})`;
+
     stream.unshift({
       id: 'gen_' + Date.now(),
       type: (type || 'URL').toUpperCase(),
-      payload: payload || 'https://www.automatixes.com',
+      payload: payload,
       preview: preview || '',
-      userEmail: user ? user.email : 'Guest Visitor (Public)',
+      userEmail: creatorLabel,
+      isGuest: !user,
       time: timeStr
     });
 
-    if (stream.length > 100) stream.length = 100;
+    if (stream.length > 150) stream.length = 150;
     localStorage.setItem('automatix_qr_global_stream_v2', JSON.stringify(stream));
   };
 
@@ -652,6 +680,19 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let updateTimeout = null;
+  let autoLogTimeout = null;
+
+  const triggerAutoLog = (payload, type) => {
+    clearTimeout(autoLogTimeout);
+    autoLogTimeout = setTimeout(() => {
+      if (payload && payload !== 'https://www.automatixes.com' && payload.trim() !== '') {
+        const canvas = document.querySelector('#qr-canvas canvas');
+        const previewUrl = canvas ? canvas.toDataURL('image/png') : '';
+        logGlobalQrGeneration({ type: type.toUpperCase(), payload, preview: previewUrl });
+      }
+    }, 1200);
+  };
+
   const updateQRCode = () => {
     clearTimeout(updateTimeout);
     updateTimeout = setTimeout(() => {
@@ -672,6 +713,8 @@ document.addEventListener('DOMContentLoaded', () => {
         cornersSquareOptions: { color: state.cornerSquareColor, type: state.cornerSquareType },
         cornersDotOptions: { color: state.cornerDotColor, type: state.cornerDotType }
       });
+
+      triggerAutoLog(state.data, state.currentType);
     }, 50);
   };
 
@@ -1822,7 +1865,7 @@ document.addEventListener('DOMContentLoaded', () => {
         streamTbody.innerHTML = stream.map(g => `
           <tr class="hover:bg-slate-50 transition">
             <td class="p-3">
-              ${g.preview ? `<img src="${g.preview}" class="w-10 h-10 object-contain rounded border border-slate-200 bg-white p-0.5" alt="QR">` : '<div class="w-10 h-10 bg-slate-100 rounded flex items-center justify-center text-[9px] text-slate-400">QR</div>'}
+              ${g.preview ? `<img src="${g.preview}" class="w-10 h-10 object-contain rounded border border-slate-200 bg-white p-0.5" alt="QR">` : '<div class="w-10 h-10 bg-slate-100 rounded flex items-center justify-center text-[9px] text-slate-400 font-bold">QR</div>'}
             </td>
             <td class="p-3">
               <span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-indigo-50 text-indigo-700 uppercase">
@@ -1830,10 +1873,15 @@ document.addEventListener('DOMContentLoaded', () => {
               </span>
             </td>
             <td class="p-3">
-              <div class="font-bold text-slate-900 text-xs">${g.userEmail}</div>
+              <div class="flex items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold flex items-center gap-1 ${g.isGuest ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}">
+                  <i data-lucide="${g.isGuest ? 'user' : 'shield-check'}" class="w-3 h-3"></i>
+                  ${g.userEmail}
+                </span>
+              </div>
             </td>
             <td class="p-3">
-              <div class="max-w-xs truncate font-mono text-[11px] text-slate-600" title="${g.payload}">${g.payload}</div>
+              <div class="max-w-xs truncate font-mono text-[11px] text-slate-600 select-all font-medium" title="${g.payload}">${g.payload}</div>
             </td>
             <td class="p-3 text-right font-mono text-[11px] text-slate-500 whitespace-nowrap">
               ${g.time}
