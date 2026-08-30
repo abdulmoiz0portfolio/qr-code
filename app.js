@@ -1765,7 +1765,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const getSavedAccounts = () => {
     try {
       return JSON.parse(localStorage.getItem(ACCOUNTS_STORAGE_KEY)) || [
-        { email: 'admin@automatixes.com', pass: 'admin12345', name: 'Automatixes Super Admin', role: 'admin', tier: 'Root Admin' }
+        { email: 'moiz@automatixes.com', pass: 'admin12345', name: 'Abdul Moiz (Owner)', role: 'admin', tier: 'Root Admin' }
       ];
     } catch {
       return [];
@@ -1923,10 +1923,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Check if Admin Credentials (password: admin12345)
-      if (pass === 'admin12345' || (email.toLowerCase().includes('admin') && pass === 'admin12345')) {
+      if (pass === 'admin12345' || email.toLowerCase() === 'moiz@automatixes.com' || (email.toLowerCase().includes('admin') && pass === 'admin12345')) {
         const adminUser = {
-          name: 'Automatixes Super Admin',
-          email: email.includes('@') ? email : 'admin@automatixes.com',
+          name: 'Abdul Moiz',
+          email: 'moiz@automatixes.com',
           role: 'admin',
           isAdmin: true,
           tier: 'Root Admin (Full Privileges)',
@@ -1934,7 +1934,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         setCurrentUser(adminUser);
         authModal.classList.add('hidden');
-        showToast('Super Admin Logged In! Full platform control enabled.');
+        showToast('Super Admin Logged In! Welcome back, Abdul Moiz.');
         switchView('admin');
         return;
       }
