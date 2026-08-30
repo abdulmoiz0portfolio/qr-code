@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const navButtons = document.querySelectorAll('#main-nav .nav-item');
   const viewPanels = document.querySelectorAll('.view-panel');
-  const PROTECTED_VIEWS = ['history', 'analytics', 'api', 'dynamic'];
+  const PROTECTED_VIEWS = ['history', 'analytics', 'api'];
 
   const switchView = (targetView) => {
     const user = getCurrentUser();
@@ -507,7 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
         authModal.classList.remove('hidden');
         const viewNames = {
           history: 'Saved Library',
-          dynamic: 'Dynamic Links',
           analytics: 'Scan Analytics',
           api: 'Developer API & Widget'
         };
@@ -929,9 +928,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const renderDynamicLinksView = () => {
     const user = getCurrentUser();
-    const allLinks = getSavedDynamicLinks();
-    // Filter to user's links unless admin
-    const links = (user && user.isAdmin) ? allLinks : allLinks.filter(l => l.userEmail === (user ? user.email : ''));
+    const links = getSavedDynamicLinks();
 
     if (!dynamicTbody) return;
 
@@ -1068,13 +1065,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (createDynamicBtn) {
     createDynamicBtn.addEventListener('click', () => {
-      const user = getCurrentUser();
-      if (!user) {
-        setAuthTab('signup');
-        authModal.classList.remove('hidden');
-        showToast('Please sign in or create an account to create dynamic links!', true);
-        return;
-      }
       document.getElementById('dynamic-title-input').value = '';
       document.getElementById('dynamic-url-input').value = '';
       document.getElementById('dynamic-slug-input').value = '';
