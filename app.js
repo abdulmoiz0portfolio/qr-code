@@ -267,10 +267,18 @@ document.addEventListener('DOMContentLoaded', () => {
         explore_agency: 'Explore Services',
         type_url: 'URL Link',
         type_text: 'Text',
+        type_image: 'Image',
         type_wifi: 'Wi-Fi',
         type_vcard: 'vCard',
         type_social: 'Social Bio',
         type_email: 'Email',
+        mode_upload_image: 'Upload Image',
+        mode_image_url: 'Image Web URL',
+        label_image_file: 'Upload Image File (PNG, JPG, WebP, GIF, SVG)',
+        image_drag_drop: 'Click or Drag & Drop Image Here',
+        image_formats_hint: 'PNG, JPG, WebP, SVG or GIF (Optimized for QR)',
+        label_image_url: 'Hosted Image Web URL',
+        image_url_hint: 'Paste direct web image link (e.g. Unsplash, Imgur, Cloudinary, AWS S3)',
         content_header: 'QR Content & Information',
         label_destination_url: 'Destination Web URL',
         label_text_message: 'Text Message / Notes',
@@ -375,10 +383,18 @@ document.addEventListener('DOMContentLoaded', () => {
         explore_agency: 'سروسز دیکھیں',
         type_url: 'ویب سائٹ لنک',
         type_text: 'ٹیکسٹ',
+        type_image: 'تصویر / فوٹو',
         type_wifi: 'وائی فائی',
         type_vcard: 'رابطہ کارڈ',
         type_social: 'سوشل بائیو',
         type_email: 'ای میل',
+        mode_upload_image: 'تصویر اپ لوڈ کریں',
+        mode_image_url: 'تصویر کا ویب لنک',
+        label_image_file: 'تصویر فائل منتخب کریں (PNG, JPG, WebP, GIF)',
+        image_drag_drop: 'یہاں تصویر ڈریگ اینڈ ڈراپ کریں یا کلک کریں',
+        image_formats_hint: 'PNG, JPG, WebP, SVG یا GIF سپورٹ ہے',
+        label_image_url: 'آن لائن تصویر کا لنک',
+        image_url_hint: 'کسی بھی آن لائن تصویر کا براہ راست لنک پیسٹ کریں',
         content_header: 'QR مواد اور معلومات',
         label_destination_url: 'ویب سائٹ لنک',
         label_text_message: 'ٹیکسٹ میسج / نوٹس',
@@ -577,6 +593,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const state = {
     currentView: 'studio',
     currentType: 'url',
+    imageMode: 'upload',
+    uploadedImageData: null,
+    imageFileName: '',
+    imageFileSize: '',
     data: 'https://www.automatixes.com',
     dotsColor: '#4f46e5',
     bgColor: '#ffffff',
@@ -717,6 +737,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = document.getElementById('vcard-title').value.trim();
         return `BEGIN:VCARD\nVERSION:3.0\nN:${last};${first};;;\nFN:${first} ${last}\nORG:${org}\nTITLE:${title}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
       }
+      case 'image': {
+        if (state.imageMode === 'url') {
+          const url = document.getElementById('input-image-url').value.trim();
+          return url || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe';
+        } else {
+          return state.uploadedImageData || document.getElementById('input-image-url').value.trim() || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe';
+        }
+      }
       case 'social': {
         const platform = document.getElementById('social-platform').value;
         const handle = document.getElementById('social-handle').value.trim().replace(/^@/, '');
@@ -784,6 +812,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const forms = {
     url: document.getElementById('form-url'),
     text: document.getElementById('form-text'),
+    image: document.getElementById('form-image'),
     wifi: document.getElementById('form-wifi'),
     vcard: document.getElementById('form-vcard'),
     social: document.getElementById('form-social'),
@@ -805,6 +834,120 @@ document.addEventListener('DOMContentLoaded', () => {
       updateQRCode();
     });
   });
+
+  // ==========================================
+  // IMAGE QR CODE CONTROLLER (UPLOAD & URL)
+  // ==========================================
+  const imgModeUploadBtn = document.getElementById('img-mode-upload');
+  const imgModeUrlBtn = document.getElementById('img-mode-url');
+  const imgUploadSection = document.getElementById('image-upload-section');
+  const imgUrlSection = document.getElementById('image-url-section');
+  const inputImageFile = document.getElementById('input-image-file');
+  const inputImageUrl = document.getElementById('input-image-url');
+  const imageUploadPrompt = document.getElementById('image-upload-prompt');
+  const imagePreviewCard = document.getElementById('image-preview-card');
+  const imagePreviewThumb = document.getElementById('image-preview-thumb');
+  const imageFileNameEl = document.getElementById('image-file-name');
+  const imageFileDetailsEl = document.getElementById('image-file-details');
+  const removeImageFileBtn = document.getElementById('remove-image-file-btn');
+
+  if (imgModeUploadBtn && imgModeUrlBtn) {
+    imgModeUploadBtn.addEventListener('click', () => {
+      state.imageMode = 'upload';
+      imgModeUploadBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-xs transition flex items-center justify-center gap-1.5';
+      imgModeUrlBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5';
+      if (imgUploadSection) imgUploadSection.classList.remove('hidden');
+      if (imgUrlSection) imgUrlSection.classList.add('hidden');
+      updateQRCode();
+    });
+
+    imgModeUrlBtn.addEventListener('click', () => {
+      state.imageMode = 'url';
+      imgModeUrlBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-xs transition flex items-center justify-center gap-1.5';
+      imgModeUploadBtn.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5';
+      if (imgUrlSection) imgUrlSection.classList.remove('hidden');
+      if (imgUploadSection) imgUploadSection.classList.add('hidden');
+      updateQRCode();
+    });
+  }
+
+  if (inputImageFile) {
+    inputImageFile.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const rawDataUrl = ev.target.result;
+        
+        // Optimize / Compress image to ensure high-speed QR rendering
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 320;
+          let width = img.width;
+          let height = img.height;
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const optimizedDataUrl = file.type === 'image/svg+xml' 
+            ? rawDataUrl 
+            : canvas.toDataURL('image/jpeg', 0.65);
+
+          state.uploadedImageData = optimizedDataUrl;
+          state.imageFileName = file.name;
+          state.imageFileSize = `${(file.size / 1024).toFixed(1)} KB`;
+
+          if (imagePreviewThumb) imagePreviewThumb.src = optimizedDataUrl;
+          if (imageFileNameEl) imageFileNameEl.textContent = file.name;
+          if (imageFileDetailsEl) imageFileDetailsEl.textContent = `${state.imageFileSize} • ${width}x${height}px`;
+
+          if (imageUploadPrompt) imageUploadPrompt.classList.add('hidden');
+          if (imagePreviewCard) imagePreviewCard.classList.remove('hidden');
+
+          if (window.lucide) lucide.createIcons();
+          updateQRCode();
+          showToast(`Image loaded: ${file.name}`);
+        };
+        img.src = rawDataUrl;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  if (removeImageFileBtn) {
+    removeImageFileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      state.uploadedImageData = null;
+      state.imageFileName = '';
+      state.imageFileSize = '';
+      if (inputImageFile) inputImageFile.value = '';
+      if (imageUploadPrompt) imageUploadPrompt.classList.remove('hidden');
+      if (imagePreviewCard) imagePreviewCard.classList.add('hidden');
+      updateQRCode();
+      showToast('Image removed');
+    });
+  }
+
+  if (inputImageUrl) {
+    inputImageUrl.addEventListener('input', () => {
+      if (state.currentType === 'image') updateQRCode();
+    });
+  }
 
   // Color inputs
   const inputs = document.querySelectorAll('#view-studio input, #view-studio textarea, #view-studio select');
