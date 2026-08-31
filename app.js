@@ -792,6 +792,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (payloadEl) payloadEl.textContent = state.data;
       if (charCountEl) charCountEl.textContent = `${state.data.length} chars`;
 
+      const qrCanvasEl = document.getElementById('qr-canvas');
+      if (qrCanvasEl) {
+        qrCanvasEl.classList.add('compiling');
+        setTimeout(() => qrCanvasEl.classList.remove('compiling'), 120);
+      }
+
       qrCode.update({
         data: state.data,
         margin: parseInt(state.margin),
