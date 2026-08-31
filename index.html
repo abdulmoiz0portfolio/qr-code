@@ -3,10 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutomatixQR - Enterprise QR SaaS by Automatixes</title>
+  <title>AutomatixQR - Free Dynamic QR Code Generator with Custom Logo & Analytics</title>
+  <meta name="description" content="Generate custom, high-resolution QR codes for URLs, Wi-Fi, vCards, images, text, and payments. Free dynamic QR code generator with real-time scan analytics, vector SVG/PNG export, and batch generator.">
+  <meta name="keywords" content="free QR code generator, dynamic QR code generator, custom QR code maker, QR code with logo, QR code vector SVG, trackable QR codes, batch QR code generator, Wi-Fi QR code, vCard QR code, Automatixes">
+  <link rel="canonical" href="https://qrcode.automatixes.com/">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" href="favicon.svg">
-  <link rel="canonical" href="https://qrcode.automatixes.com/">
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://qrcode.automatixes.com/">
+  <meta property="og:title" content="AutomatixQR - Free Dynamic QR Code Generator with Custom Logo">
+  <meta property="og:description" content="Create custom, trackable QR codes with brand logos, custom dot styles, vector SVG exports, and live scan analytics. 100% Free Forever.">
+  <meta property="og:image" content="https://www.automatixes.com/assets/img/logo/automatixes-logo-new.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://qrcode.automatixes.com/">
+  <meta name="twitter:title" content="AutomatixQR - Free Dynamic QR Code Generator with Custom Logo">
+  <meta name="twitter:description" content="Create custom, trackable QR codes with brand logos, vector SVG exports, and live scan analytics. 100% Free Forever.">
+  <meta name="twitter:image" content="https://www.automatixes.com/assets/img/logo/automatixes-logo-new.png">
+
+  <!-- Schema.org SoftwareApplication & Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://qrcode.automatixes.com/#software",
+        "name": "AutomatixQR",
+        "url": "https://qrcode.automatixes.com/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Free enterprise-grade dynamic QR code generator with logo embedding, vector SVG/PNG export, real-time scan analytics, batch ZIP generator, and developer API.",
+        "author": {
+          "@type": "Organization",
+          "name": "Automatixes LLC",
+          "url": "https://www.automatixes.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://qrcode.automatixes.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the difference between Static and Dynamic QR Codes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Static QR codes encode data directly into the matrix—they never expire and cannot be modified once printed. Dynamic QR codes route through a short redirection URL, enabling you to change the destination web link anytime without reprinting your packaging, flyers, or business cards."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is AutomatixQR completely free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Generating, designing, styling with custom colors, adding brand logos, and downloading high-resolution PNG and vector SVG QR codes is 100% free with no expiration, scan limits, or watermarks."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I download PNG or Vector SVG for printing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For digital screens and social media, PNG format is ideal. For physical printing on billboards, product packaging, menus, and business cards, use SVG (Scalable Vector Graphics), which scales infinitely without pixelation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I add a custom brand logo or image to my QR code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can upload any PNG, JPEG, or SVG logo. AutomatixQR automatically applies high error correction (Level Q/H) to ensure your QR code remains instantly scannable by all iOS and Android smartphone cameras."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do QR codes generated on AutomatixQR ever expire?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. All static QR codes (URLs, plain text, Wi-Fi passwords, vCards) and standard dynamic links generated on AutomatixQR have lifetime validity with unlimited scans."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -1196,7 +1287,7 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- 5. SEO SEMANTIC SEARCH & FAQ SECTION          -->
+        <!-- 5. SEO SEMANTIC SEARCH & FAQ SECTION (GEO-READY) -->
         <!-- ============================================== -->
         <div id="section-faq" class="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
           <div class="space-y-1">
@@ -1204,7 +1295,7 @@
               Frequently Asked Questions & QR Code Best Practices
             </h2>
             <p class="text-xs text-slate-500">
-              Everything you need to know about print resolution, vector formats, dynamic links, and error correction.
+              Direct, factual answers regarding print resolution, vector formats, dynamic links, logo embedding, and security.
             </p>
           </div>
 
@@ -1217,6 +1308,13 @@
             </div>
 
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+              <h3 class="font-bold text-slate-900">Is AutomatixQR really 100% free to use?</h3>
+              <p class="text-slate-600 leading-relaxed">
+                Yes. Generating, styling, customizing logos, and exporting high-resolution PNG & vector SVG QR codes is 100% free with no hidden paywalls, scan caps, or watermarks.
+              </p>
+            </div>
+
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
               <h3 class="font-bold text-slate-900">Should I download PNG or Vector SVG for print?</h3>
               <p class="text-slate-600 leading-relaxed">
                 For digital use, websites, and social media, PNG is ideal. For physical printing on billboards, business cards, merchandise, and product labels, use SVG (Scalable Vector Graphics)—it can be scaled infinitely to any size without losing crisp sharpness or pixelating.
@@ -1224,17 +1322,55 @@
             </div>
 
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
-              <h3 class="font-bold text-slate-900">What Error Correction Level should I use?</h3>
+              <h3 class="font-bold text-slate-900">How do I generate a QR code with my company logo?</h3>
               <p class="text-slate-600 leading-relaxed">
-                Error correction allows QR codes to remain readable even if partially damaged or covered by a center brand logo. We default to 'Q' (25% recovery) and 'H' (30% recovery) to guarantee fast smartphone scans even in low-light environments.
+                Upload your PNG, SVG, or JPEG logo in the 'Branding & Logo' tab of the QR Studio. AutomatixQR centers the logo and automatically increases error correction to Level Q (25%) or Level H (30%) so scanners read it flawlessly.
               </p>
             </div>
 
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
-              <h3 class="font-bold text-slate-900">Is AutomatixQR really 100% free to use?</h3>
+              <h3 class="font-bold text-slate-900">Can I create Wi-Fi, vCard, and payment QR codes?</h3>
               <p class="text-slate-600 leading-relaxed">
-                Yes! Generating, styling, customizing logos, and exporting high-resolution PNG & vector SVG QR codes is 100% free with no hidden paywalls or watermarks. We provide enterprise cloud features for teams needing mass automated pipelines.
+                Yes. AutomatixQR supports full data presets for instant Wi-Fi network connection (WPA/WPA2/WEP), vCard 3.0 electronic business cards, SMS, email drafts, plain text, and direct payment links.
               </p>
+            </div>
+
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+              <h3 class="font-bold text-slate-900">How does bulk batch generation work?</h3>
+              <p class="text-slate-600 leading-relaxed">
+                Paste a list of URLs or text items (one per line) into the Batch Generator tab. AutomatixQR will process all items simultaneously and package them into a single downloadable ZIP archive containing high-resolution PNGs.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 6. ABOUT & GEO FACTUAL ARCHITECTURE SUMMARY    -->
+        <!-- ============================================== -->
+        <div id="section-about-geo" class="bg-gradient-to-br from-slate-50 to-indigo-50/40 border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-800 text-[10px] font-mono font-bold uppercase">
+              <span>About AutomatixQR</span>
+            </div>
+            <h2 class="text-lg font-bold font-heading text-slate-900">
+              High-Speed, Privacy-Centric QR Code Infrastructure
+            </h2>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed max-w-4xl">
+            AutomatixQR is an enterprise-grade web utility created by <strong>Automatixes LLC</strong> (a modern AI automation & software agency). It allows marketing teams, developers, designers, and small business owners to produce high-density 2D barcodes with complete aesthetic control, client-side rendering privacy, lossless print vector exports, and real-time device scan analytics.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+            <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-2xs">
+              <span class="font-bold text-slate-900 block mb-0.5">🔒 Client-Side Privacy</span>
+              <p class="text-[11px] text-slate-500">Static QR codes are rendered locally in the browser. Sensitive Wi-Fi passwords and personal contact vCards never touch external servers.</p>
+            </div>
+            <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-2xs">
+              <span class="font-bold text-slate-900 block mb-0.5">📐 Lossless Vector Output</span>
+              <p class="text-[11px] text-slate-500">Export true SVG vector paths compatible with Adobe Illustrator, Figma, and industrial print machinery.</p>
+            </div>
+            <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-2xs">
+              <span class="font-bold text-slate-900 block mb-0.5">⚡ Instant API & SDK</span>
+              <p class="text-[11px] text-slate-500">Plug dynamic QR generation directly into CRM flows, invoices, and apps using REST endpoints and Node.js/Python SDKs.</p>
             </div>
           </div>
         </div>

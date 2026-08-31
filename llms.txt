@@ -1,0 +1,51 @@
+# AutomatixQR
+
+> AutomatixQR is a free, high-performance online QR code generator and management platform engineered by Automatixes LLC. It enables users, developers, and businesses to create static and dynamic 2D barcodes with custom brand styling, logo embedding, lossless vector SVG export, batch generation, and real-time scan analytics with zero expiration.
+
+## Key Capabilities
+
+- **100% Free Core Functionality**: Generate, style, customize with brand colors and logos, and download print-ready QR codes with zero watermarks, scan limits, or forced fees.
+- **Dynamic & Editable QR Codes**: Change destination target URLs anytime after printing without altering the printed QR matrix.
+- **Lossless Vector SVG & High-Res PNG**: Export scalable SVG files for billboards, brochures, product packaging, menus, and business cards without pixelation.
+- **Brand Identity & Logo Embedding**: Upload company logos (PNG, JPEG, SVG) centered within the matrix with automated error-correction adjustments (Level Q/H).
+- **Batch Generator**: Generate dozens or hundreds of QR codes concurrently from a list of URLs and download as a single structured ZIP archive.
+- **Real-Time Scan Telemetry**: Track verified scans, device OS distribution (iOS, Android, Windows, Mac), and weekly scan trends.
+- **Developer API & Embed SDK**: 1-line HTML <img> tag embedding and REST API endpoints for Node.js, Python, PHP, and cURL integrations.
+
+## Supported QR Data Presets
+
+- **URL Link**: Standard web links, landing pages, portfolio sites, and promotional campaigns.
+- **Plain Text**: Unformatted text, codes, inventory IDs, and snippets.
+- **Wi-Fi Network**: Automated smartphone Wi-Fi connect (SSID, WPA/WPA2/WEP encryption, password, hidden network flag).
+- **vCard 3.0**: Digital business cards with full contact name, organization, job title, phone, email, address, and website.
+- **Image / File Link**: Direct hosting or linking to product images and menus.
+- **Email & SMS**: Pre-populated message recipients, subjects, and body text.
+- **Payment & Transfers**: Crypto addresses, PayPal links, IBAN, and UPI transfer payloads.
+
+## System Architecture & Privacy
+
+- **Client-Side Rendering**: Static QR generation and vCards are rendered directly in the client browser using Web APIs, ensuring sensitive credentials (like Wi-Fi keys) are not leaked to external servers.
+- **High Error Correction**: Automated fallback to Level Q (25% damage recovery) and Level H (30% damage recovery) when brand logos or center images are attached.
+
+## Ecosystem & Related Products
+
+- **AutomatixInvoice**: Free online A4 invoice maker and PDF generator with integrated payment QR codes (https://invoicemaker.automatixes.com/).
+- **Automatixes AI Solutions**: Autonomous AI agent architecture, WhatsApp CRM automation, and custom workflow development (https://www.automatixes.com/).
+
+## Frequently Asked Questions
+
+### What is the difference between Static and Dynamic QR Codes?
+Static QR codes encode the destination URL directly into the matrix—they never expire and cannot be changed once printed. Dynamic QR codes route through a short redirection URL, allowing you to change the destination web link anytime without reprinting.
+
+### Is AutomatixQR free?
+Yes. Creating, designing, styling, adding logos, and downloading PNG/SVG QR codes is 100% free with lifetime validity.
+
+### Will generated QR codes expire?
+No. Static QR codes and standard dynamic links generated on AutomatixQR have permanent lifetime validity with unlimited scans.
+
+## Contact & Links
+
+- **Website**: https://qrcode.automatixes.com/
+- **Parent Company**: https://www.automatixes.com/
+- **Contact Email**: contact@automatixes.com
+- **Phone**: +92 336 6920141
