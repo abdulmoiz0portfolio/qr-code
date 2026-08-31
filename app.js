@@ -1683,12 +1683,173 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (history.length === 0) {
       grid.innerHTML = `
-        <div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-          <i data-lucide="folder-open" class="w-10 h-10 mx-auto text-slate-400 mb-3"></i>
-          <p class="text-sm font-semibold text-slate-700">Your Library is empty</p>
-          <p class="text-xs text-slate-500 mt-1">Create a QR Code in Studio and click "Save to Library" to store it here.</p>
+        <div class="col-span-full bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-100 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 text-[10px] font-bold tracking-wide uppercase">
+                <i data-lucide="sparkles" class="w-3 h-3 text-indigo-600"></i>
+                <span>Smart Library Overview</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">Your Saved Library is Ready</h3>
+              <p class="text-xs text-slate-500">
+                You haven't saved any custom QR codes yet. Explore these pre-loaded interactive samples or load them directly into your library!
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="load-sample-demos-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-600/20 transition flex items-center gap-1.5 active:scale-95">
+                <i data-lucide="download-cloud" class="w-4 h-4"></i>
+                <span>Load 3 Sample QRs</span>
+              </button>
+              <button id="empty-create-qr-btn" class="px-3.5 py-2 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition flex items-center gap-1.5 active:scale-95">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Create in Studio</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3 Sample Demo QR Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            
+            <!-- Demo 1: Website URL -->
+            <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm space-y-3 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-50 text-indigo-700 uppercase">URL LINK</span>
+                  <span class="text-[10px] text-slate-400 font-mono">Sample Demo</span>
+                </div>
+                <div class="my-3 p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center">
+                  <div id="sample-demo-qr-1" class="w-28 h-28 flex items-center justify-center"></div>
+                </div>
+                <p class="text-xs font-bold text-slate-800">Automatixes Agency Portfolio</p>
+                <p class="text-[11px] font-mono text-slate-500 truncate">https://www.automatixes.com</p>
+              </div>
+              <button data-demo="url" class="sample-demo-open-btn w-full py-2 px-3 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 font-semibold text-xs rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95">
+                <i data-lucide="wand-2" class="w-3.5 h-3.5"></i> Open in Studio
+              </button>
+            </div>
+
+            <!-- Demo 2: vCard Contact -->
+            <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm space-y-3 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-50 text-rose-700 uppercase">VCARD</span>
+                  <span class="text-[10px] text-slate-400 font-mono">Sample Demo</span>
+                </div>
+                <div class="my-3 p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center">
+                  <div id="sample-demo-qr-2" class="w-28 h-28 flex items-center justify-center"></div>
+                </div>
+                <p class="text-xs font-bold text-slate-800">Executive Digital Business Card</p>
+                <p class="text-[11px] font-mono text-slate-500 truncate">Solutions Architect (+92 336 6920141)</p>
+              </div>
+              <button data-demo="vcard" class="sample-demo-open-btn w-full py-2 px-3 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 font-semibold text-xs rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95">
+                <i data-lucide="wand-2" class="w-3.5 h-3.5"></i> Open in Studio
+              </button>
+            </div>
+
+            <!-- Demo 3: Wi-Fi Access -->
+            <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm space-y-3 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-50 text-cyan-700 uppercase">WI-FI</span>
+                  <span class="text-[10px] text-slate-400 font-mono">Sample Demo</span>
+                </div>
+                <div class="my-3 p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center">
+                  <div id="sample-demo-qr-3" class="w-28 h-28 flex items-center justify-center"></div>
+                </div>
+                <p class="text-xs font-bold text-slate-800">Office Guest Wi-Fi Network</p>
+                <p class="text-[11px] font-mono text-slate-500 truncate">SSID: Office_Guest_WiFi</p>
+              </div>
+              <button data-demo="wifi" class="sample-demo-open-btn w-full py-2 px-3 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 font-semibold text-xs rounded-xl transition flex items-center justify-center gap-1.5 active:scale-95">
+                <i data-lucide="wand-2" class="w-3.5 h-3.5"></i> Open in Studio
+              </button>
+            </div>
+
+          </div>
         </div>
       `;
+
+      // Mount mini demo QRs
+      setTimeout(() => {
+        const d1 = document.getElementById('sample-demo-qr-1');
+        const d2 = document.getElementById('sample-demo-qr-2');
+        const d3 = document.getElementById('sample-demo-qr-3');
+        if (d1) {
+          d1.innerHTML = '';
+          new QRCodeStyling({ width: 110, height: 110, data: 'https://www.automatixes.com', dotsOptions: { color: '#4f46e5', type: 'rounded' } }).append(d1);
+        }
+        if (d2) {
+          d2.innerHTML = '';
+          new QRCodeStyling({ width: 110, height: 110, data: 'BEGIN:VCARD\nVERSION:3.0\nN:Baig;Moiz;;;\nFN:Abdul Moiz\nORG:Automatixes\nTEL:+923366920141\nEMAIL:contact@automatixes.com\nEND:VCARD', dotsOptions: { color: '#e11d48', type: 'extra-rounded' } }).append(d2);
+        }
+        if (d3) {
+          d3.innerHTML = '';
+          new QRCodeStyling({ width: 110, height: 110, data: 'WIFI:T:WPA;S:Office_Guest_WiFi;P:ConnectFast2026;;', dotsOptions: { color: '#0284c7', type: 'dots' } }).append(d3);
+        }
+      }, 50);
+
+      const emptyCreateBtn = document.getElementById('empty-create-qr-btn');
+      if (emptyCreateBtn) {
+        emptyCreateBtn.addEventListener('click', () => switchView('studio'));
+      }
+
+      const loadSamplesBtn = document.getElementById('load-sample-demos-btn');
+      if (loadSamplesBtn) {
+        loadSamplesBtn.addEventListener('click', () => {
+          const sampleHistory = [
+            {
+              id: 'qr_sample_1',
+              userId: user ? user.id : 'guest',
+              userEmail: user ? user.email : '',
+              type: 'url',
+              payload: 'https://www.automatixes.com',
+              preview: '',
+              dotsColor: '#4f46e5',
+              bgColor: '#ffffff',
+              dotType: 'rounded',
+              createdAt: new Date().toLocaleDateString()
+            },
+            {
+              id: 'qr_sample_2',
+              userId: user ? user.id : 'guest',
+              userEmail: user ? user.email : '',
+              type: 'vcard',
+              payload: 'BEGIN:VCARD\nVERSION:3.0\nN:Baig;Moiz;;;\nFN:Abdul Moiz\nORG:Automatixes\nTEL:+923366920141\nEMAIL:contact@automatixes.com\nEND:VCARD',
+              preview: '',
+              dotsColor: '#e11d48',
+              bgColor: '#ffffff',
+              dotType: 'extra-rounded',
+              createdAt: new Date().toLocaleDateString()
+            },
+            {
+              id: 'qr_sample_3',
+              userId: user ? user.id : 'guest',
+              userEmail: user ? user.email : '',
+              type: 'wifi',
+              payload: 'WIFI:T:WPA;S:Office_Guest_WiFi;P:ConnectFast2026;;',
+              preview: '',
+              dotsColor: '#0284c7',
+              bgColor: '#ffffff',
+              dotType: 'dots',
+              createdAt: new Date().toLocaleDateString()
+            }
+          ];
+          setSavedHistory(sampleHistory);
+          renderHistoryView();
+          showToast('Loaded 3 Sample QRs into your Library!');
+        });
+      }
+
+      document.querySelectorAll('.sample-demo-open-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const demoType = btn.getAttribute('data-demo');
+          const tab = document.querySelector(`[data-type="${demoType}"]`);
+          if (tab) tab.click();
+          switchView('studio');
+          updateQRCode();
+          showToast(`Opened ${demoType.toUpperCase()} in Studio!`);
+        });
+      });
+
       if (window.lucide) lucide.createIcons();
       return;
     }
@@ -2718,6 +2879,123 @@ echo "QR Code generated and saved!";
 
     btn.appendChild(circle);
     setTimeout(() => circle.remove(), 600);
+  });
+
+  // ==========================================
+  // ONBOARDING TOUR & USE-CASE PRESETS
+  // ==========================================
+  const tourBanner = document.getElementById('onboarding-tour-banner');
+  const dismissTourBtn = document.getElementById('dismiss-tour-btn');
+
+  if (localStorage.getItem('automatix_tour_dismissed') === 'true' && tourBanner) {
+    tourBanner.classList.add('hidden');
+  }
+
+  if (dismissTourBtn && tourBanner) {
+    dismissTourBtn.addEventListener('click', () => {
+      tourBanner.style.opacity = '0';
+      tourBanner.style.transform = 'translateY(-10px)';
+      tourBanner.style.transition = 'all 0.3s ease';
+      setTimeout(() => {
+        tourBanner.classList.add('hidden');
+        localStorage.setItem('automatix_tour_dismissed', 'true');
+      }, 300);
+    });
+  }
+
+  // Industry Use-Case Presets Click Handler
+  document.querySelectorAll('.use-case-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const usecase = card.getAttribute('data-usecase');
+      if (!usecase) return;
+
+      if (usecase === 'restaurant') {
+        const tab = document.querySelector('[data-type="url"]');
+        if (tab) tab.click();
+        const urlInput = document.getElementById('input-url');
+        if (urlInput) urlInput.value = 'https://www.automatixes.com/restaurant-menu-demo';
+        state.dotsColor = '#d97706';
+        state.bgColor = '#fffbeb';
+        state.cornerSquareColor = '#b45309';
+        state.cornerDotColor = '#f59e0b';
+        state.dotType = 'rounded';
+        showToast('Loaded Restaurant Digital Menu Preset!');
+      } else if (usecase === 'realestate') {
+        const tab = document.querySelector('[data-type="url"]');
+        if (tab) tab.click();
+        const urlInput = document.getElementById('input-url');
+        if (urlInput) urlInput.value = 'https://www.automatixes.com/property-tour-3d';
+        state.dotsColor = '#0284c7';
+        state.bgColor = '#f0f9ff';
+        state.cornerSquareColor = '#0369a1';
+        state.cornerDotColor = '#38bdf8';
+        state.dotType = 'extra-rounded';
+        showToast('Loaded Real Estate Property Showcase Preset!');
+      } else if (usecase === 'events') {
+        const tab = document.querySelector('[data-type="wifi"]');
+        if (tab) tab.click();
+        const ssidInput = document.getElementById('wifi-ssid');
+        const passInput = document.getElementById('wifi-password');
+        if (ssidInput) ssidInput.value = 'TechSummit_Guest_WiFi';
+        if (passInput) passInput.value = 'ConnectFast2026';
+        state.dotsColor = '#7c3aed';
+        state.bgColor = '#f5f3ff';
+        state.cornerSquareColor = '#6d28d9';
+        state.cornerDotColor = '#8b5cf6';
+        state.dotType = 'dots';
+        showToast('Loaded Event Check-in & Wi-Fi Preset!');
+      } else if (usecase === 'packaging') {
+        const tab = document.querySelector('[data-type="url"]');
+        if (tab) tab.click();
+        const urlInput = document.getElementById('input-url');
+        if (urlInput) urlInput.value = 'https://www.automatixes.com/verify-product?sku=ATX-900';
+        state.dotsColor = '#059669';
+        state.bgColor = '#ecfdf5';
+        state.cornerSquareColor = '#047857';
+        state.cornerDotColor = '#10b981';
+        state.dotType = 'classy';
+        showToast('Loaded Smart Packaging & Authenticity Preset!');
+      } else if (usecase === 'vcard') {
+        const tab = document.querySelector('[data-type="vcard"]');
+        if (tab) tab.click();
+        const fn = document.getElementById('vcard-first');
+        const ln = document.getElementById('vcard-last');
+        const org = document.getElementById('vcard-company');
+        const title = document.getElementById('vcard-job-title');
+        const tel = document.getElementById('vcard-phone');
+        const email = document.getElementById('vcard-email');
+        const web = document.getElementById('vcard-website');
+        if (fn) fn.value = 'Abdul';
+        if (ln) ln.value = 'Moiz';
+        if (org) org.value = 'Automatixes AI Solutions';
+        if (title) title.value = 'Principal Solutions Architect';
+        if (tel) tel.value = '+92 336 6920141';
+        if (email) email.value = 'contact@automatixes.com';
+        if (web) web.value = 'https://www.automatixes.com';
+        state.dotsColor = '#0f172a';
+        state.bgColor = '#ffffff';
+        state.cornerSquareColor = '#0f172a';
+        state.cornerDotColor = '#4f46e5';
+        state.dotType = 'rounded';
+        showToast('Loaded Executive vCard Business Card Preset!');
+      }
+
+      // Sync color inputs
+      const dotsColorInp = document.getElementById('qr-dots-color');
+      const dotsColorVal = document.getElementById('qr-dots-color-val');
+      const bgColorInp = document.getElementById('qr-bg-color');
+      const bgColorVal = document.getElementById('qr-bg-color-val');
+      if (dotsColorInp) dotsColorInp.value = state.dotsColor;
+      if (dotsColorVal) dotsColorVal.textContent = state.dotsColor.toUpperCase();
+      if (bgColorInp) bgColorInp.value = state.bgColor;
+      if (bgColorVal) bgColorVal.textContent = state.bgColor.toUpperCase();
+
+      switchView('studio');
+      updateQRCode();
+
+      // Smooth scroll to studio top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   });
 
   // Initial Startup
