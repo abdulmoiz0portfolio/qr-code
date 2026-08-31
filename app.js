@@ -575,7 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const savedTheme = localStorage.getItem(THEME_KEY);
-  if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  if (savedTheme === 'dark') {
     applyTheme(true);
   } else {
     applyTheme(false);
