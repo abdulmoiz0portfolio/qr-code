@@ -1,63 +1,70 @@
 /* ==========================================================================
-   AUTOMATIXQR - PRECISION OPTICAL DESIGN SYSTEM (HIGH-END AGENCY TIER)
-   Engineered for $150k+ Agency Digital Product Experience
+   AUTOMATIXQR - ENTERPRISE DESIGN SYSTEM (PRECISION REFINED UI)
+   Engineered for Crisp Contrast, Architectural Hierarchy & Clean Corners
    ========================================================================== */
 
 /* --- 1. DESIGN TOKENS & SYSTEM ROOT --- */
 :root {
-  /* Light Mode Palette: Crisp Porcelain & Electric Sapphire */
-  --qr-bg-canvas: #f8fafc;
-  --qr-surface-shell: rgba(241, 245, 249, 0.85);
+  /* Light Mode Palette: High-Contrast Technical Neutral & Crisp Charcoal */
+  --qr-bg-canvas: #f1f5f9;
+  --qr-surface-shell: #ffffff;
   --qr-surface-core: #ffffff;
   --qr-surface-elevated: #ffffff;
+  --qr-surface-muted: #f8fafc;
+  
   --qr-ink-primary: #0f172a;
-  --qr-ink-secondary: #475569;
+  --qr-ink-secondary: #334155;
   --qr-ink-muted: #64748b;
   --qr-ink-faint: #94a3b8;
   
-  --qr-accent-primary: #1d4ed8;
-  --qr-accent-glow: rgba(29, 78, 216, 0.25);
-  --qr-accent-neon: #0284c7;
+  --qr-accent-primary: #0f172a;
+  --qr-accent-brand: #4f46e5;
+  --qr-accent-glow: rgba(15, 23, 42, 0.08);
   --qr-accent-emerald: #059669;
   --qr-accent-amber: #d97706;
   
-  --qr-border-hairline: rgba(15, 23, 42, 0.08);
-  --qr-border-medium: rgba(15, 23, 42, 0.12);
-  --qr-border-highlight: rgba(255, 255, 255, 0.8);
+  --qr-border-hairline: #e2e8f0;
+  --qr-border-medium: #cbd5e1;
+  --qr-border-highlight: #ffffff;
   
-  --qr-shadow-ambient: 0 20px 40px -15px rgba(15, 23, 42, 0.06), 0 0 1px 1px rgba(15, 23, 42, 0.04);
-  --qr-shadow-bezel: 0 25px 60px -12px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-  --qr-shadow-hover: 0 30px 70px -10px rgba(29, 78, 216, 0.15);
+  --qr-radius-lg: 0.75rem; /* 12px clean corners */
+  --qr-radius-md: 0.5rem;  /* 8px inner corners */
+  --qr-radius-sm: 0.375rem; /* 6px controls */
+  
+  --qr-shadow-ambient: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  --qr-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --qr-shadow-hover: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
   
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-kinetic: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-/* Dark Mode Palette: OLED Obsidian Abyss & Cyber Glow */
+/* Dark Mode Palette: OLED Charcoal & Crisp Platinum */
 html.dark {
   color-scheme: dark;
-  --qr-bg-canvas: #05070d;
-  --qr-surface-shell: rgba(255, 255, 255, 0.04);
-  --qr-surface-core: #0a0f18;
-  --qr-surface-elevated: #101725;
+  --qr-bg-canvas: #090d16;
+  --qr-surface-shell: #0f172a;
+  --qr-surface-core: #0f172a;
+  --qr-surface-elevated: #1e293b;
+  --qr-surface-muted: #111827;
+  
   --qr-ink-primary: #f8fafc;
   --qr-ink-secondary: #cbd5e1;
   --qr-ink-muted: #94a3b8;
   --qr-ink-faint: #64748b;
   
-  --qr-accent-primary: #3b82f6;
-  --qr-accent-glow: rgba(59, 130, 246, 0.35);
-  --qr-accent-neon: #38bdf8;
+  --qr-accent-primary: #f8fafc;
+  --qr-accent-brand: #6366f1;
+  --qr-accent-glow: rgba(255, 255, 255, 0.1);
   --qr-accent-emerald: #10b981;
   --qr-accent-amber: #f59e0b;
   
-  --qr-border-hairline: rgba(255, 255, 255, 0.08);
-  --qr-border-medium: rgba(255, 255, 255, 0.14);
-  --qr-border-highlight: rgba(255, 255, 255, 0.12);
+  --qr-border-hairline: #1e293b;
+  --qr-border-medium: #334155;
+  --qr-border-highlight: rgba(255, 255, 255, 0.06);
   
-  --qr-shadow-ambient: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.05);
-  --qr-shadow-bezel: 0 30px 80px -15px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-  --qr-shadow-hover: 0 35px 80px -10px rgba(59, 130, 246, 0.25);
+  --qr-shadow-ambient: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  --qr-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --qr-shadow-hover: 0 8px 24px 0 rgba(0, 0, 0, 0.6);
 }
 
 /* --- 2. BASE SURFACE & TYPOGRAPHY ENGINE --- */
@@ -67,13 +74,13 @@ body {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s var(--ease-spring), color 0.3s var(--ease-spring);
+  transition: background-color 0.2s ease, color 0.2s ease;
   overflow-x: hidden;
 }
 
 h1, h2, h3, h4, .font-heading {
   font-family: 'Syne', system-ui, -apple-system, sans-serif;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 }
 
 .font-mono {
@@ -81,238 +88,254 @@ h1, h2, h3, h4, .font-heading {
   font-feature-settings: 'tnum' 1;
 }
 
-/* --- 3. DOUBLE-BEZEL (DOPPELRAND) NESTED ARCHITECTURE --- */
+/* --- 3. CLEAN CARD & SURFACE CONTAINERS --- */
 .bezel-shell {
-  background: var(--qr-surface-shell);
-  border: 1px solid var(--qr-border-hairline);
-  border-radius: 2rem;
-  padding: 0.5rem;
-  box-shadow: var(--qr-shadow-bezel);
-  transition: all 0.3s var(--ease-spring);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.bezel-shell:hover {
-  border-color: var(--qr-border-medium);
+  background: transparent;
+  border: none;
+  border-radius: var(--qr-radius-lg);
+  padding: 0;
+  box-shadow: none;
 }
 
 .bezel-core {
   background: var(--qr-surface-core);
-  border-radius: calc(2rem - 0.5rem);
+  border-radius: var(--qr-radius-lg);
   border: 1px solid var(--qr-border-hairline);
-  box-shadow: inset 0 1px 1px var(--qr-border-highlight);
-  transition: all 0.3s var(--ease-spring);
+  box-shadow: var(--qr-shadow-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* --- 4. BUTTON-IN-BUTTON (NESTED CTA ARCHITECTURE) --- */
+/* --- 4. CRISP TACTILE BUTTONS --- */
 .btn-luxury-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.625rem 1.25rem;
-  border-radius: 9999px;
-  font-weight: 700;
+  gap: 0.625rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--qr-radius-md);
+  font-weight: 600;
   font-size: 0.8125rem;
-  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s var(--ease-spring), background-color 0.2s ease;
+  transition: all 0.15s var(--ease-spring);
   position: relative;
-  overflow: hidden;
   user-select: none;
 }
 
 .btn-luxury-pill:active {
-  transform: scale(0.96) translateY(1px) !important;
+  transform: scale(0.98);
 }
 
 .btn-nested-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.625rem;
-  height: 1.625rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.18);
-  transition: transform 0.25s var(--ease-kinetic);
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: var(--qr-radius-sm);
+  background: rgba(255, 255, 255, 0.15);
+  transition: transform 0.2s var(--ease-spring);
 }
 
 .btn-luxury-pill:hover .btn-nested-icon {
-  transform: translate(2px, -2px) scale(1.1);
+  transform: scale(1.08);
 }
 
-/* --- 5. MICROSCOPIC EYEBROW TAGS --- */
+/* --- 5. MICRO STATUS & EYEBROW BADGES --- */
 .eyebrow-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.625rem;
+  gap: 0.375rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--qr-radius-sm);
+  font-size: 0.6875rem;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.06em;
   font-weight: 700;
   border: 1px solid var(--qr-border-hairline);
-  background: var(--qr-surface-shell);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: var(--qr-surface-muted);
 }
 
-/* --- 6. OPTICAL PRECISION CALIBRATION VIEWFINDER --- */
+/* --- 6. OPTICAL VIEWFINDER BENCH --- */
 .viewfinder-plate {
   position: relative;
-  background: var(--qr-surface-core);
+  background: var(--qr-surface-muted);
   border: 1px solid var(--qr-border-hairline);
-  border-radius: 1.75rem;
-  box-shadow: var(--qr-shadow-ambient);
+  border-radius: var(--qr-radius-md);
   overflow: hidden;
 }
 
 .viewfinder-corner {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border-color: var(--qr-accent-primary);
-  opacity: 0.85;
+  width: 10px;
+  height: 10px;
+  border-color: var(--qr-ink-muted);
+  opacity: 0.6;
   pointer-events: none;
-  transition: all 0.25s var(--ease-spring);
+  transition: all 0.2s ease;
 }
 
 .viewfinder-plate:hover .viewfinder-corner {
-  width: 16px;
-  height: 16px;
   opacity: 1;
-  filter: drop-shadow(0 0 6px var(--qr-accent-glow));
+  border-color: var(--qr-ink-primary);
 }
 
-.viewfinder-corner-tl { top: 14px; left: 14px; border-top: 2px solid; border-left: 2px solid; }
-.viewfinder-corner-tr { top: 14px; right: 14px; border-top: 2px solid; border-right: 2px solid; }
-.viewfinder-corner-bl { bottom: 14px; left: 14px; border-bottom: 2px solid; border-left: 2px solid; }
-.viewfinder-corner-br { bottom: 14px; right: 14px; border-bottom: 2px solid; border-right: 2px solid; }
+.viewfinder-corner-tl { top: 10px; left: 10px; border-top: 1.5px solid; border-left: 1.5px solid; }
+.viewfinder-corner-tr { top: 10px; right: 10px; border-top: 1.5px solid; border-right: 1.5px solid; }
+.viewfinder-corner-bl { bottom: 10px; left: 10px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+.viewfinder-corner-br { bottom: 10px; right: 10px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
 
-/* Real-Time Matrix Compilation Spring Physics */
+/* QR Canvas Compilation Animation */
 #qr-canvas {
-  transition: transform 0.22s var(--ease-spring), opacity 0.22s var(--ease-spring), filter 0.22s var(--ease-spring);
+  transition: transform 0.18s var(--ease-spring), opacity 0.18s ease;
   will-change: transform, opacity;
 }
 
 #qr-canvas.compiling {
-  transform: scale(0.96);
-  opacity: 0.75;
-  filter: blur(1.5px);
+  transform: scale(0.98);
+  opacity: 0.8;
 }
 
 #qr-canvas svg, #qr-canvas canvas {
   max-width: 100%;
   height: auto !important;
   display: block;
-  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.08));
 }
 
-/* --- 7. TACTILE NAVIGATION & TABS --- */
+/* --- 7. NAVIGATION & TABS --- */
 .nav-item {
   color: var(--qr-ink-secondary);
   background-color: transparent;
   border: 1px solid transparent;
-  border-radius: 0.875rem;
-  transition: all 0.2s var(--ease-spring);
+  border-radius: var(--qr-radius-md);
+  transition: all 0.15s ease;
 }
 
 .nav-item:hover {
   color: var(--qr-ink-primary);
-  background-color: var(--qr-surface-shell);
-  transform: translateX(3px);
+  background-color: var(--qr-surface-muted);
 }
 
 .nav-item.active {
-  color: var(--qr-accent-primary);
-  background-color: var(--qr-surface-shell);
+  color: var(--qr-ink-primary);
+  background-color: #ffffff;
   border-color: var(--qr-border-hairline);
   font-weight: 700;
-  box-shadow: 0 4px 15px var(--qr-accent-glow);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+html.dark .nav-item.active {
+  background-color: #1e293b;
+  color: #ffffff;
+  border-color: #334155;
 }
 
 .tab-btn {
   color: var(--qr-ink-muted);
   background-color: transparent;
   border: 1px solid transparent;
-  border-radius: 0.875rem;
-  transition: all 0.2s var(--ease-spring);
+  border-radius: var(--qr-radius-md);
+  transition: all 0.15s ease;
   font-weight: 600;
 }
 
 .tab-btn:hover {
   color: var(--qr-ink-primary);
-  background-color: var(--qr-surface-shell);
-  transform: translateY(-1px);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+html.dark .tab-btn:hover {
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .tab-btn.active {
-  color: var(--qr-accent-primary);
+  color: var(--qr-ink-primary);
   background-color: var(--qr-surface-core);
   border-color: var(--qr-border-hairline);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   font-weight: 700;
 }
 
 /* Preset Pills */
 .preset-pill {
-  border-radius: 0.75rem;
+  border-radius: var(--qr-radius-sm);
   border: 1px solid var(--qr-border-hairline);
-  background-color: var(--qr-surface-shell);
+  background-color: var(--qr-surface-core);
   color: var(--qr-ink-secondary);
-  transition: all 0.2s var(--ease-spring);
+  transition: all 0.15s ease;
 }
 
 .preset-pill:hover {
-  transform: translateY(-2px);
   border-color: var(--qr-border-medium);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
 }
 
 .preset-pill.active {
   border-color: var(--qr-accent-primary) !important;
-  background-color: var(--qr-surface-core) !important;
+  background-color: var(--qr-surface-muted) !important;
   color: var(--qr-accent-primary) !important;
   font-weight: 700;
-  box-shadow: 0 0 0 3px var(--qr-accent-glow);
 }
 
-/* Input Fields & Tactile Focus Rings */
+/* Inputs & Form Fields */
 input[type="text"], input[type="url"], input[type="email"], input[type="password"], textarea, select {
-  background-color: var(--qr-surface-shell);
+  background-color: #ffffff;
   color: var(--qr-ink-primary);
   border: 1px solid var(--qr-border-hairline);
-  border-radius: 0.875rem;
-  transition: all 0.2s var(--ease-spring);
+  border-radius: var(--qr-radius-md);
+  transition: all 0.15s ease;
+}
+
+html.dark input[type="text"], html.dark input[type="url"], html.dark input[type="email"], html.dark input[type="password"], html.dark textarea, html.dark select {
+  background-color: #0b0f19;
+  border-color: #1e293b;
+  color: #f8fafc;
 }
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  background-color: var(--qr-surface-core);
-  border-color: var(--qr-accent-primary) !important;
-  box-shadow: 0 0 0 3px var(--qr-accent-glow) !important;
+  border-color: #0f172a !important;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1) !important;
 }
 
-/* Color Pickers */
-input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
+html.dark input:focus, html.dark textarea:focus, html.dark select:focus {
+  border-color: #f8fafc !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15) !important;
 }
-input[type="color"]::-webkit-color-swatch {
+
+/* Modal Dialogs */
+.modal-backdrop:not(.hidden) {
+  display: flex !important;
+  animation: backdropIn 0.2s ease-out forwards;
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-dialog {
+  animation: modalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border-radius: var(--qr-radius-lg);
   border: 1px solid var(--qr-border-hairline);
-  border-radius: 0.5rem;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Precision Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--qr-ink-faint);
-  opacity: 0.4;
+  background: var(--qr-border-medium);
   border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--qr-ink-muted);
 }
