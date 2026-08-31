@@ -1,233 +1,318 @@
-/* AutomatixQR - Precision Optical Design System (Automatixes Family) */
+/* ==========================================================================
+   AUTOMATIXQR - PRECISION OPTICAL DESIGN SYSTEM (HIGH-END AGENCY TIER)
+   Engineered for $150k+ Agency Digital Product Experience
+   ========================================================================== */
 
+/* --- 1. DESIGN TOKENS & SYSTEM ROOT --- */
 :root {
+  /* Light Mode Palette: Crisp Porcelain & Electric Sapphire */
   --qr-bg-canvas: #f8fafc;
-  --qr-surface: #ffffff;
+  --qr-surface-shell: rgba(241, 245, 249, 0.85);
+  --qr-surface-core: #ffffff;
+  --qr-surface-elevated: #ffffff;
   --qr-ink-primary: #0f172a;
   --qr-ink-secondary: #475569;
-  --qr-accent-signal: #1d4ed8;
-  --qr-accent-active: #0284c7;
-  --qr-border-hairline: #e2e8f0;
+  --qr-ink-muted: #64748b;
+  --qr-ink-faint: #94a3b8;
+  
+  --qr-accent-primary: #1d4ed8;
+  --qr-accent-glow: rgba(29, 78, 216, 0.25);
+  --qr-accent-neon: #0284c7;
+  --qr-accent-emerald: #059669;
+  --qr-accent-amber: #d97706;
+  
+  --qr-border-hairline: rgba(15, 23, 42, 0.08);
+  --qr-border-medium: rgba(15, 23, 42, 0.12);
+  --qr-border-highlight: rgba(255, 255, 255, 0.8);
+  
+  --qr-shadow-ambient: 0 20px 40px -15px rgba(15, 23, 42, 0.06), 0 0 1px 1px rgba(15, 23, 42, 0.04);
+  --qr-shadow-bezel: 0 25px 60px -12px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  --qr-shadow-hover: 0 30px 70px -10px rgba(29, 78, 216, 0.15);
+  
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-kinetic: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-/* Base Body Surface */
+/* Dark Mode Palette: OLED Obsidian Abyss & Cyber Glow */
+html.dark {
+  color-scheme: dark;
+  --qr-bg-canvas: #05070d;
+  --qr-surface-shell: rgba(255, 255, 255, 0.04);
+  --qr-surface-core: #0a0f18;
+  --qr-surface-elevated: #101725;
+  --qr-ink-primary: #f8fafc;
+  --qr-ink-secondary: #cbd5e1;
+  --qr-ink-muted: #94a3b8;
+  --qr-ink-faint: #64748b;
+  
+  --qr-accent-primary: #3b82f6;
+  --qr-accent-glow: rgba(59, 130, 246, 0.35);
+  --qr-accent-neon: #38bdf8;
+  --qr-accent-emerald: #10b981;
+  --qr-accent-amber: #f59e0b;
+  
+  --qr-border-hairline: rgba(255, 255, 255, 0.08);
+  --qr-border-medium: rgba(255, 255, 255, 0.14);
+  --qr-border-highlight: rgba(255, 255, 255, 0.12);
+  
+  --qr-shadow-ambient: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+  --qr-shadow-bezel: 0 30px 80px -15px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  --qr-shadow-hover: 0 35px 80px -10px rgba(59, 130, 246, 0.25);
+}
+
+/* --- 2. BASE SURFACE & TYPOGRAPHY ENGINE --- */
 body {
   background-color: var(--qr-bg-canvas);
   color: var(--qr-ink-primary);
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s var(--ease-spring), color 0.3s var(--ease-spring);
+  overflow-x: hidden;
 }
 
-/* Headings with Syne Geometric Type */
-h1, h2, h3, .font-heading {
+h1, h2, h3, h4, .font-heading {
   font-family: 'Syne', system-ui, -apple-system, sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
-/* Monospace restricted to actual data, codes, hex values */
 .font-mono {
   font-family: 'JetBrains Mono', monospace;
   font-feature-settings: 'tnum' 1;
 }
 
-/* Precision Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+/* --- 3. DOUBLE-BEZEL (DOPPELRAND) NESTED ARCHITECTURE --- */
+.bezel-shell {
+  background: var(--qr-surface-shell);
+  border: 1px solid var(--qr-border-hairline);
+  border-radius: 2rem;
+  padding: 0.5rem;
+  box-shadow: var(--qr-shadow-bezel);
+  transition: all 0.3s var(--ease-spring);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-/* Optical Calibration Bench Viewfinder */
+.bezel-shell:hover {
+  border-color: var(--qr-border-medium);
+}
+
+.bezel-core {
+  background: var(--qr-surface-core);
+  border-radius: calc(2rem - 0.5rem);
+  border: 1px solid var(--qr-border-hairline);
+  box-shadow: inset 0 1px 1px var(--qr-border-highlight);
+  transition: all 0.3s var(--ease-spring);
+}
+
+/* --- 4. BUTTON-IN-BUTTON (NESTED CTA ARCHITECTURE) --- */
+.btn-luxury-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s var(--ease-spring), background-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.btn-luxury-pill:active {
+  transform: scale(0.96) translateY(1px) !important;
+}
+
+.btn-nested-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.18);
+  transition: transform 0.25s var(--ease-kinetic);
+}
+
+.btn-luxury-pill:hover .btn-nested-icon {
+  transform: translate(2px, -2px) scale(1.1);
+}
+
+/* --- 5. MICROSCOPIC EYEBROW TAGS --- */
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  border: 1px solid var(--qr-border-hairline);
+  background: var(--qr-surface-shell);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* --- 6. OPTICAL PRECISION CALIBRATION VIEWFINDER --- */
 .viewfinder-plate {
   position: relative;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
+  background: var(--qr-surface-core);
+  border: 1px solid var(--qr-border-hairline);
+  border-radius: 1.75rem;
+  box-shadow: var(--qr-shadow-ambient);
+  overflow: hidden;
 }
 
 .viewfinder-corner {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border-color: #94a3b8;
-  pointer-events: none;
-}
-.viewfinder-corner-tl { top: 12px; left: 12px; border-top: 1.5px solid; border-left: 1.5px solid; }
-.viewfinder-corner-tr { top: 12px; right: 12px; border-top: 1.5px solid; border-right: 1.5px solid; }
-.viewfinder-corner-bl { bottom: 12px; left: 12px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
-.viewfinder-corner-br { bottom: 12px; right: 12px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
-
-/* Responsive Micro-Interaction for compilation */
-#qr-canvas {
-  transition: transform 0.12s ease-out;
-}
-#qr-canvas.compiling {
-  transform: scale(0.985);
+  width: 12px;
+  height: 12px;
+  border-color: var(--qr-accent-primary);
   opacity: 0.85;
+  pointer-events: none;
+  transition: all 0.25s var(--ease-spring);
+}
+
+.viewfinder-plate:hover .viewfinder-corner {
+  width: 16px;
+  height: 16px;
+  opacity: 1;
+  filter: drop-shadow(0 0 6px var(--qr-accent-glow));
+}
+
+.viewfinder-corner-tl { top: 14px; left: 14px; border-top: 2px solid; border-left: 2px solid; }
+.viewfinder-corner-tr { top: 14px; right: 14px; border-top: 2px solid; border-right: 2px solid; }
+.viewfinder-corner-bl { bottom: 14px; left: 14px; border-bottom: 2px solid; border-left: 2px solid; }
+.viewfinder-corner-br { bottom: 14px; right: 14px; border-bottom: 2px solid; border-right: 2px solid; }
+
+/* Real-Time Matrix Compilation Spring Physics */
+#qr-canvas {
+  transition: transform 0.22s var(--ease-spring), opacity 0.22s var(--ease-spring), filter 0.22s var(--ease-spring);
+  will-change: transform, opacity;
+}
+
+#qr-canvas.compiling {
+  transform: scale(0.96);
+  opacity: 0.75;
+  filter: blur(1.5px);
 }
 
 #qr-canvas svg, #qr-canvas canvas {
   max-width: 100%;
   height: auto !important;
   display: block;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.08));
 }
 
-/* Navigation Items */
+/* --- 7. TACTILE NAVIGATION & TABS --- */
 .nav-item {
-  color: #475569;
+  color: var(--qr-ink-secondary);
   background-color: transparent;
   border: 1px solid transparent;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  border-radius: 0.875rem;
+  transition: all 0.2s var(--ease-spring);
 }
 
 .nav-item:hover {
-  color: #0f172a;
-  background-color: #f1f5f9;
+  color: var(--qr-ink-primary);
+  background-color: var(--qr-surface-shell);
+  transform: translateX(3px);
 }
 
 .nav-item.active {
-  color: #1d4ed8;
-  background-color: #eff6ff;
-  border-color: #bfdbfe;
-  font-weight: 600;
+  color: var(--qr-accent-primary);
+  background-color: var(--qr-surface-shell);
+  border-color: var(--qr-border-hairline);
+  font-weight: 700;
+  box-shadow: 0 4px 15px var(--qr-accent-glow);
 }
 
-/* Segmented Tab Buttons inside Studio */
 .tab-btn {
-  color: #64748b;
+  color: var(--qr-ink-muted);
   background-color: transparent;
   border: 1px solid transparent;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  border-radius: 0.875rem;
+  transition: all 0.2s var(--ease-spring);
+  font-weight: 600;
 }
 
 .tab-btn:hover {
-  color: #0f172a;
-  background-color: #f1f5f9;
+  color: var(--qr-ink-primary);
+  background-color: var(--qr-surface-shell);
+  transform: translateY(-1px);
 }
 
 .tab-btn.active {
-  color: #1d4ed8;
-  background-color: #eff6ff;
-  border-color: #bfdbfe;
-  font-weight: 600;
+  color: var(--qr-accent-primary);
+  background-color: var(--qr-surface-core);
+  border-color: var(--qr-border-hairline);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  font-weight: 700;
 }
 
 /* Preset Pills */
 .preset-pill {
-  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
-}
-.preset-pill.active {
-  border-color: #1d4ed8 !important;
-  background-color: #eff6ff !important;
-  color: #1d4ed8 !important;
-  font-weight: 600;
+  border-radius: 0.75rem;
+  border: 1px solid var(--qr-border-hairline);
+  background-color: var(--qr-surface-shell);
+  color: var(--qr-ink-secondary);
+  transition: all 0.2s var(--ease-spring);
 }
 
-/* Color Picker input */
+.preset-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--qr-border-medium);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.preset-pill.active {
+  border-color: var(--qr-accent-primary) !important;
+  background-color: var(--qr-surface-core) !important;
+  color: var(--qr-accent-primary) !important;
+  font-weight: 700;
+  box-shadow: 0 0 0 3px var(--qr-accent-glow);
+}
+
+/* Input Fields & Tactile Focus Rings */
+input[type="text"], input[type="url"], input[type="email"], input[type="password"], textarea, select {
+  background-color: var(--qr-surface-shell);
+  color: var(--qr-ink-primary);
+  border: 1px solid var(--qr-border-hairline);
+  border-radius: 0.875rem;
+  transition: all 0.2s var(--ease-spring);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  background-color: var(--qr-surface-core);
+  border-color: var(--qr-accent-primary) !important;
+  box-shadow: 0 0 0 3px var(--qr-accent-glow) !important;
+}
+
+/* Color Pickers */
 input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
 }
 input[type="color"]::-webkit-color-swatch {
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 6px;
+  border: 1px solid var(--qr-border-hairline);
+  border-radius: 0.5rem;
 }
 
-/* Focus Ring */
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: #1d4ed8 !important;
-  box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.15);
+/* Precision Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-
-/* Drag & Drop */
-#drop-zone.drag-active {
-  border-color: #1d4ed8 !important;
-  background-color: #eff6ff !important;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-/* Modal Dynamics */
-.modal-backdrop:not(.hidden) {
-  display: flex !important;
-  animation: backdropIn 0.2s ease-out forwards;
+::-webkit-scrollbar-thumb {
+  background: var(--qr-ink-faint);
+  opacity: 0.4;
+  border-radius: 9999px;
 }
-
-@keyframes backdropIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal-dialog {
-  animation: modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes modalIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Dark Mode Architecture */
-html.dark {
-  color-scheme: dark;
-}
-
-html.dark body {
-  background-color: #0b0f17 !important;
-  color: #f1f5f9 !important;
-}
-
-html.dark .viewfinder-plate {
-  background-color: #111827;
-  border-color: #1f2937;
-}
-
-html.dark .nav-item {
-  color: #94a3b8;
-}
-html.dark .nav-item:hover {
-  color: #ffffff;
-  background-color: #1e293b;
-}
-html.dark .nav-item.active {
-  color: #60a5fa;
-  background-color: #172554;
-  border-color: #1e40af;
-}
-
-html.dark .tab-btn {
-  color: #94a3b8;
-}
-html.dark .tab-btn:hover {
-  color: #ffffff;
-  background-color: #1e293b;
-}
-html.dark .tab-btn.active {
-  color: #60a5fa;
-  background-color: #172554;
-  border-color: #1e40af;
-}
-
-/* Accessibility & Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--qr-ink-muted);
 }
