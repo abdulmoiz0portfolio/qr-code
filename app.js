@@ -689,7 +689,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (targetView === 'admin') renderAdminView();
 
     if (window.lucide) lucide.createIcons();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.lenis) {
+      setTimeout(() => {
+        window.lenis.resize();
+        window.lenis.scrollTo(0, { immediate: true });
+      }, 50);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   navButtons.forEach(btn => {
