@@ -2,6 +2,21 @@
 <html lang="en" dir="ltr" class="light">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('automatix_qr_theme_mode_v2');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+        }
+      } catch(e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutomatixQR - Free Dynamic QR Code Generator with Custom Logo & Analytics</title>
   <meta name="description" content="Generate custom, high-resolution QR codes for URLs, Wi-Fi, vCards, images, text, and payments. Free dynamic QR code generator with real-time scan analytics, vector SVG/PNG export, and batch generator.">
@@ -142,7 +157,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- JSZip for Bulk/Batch ZIP Downloads -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -2022,7 +2037,7 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
   <!-- ============================================== -->
   <!-- OFFICIAL AUTOMATIXES FOOTER (Theme Aligned)    -->
   <!-- ============================================== -->
-  <footer class="bg-white text-slate-600 border-t border-slate-200/90 mt-auto pt-12 pb-8 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
+  <footer class="bg-white dark:bg-[#0b0f19] text-slate-600 dark:text-slate-400 border-t border-slate-200/90 dark:border-slate-800 mt-auto pt-12 pb-8 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
     <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-12">
         

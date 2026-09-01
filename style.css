@@ -339,3 +339,107 @@ html.dark input:focus, html.dark textarea:focus, html.dark select:focus {
   background: var(--qr-border-medium);
   border-radius: 9999px;
 }
+
+/* ==========================================
+   UNIVERSAL DARK MODE HIGH-CONTRAST ENGINE
+   ========================================== */
+html.dark {
+  background-color: #090d16;
+}
+
+html.dark body {
+  background-color: #090d16;
+  color: #f8fafc;
+}
+
+html.dark footer {
+  background-color: #0b0f19 !important;
+  color: #94a3b8 !important;
+  border-top-color: #1e293b !important;
+}
+
+html.dark footer h4 {
+  color: #f8fafc !important;
+}
+
+html.dark footer a:not(.btn-luxury-pill):not(.text-indigo-600) {
+  color: #94a3b8 !important;
+}
+
+html.dark footer a:hover {
+  color: #f8fafc !important;
+}
+
+html.dark .view-panel > div,
+html.dark .view-panel .grid > div:not(.bg-gradient-to-r) {
+  background-color: #0f172a;
+  border-color: #1e293b;
+  color: #cbd5e1;
+}
+
+html.dark .view-panel h2,
+html.dark .view-panel h3,
+html.dark .view-panel h4 {
+  color: #f8fafc;
+}
+
+html.dark table thead {
+  background-color: #0b0f19 !important;
+  border-bottom-color: #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+html.dark table tbody tr {
+  border-bottom-color: #1e293b !important;
+}
+
+html.dark table tbody td {
+  color: #cbd5e1 !important;
+}
+
+html.dark .modal-dialog > div,
+html.dark #dynamic-modal > div {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .modal-dialog h3,
+html.dark #dynamic-modal h3 {
+  color: #f8fafc !important;
+}
+
+html.dark #auth-modal .double-bezel-shell > div,
+html.dark #dynamic-qr-modal .double-bezel-shell > div,
+html.dark #admin-user-detail-modal .double-bezel-shell > div {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark #auth-tab-signin.bg-white {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+html.dark #auth-tab-signup.bg-white {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+html.dark #auth-modal .bg-slate-100\/90 {
+  background-color: #0b0f19 !important;
+  border-color: #1e293b !important;
+}
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #0b0f19 !important;
+  border-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark #qr-canvas {
+  background-color: #ffffff !important; /* QR code matrix always stays clean white canvas for scanner readability */
+}
