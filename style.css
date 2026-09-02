@@ -6,15 +6,15 @@
 
 /* --- 1. THEME TOKENS --- */
 :root {
-  /* LIGHT MODE */
-  --qr-bg-canvas: #f1f5f9;
+  /* COCONUT UI SOOTHING MATTE LIGHT THEME (ANTI-GLARE) */
+  --qr-bg-canvas: #edf1f7;
   --qr-surface-shell: #ffffff;
-  --qr-surface-core: #ffffff;
+  --qr-surface-core: #f8fafc;
   --qr-surface-elevated: #ffffff;
-  --qr-surface-muted: #f8fafc;
+  --qr-surface-muted: #e2e8f0;
   
-  --qr-ink-primary: #0f172a;
-  --qr-ink-secondary: #334155;
+  --qr-ink-primary: #1e293b;
+  --qr-ink-secondary: #475569;
   --qr-ink-muted: #64748b;
   --qr-ink-faint: #94a3b8;
   
@@ -26,19 +26,19 @@
   --qr-accent-amber: #d97706;
   --qr-accent-rose: #e11d48;
   
-  --qr-border-hairline: #cbd5e1;
+  --qr-border-hairline: #cfd8e3;
   --qr-border-medium: #94a3b8;
   --qr-border-highlight: #ffffff;
   
-  --qr-radius-xl: 12px;
-  --qr-radius-lg: 10px;
-  --qr-radius-md: 8px;
-  --qr-radius-sm: 6px;
+  --qr-radius-xl: 14px;
+  --qr-radius-lg: 12px;
+  --qr-radius-md: 10px;
+  --qr-radius-sm: 8px;
   --qr-radius-pill: 9999px;
   
-  --qr-shadow-ambient: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
-  --qr-shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 4px 14px -3px rgba(15, 23, 42, 0.04);
-  --qr-shadow-hover: 0 10px 25px -4px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(79, 70, 229, 0.3);
+  --qr-shadow-ambient: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+  --qr-shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 4px 14px -3px rgba(15, 23, 42, 0.03);
+  --qr-shadow-hover: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(79, 70, 229, 0.25);
   
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -429,15 +429,16 @@ input[type="text"], input[type="url"], input[type="email"], input[type="password
 }
 
 html:not(.dark) input[type="text"], html:not(.dark) input[type="url"], html:not(.dark) input[type="email"], html:not(.dark) input[type="password"], html:not(.dark) textarea, html:not(.dark) select {
-  background-color: #ffffff !important;
-  border: 1px solid #cbd5e1 !important;
-  color: #0f172a !important;
+  background-color: #fbfcfd !important;
+  border: 1px solid #cfd8e3 !important;
+  color: #1e293b !important;
 }
 
 html:not(.dark) input:focus, html:not(.dark) textarea:focus, html:not(.dark) select:focus {
   outline: none;
   border-color: #4f46e5 !important;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.18) !important;
+  background-color: #ffffff !important;
 }
 
 html.dark input[type="text"], html.dark input[type="url"], html.dark input[type="email"], html.dark input[type="password"], html.dark textarea, html.dark select {
@@ -451,21 +452,53 @@ html.dark input:focus, html.dark textarea:focus, html.dark select:focus {
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3) !important;
 }
 
-/* --- 11. TOP HEADER & NAVBAR --- */
+/* --- 11. TOP HEADER & NAVBAR (COCONUT FROSTED GLASS) --- */
 header {
   border-bottom: 1px solid var(--qr-border-hairline) !important;
 }
 
 html:not(.dark) header {
-  background-color: rgba(255, 255, 255, 0.95) !important;
+  background-color: rgba(237, 241, 247, 0.85) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(207, 216, 227, 0.8) !important;
+}
+
+html.dark header {
+  background-color: rgba(12, 12, 14, 0.9) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 
-html.dark header {
-  background-color: rgba(12, 12, 14, 0.95) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* ==========================================================================
+   COCONUT UI ANTI-GLARE & SOOTHING MATTE SURFACES
+   ========================================================================== */
+html:not(.dark) .bg-white:not(#qr-canvas):not(.qr-preview-code) {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-color: #d1d9e4 !important;
+}
+
+html:not(.dark) .bg-slate-50 {
+  background-color: #e6ecf4 !important;
+  border-color: #d1d9e4 !important;
+}
+
+html:not(.dark) .bg-slate-100 {
+  background-color: #dbe4ef !important;
+  border-color: #cad5e2 !important;
+}
+
+html:not(.dark) .border-slate-200,
+html:not(.dark) .border-slate-200\/90,
+html:not(.dark) .border-slate-200\/80 {
+  border-color: #d1d9e4 !important;
+}
+
+/* Tactile micro-transitions on interactive surfaces */
+.bklit-card, .bezel-core, #section-connected-suite, #section-faq, #section-about-geo, #section-pricing-comparison {
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s ease, border-color 0.2s ease !important;
 }
 
 /* --- 12. CLEAN SCROLLBARS --- */
