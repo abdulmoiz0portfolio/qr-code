@@ -1,70 +1,82 @@
 /* ==========================================================================
-   AUTOMATIXQR - ENTERPRISE DESIGN SYSTEM (PRECISION REFINED UI)
-   Engineered for Crisp Contrast, Architectural Hierarchy & Clean Corners
+   AUTOMATIXQR - BKLIT UI ENTERPRISE DESIGN SYSTEM
+   Minimalist Dark-Mode UI with High-Contrast Borders, Tactile Components,
+   and Modern Dashboard Primitives (Powered by Bklit UI)
    ========================================================================== */
 
 /* --- 1. DESIGN TOKENS & SYSTEM ROOT --- */
 :root {
-  /* Light Mode Palette: High-Contrast Technical Neutral & Crisp Charcoal */
-  --qr-bg-canvas: #f1f5f9;
+  /* Light Mode Palette: High-Contrast Technical Neutral & Crisp Zinc */
+  --qr-bg-canvas: #f4f4f5;
   --qr-surface-shell: #ffffff;
   --qr-surface-core: #ffffff;
   --qr-surface-elevated: #ffffff;
-  --qr-surface-muted: #f8fafc;
+  --qr-surface-muted: #fafafa;
   
-  --qr-ink-primary: #0f172a;
-  --qr-ink-secondary: #334155;
-  --qr-ink-muted: #64748b;
-  --qr-ink-faint: #94a3b8;
+  --qr-ink-primary: #09090b;
+  --qr-ink-secondary: #27272a;
+  --qr-ink-muted: #71717a;
+  --qr-ink-faint: #a1a1aa;
   
-  --qr-accent-primary: #0f172a;
+  --qr-accent-primary: #09090b;
   --qr-accent-brand: #4f46e5;
-  --qr-accent-glow: rgba(15, 23, 42, 0.08);
-  --qr-accent-emerald: #059669;
-  --qr-accent-amber: #d97706;
-  
-  --qr-border-hairline: #e2e8f0;
-  --qr-border-medium: #cbd5e1;
-  --qr-border-highlight: #ffffff;
-  
-  --qr-radius-lg: 0.75rem; /* 12px clean corners */
-  --qr-radius-md: 0.5rem;  /* 8px inner corners */
-  --qr-radius-sm: 0.375rem; /* 6px controls */
-  
-  --qr-shadow-ambient: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
-  --qr-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
-  --qr-shadow-hover: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-  
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Dark Mode Palette: OLED Charcoal & Crisp Platinum */
-html.dark {
-  color-scheme: dark;
-  --qr-bg-canvas: #090d16;
-  --qr-surface-shell: #0f172a;
-  --qr-surface-core: #0f172a;
-  --qr-surface-elevated: #1e293b;
-  --qr-surface-muted: #111827;
-  
-  --qr-ink-primary: #f8fafc;
-  --qr-ink-secondary: #cbd5e1;
-  --qr-ink-muted: #94a3b8;
-  --qr-ink-faint: #64748b;
-  
-  --qr-accent-primary: #f8fafc;
-  --qr-accent-brand: #6366f1;
-  --qr-accent-glow: rgba(255, 255, 255, 0.1);
+  --qr-accent-brand-hover: #4338ca;
+  --qr-accent-glow: rgba(79, 70, 229, 0.12);
   --qr-accent-emerald: #10b981;
   --qr-accent-amber: #f59e0b;
+  --qr-accent-rose: #f43f5e;
   
-  --qr-border-hairline: #1e293b;
-  --qr-border-medium: #334155;
-  --qr-border-highlight: rgba(255, 255, 255, 0.06);
+  --qr-border-hairline: #e4e4e7;
+  --qr-border-medium: #d4d4d8;
+  --qr-border-highlight: #ffffff;
+  --qr-border-contrast: #27272a;
   
-  --qr-shadow-ambient: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-  --qr-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-  --qr-shadow-hover: 0 8px 24px 0 rgba(0, 0, 0, 0.6);
+  --qr-radius-xl: 1rem;    /* 16px cards */
+  --qr-radius-lg: 0.75rem; /* 12px containers */
+  --qr-radius-md: 0.5rem;  /* 8px inner cards */
+  --qr-radius-sm: 0.375rem; /* 6px controls */
+  --qr-radius-pill: 9999px;
+  
+  --qr-shadow-ambient: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --qr-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+  --qr-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --qr-shadow-tactile: 0 2px 0 0 rgba(0, 0, 0, 0.08);
+  
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* BKLIT UI Dark Mode Palette: Obsidian Canvas, Zinc Surfaces & High-Contrast Borders */
+html.dark {
+  color-scheme: dark;
+  --qr-bg-canvas: #09090b;          /* Bklit Obsidian Canvas */
+  --qr-surface-shell: #0c0c0e;       /* Outer Dashboard Shell */
+  --qr-surface-core: #121215;        /* Primary Card Surface */
+  --qr-surface-elevated: #18181b;    /* Elevated Floating Elements */
+  --qr-surface-muted: #141418;       /* Subtle Recessed Inputs / Badges */
+  
+  --qr-ink-primary: #fafafa;         /* Crisp White */
+  --qr-ink-secondary: #e4e4e7;       /* Bright Zinc */
+  --qr-ink-muted: #a1a1aa;           /* Muted Zinc */
+  --qr-ink-faint: #52525b;           /* Dim Hairline */
+  
+  --qr-accent-primary: #fafafa;
+  --qr-accent-brand: #6366f1;        /* Electric Indigo */
+  --qr-accent-brand-hover: #818cf8;
+  --qr-accent-glow: rgba(99, 102, 241, 0.25);
+  --qr-accent-emerald: #10b981;
+  --qr-accent-amber: #fbbf24;
+  --qr-accent-rose: #f43f5e;
+  
+  --qr-border-hairline: #27272a;     /* Bklit High-Contrast Hairline */
+  --qr-border-medium: #3f3f46;       /* Medium Active Border */
+  --qr-border-highlight: rgba(255, 255, 255, 0.12); /* Top Edge Light Glint */
+  --qr-border-contrast: #52525b;
+  
+  --qr-shadow-ambient: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
+  --qr-shadow-card: 0 4px 12px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  --qr-shadow-hover: 0 12px 32px -4px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(99, 102, 241, 0.3);
+  --qr-shadow-tactile: 0 2px 0 0 rgba(0, 0, 0, 0.4);
 }
 
 /* --- 2. BASE SURFACE & TYPOGRAPHY ENGINE --- */
@@ -76,6 +88,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.2s ease, color 0.2s ease;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Bklit UI Subtle Geometric Grid Texture */
+html.dark body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  z-index: 0;
+  opacity: 0.75;
 }
 
 h1, h2, h3, h4, .font-heading {
@@ -94,51 +122,63 @@ p {
   font-variant-numeric: tabular-nums;
 }
 
-/* --- 3. CLEAN CARD & SURFACE CONTAINERS --- */
-.bezel-shell {
-  background: transparent;
-  border: none;
-  border-radius: var(--qr-radius-lg);
-  padding: 0;
-  box-shadow: none;
-}
-
-.view-panel {
-  min-height: 520px;
-}
-
-.bezel-core {
+/* --- 3. BKLIT UI HIGH-CONTRAST CARDS & CONTAINERS --- */
+.bklit-card, .bezel-core {
   background: var(--qr-surface-core);
   border-radius: var(--qr-radius-lg);
   border: 1px solid var(--qr-border-hairline);
   box-shadow: var(--qr-shadow-card);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s var(--ease-spring);
 }
 
-/* Interactive Card Elevation */
+html.dark .bklit-card, html.dark .bezel-core {
+  background: linear-gradient(180deg, #131317 0%, #0f0f12 100%);
+  border: 1px solid #27272a;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+.bezel-shell {
+  background: transparent;
+  border: none;
+  border-radius: var(--qr-radius-xl);
+  padding: 0;
+  box-shadow: none;
+  position: relative;
+  z-index: 1;
+}
+
+.view-panel {
+  min-height: 540px;
+}
+
+/* Interactive Card Elevation & Tactile Hover */
 .preset-card, .tool-card, #section-connected-suite .grid > div, #section-connected-suite .grid > a {
   transition: transform 0.2s var(--ease-spring), border-color 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--qr-radius-lg);
 }
 
 .preset-card:hover, .tool-card:hover, #section-connected-suite .grid > a:hover {
   transform: translateY(-2px);
-  border-color: rgba(79, 70, 229, 0.4) !important;
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08);
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  box-shadow: var(--qr-shadow-hover);
 }
 
 html.dark .preset-card:hover, html.dark .tool-card:hover, html.dark #section-connected-suite .grid > a:hover {
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
-  border-color: rgba(99, 102, 241, 0.5) !important;
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(99, 102, 241, 0.5);
+  border-color: #6366f1 !important;
 }
 
-/* --- 4. CRISP TACTILE BUTTONS & SPRING FEEDBACK --- */
-button, .btn, .btn-luxury-pill, .nav-item, .tab-btn, .preset-pill {
+/* --- 4. BKLIT TACTILE BUTTONS & SPRING FEEDBACK --- */
+button, .btn, .btn-luxury-pill, .nav-item, .tab-btn, .preset-pill, input[type="submit"] {
   transition: transform 0.15s var(--ease-spring), background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
   user-select: none;
+  position: relative;
+  outline: none;
 }
 
 button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:active, .preset-pill:active {
-  transform: scale(0.975) !important;
+  transform: scale(0.96) !important;
 }
 
 .btn-luxury-pill {
@@ -150,6 +190,8 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
   font-weight: 600;
   font-size: 0.8125rem;
   position: relative;
+  border: 1px solid var(--qr-border-hairline);
+  box-shadow: var(--qr-shadow-tactile);
 }
 
 .btn-nested-icon {
@@ -159,67 +201,111 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
   width: 1.375rem;
   height: 1.375rem;
   border-radius: var(--qr-radius-sm);
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
   transition: transform 0.2s var(--ease-spring);
 }
 
 .btn-luxury-pill:hover .btn-nested-icon {
-  transform: scale(1.08);
+  transform: scale(1.1);
 }
 
-/* --- 5. MICRO STATUS & EYEBROW BADGES --- */
-.eyebrow-pill {
+/* --- 5. BKLIT MICRO STATUS & EYEBROW BADGES --- */
+.eyebrow-pill, .bklit-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--qr-radius-sm);
+  padding: 0.225rem 0.625rem;
+  border-radius: var(--qr-radius-pill);
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
   border: 1px solid var(--qr-border-hairline);
   background: var(--qr-surface-muted);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
-/* --- 6. OPTICAL VIEWFINDER BENCH --- */
+html.dark .eyebrow-pill, html.dark .bklit-badge {
+  background: #18181b;
+  border: 1px solid #27272a;
+  color: #e4e4e7;
+}
+
+/* Badge Status Dot */
+.bklit-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.bklit-dot-live {
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.bklit-dot-brand {
+  background-color: #6366f1;
+  box-shadow: 0 0 8px #6366f1;
+}
+
+.bklit-dot-amber {
+  background-color: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+/* --- 6. OPTICAL VIEWFINDER & LIVE PREVIEW BENCH --- */
 .viewfinder-plate {
   position: relative;
   background: var(--qr-surface-muted);
   border: 1px solid var(--qr-border-hairline);
-  border-radius: var(--qr-radius-md);
+  border-radius: var(--qr-radius-lg);
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+html.dark .viewfinder-plate {
+  background: #09090b;
+  border: 1px solid #27272a;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .viewfinder-corner {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border-color: var(--qr-ink-muted);
-  opacity: 0.6;
+  width: 12px;
+  height: 12px;
+  border-color: var(--qr-ink-faint);
+  opacity: 0.7;
   pointer-events: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s var(--ease-spring);
 }
 
 .viewfinder-plate:hover .viewfinder-corner {
   opacity: 1;
-  border-color: var(--qr-ink-primary);
+  border-color: var(--qr-accent-brand);
+  width: 16px;
+  height: 16px;
 }
 
-.viewfinder-corner-tl { top: 10px; left: 10px; border-top: 1.5px solid; border-left: 1.5px solid; }
-.viewfinder-corner-tr { top: 10px; right: 10px; border-top: 1.5px solid; border-right: 1.5px solid; }
-.viewfinder-corner-bl { bottom: 10px; left: 10px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
-.viewfinder-corner-br { bottom: 10px; right: 10px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
+.viewfinder-corner-tl { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; }
+.viewfinder-corner-tr { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; }
+.viewfinder-corner-bl { bottom: 12px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; }
+.viewfinder-corner-br { bottom: 12px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; }
 
 /* QR Canvas Compilation Animation */
 #qr-canvas {
-  transition: transform 0.18s var(--ease-spring), opacity 0.18s ease;
+  transition: transform 0.2s var(--ease-spring), opacity 0.2s ease, box-shadow 0.2s ease;
   will-change: transform, opacity;
+  border-radius: var(--qr-radius-md);
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 #qr-canvas.compiling {
-  transform: scale(0.98);
-  opacity: 0.8;
+  transform: scale(0.97);
+  opacity: 0.75;
 }
 
 #qr-canvas svg, #qr-canvas canvas {
@@ -228,18 +314,20 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
   display: block;
 }
 
-/* --- 7. NAVIGATION & TABS --- */
+/* --- 7. BKLIT NAVIGATION & SEGMENTED TABS --- */
 .nav-item {
-  color: var(--qr-ink-secondary);
+  color: var(--qr-ink-muted);
   background-color: transparent;
   border: 1px solid transparent;
   border-radius: var(--qr-radius-md);
   transition: all 0.15s ease;
+  font-weight: 500;
 }
 
 .nav-item:hover {
   color: var(--qr-ink-primary);
   background-color: var(--qr-surface-muted);
+  border-color: var(--qr-border-hairline);
 }
 
 .nav-item.active {
@@ -247,13 +335,19 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
   background-color: #ffffff;
   border-color: var(--qr-border-hairline);
   font-weight: 700;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+html.dark .nav-item:hover {
+  background-color: #18181b;
+  border-color: #27272a;
 }
 
 html.dark .nav-item.active {
-  background-color: #1e293b;
+  background: linear-gradient(180deg, #27272a 0%, #1f1f23 100%);
   color: #ffffff;
-  border-color: #334155;
+  border-color: #3f3f46;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
 }
 
 .tab-btn {
@@ -267,11 +361,13 @@ html.dark .nav-item.active {
 
 .tab-btn:hover {
   color: var(--qr-ink-primary);
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 html.dark .tab-btn:hover {
-  background-color: rgba(255, 255, 255, 0.04);
+  color: #fafafa;
+  background-color: #1f1f23;
+  border-color: #27272a;
 }
 
 .tab-btn.active {
@@ -282,27 +378,50 @@ html.dark .tab-btn:hover {
   font-weight: 700;
 }
 
+html.dark .tab-btn.active {
+  background: linear-gradient(180deg, #27272a 0%, #1c1c20 100%);
+  color: #ffffff;
+  border-color: #3f3f46;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
 /* Preset Pills */
 .preset-pill {
-  border-radius: var(--qr-radius-sm);
+  border-radius: var(--qr-radius-pill);
   border: 1px solid var(--qr-border-hairline);
   background-color: var(--qr-surface-core);
   color: var(--qr-ink-secondary);
   transition: all 0.15s ease;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
 }
 
 .preset-pill:hover {
   border-color: var(--qr-border-medium);
+  transform: translateY(-1px);
+}
+
+html.dark .preset-pill {
+  background: #141418;
+  border-color: #27272a;
+  color: #a1a1aa;
+}
+
+html.dark .preset-pill:hover {
+  border-color: #52525b;
+  color: #fafafa;
 }
 
 .preset-pill.active {
-  border-color: var(--qr-accent-primary) !important;
-  background-color: var(--qr-surface-muted) !important;
-  color: var(--qr-accent-primary) !important;
+  border-color: var(--qr-accent-brand) !important;
+  background-color: var(--qr-accent-brand) !important;
+  color: #ffffff !important;
   font-weight: 700;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
 }
 
-/* Inputs & Form Fields */
+/* --- 8. INPUTS, FORM FIELDS & PALETTES --- */
 input[type="text"], input[type="url"], input[type="email"], input[type="password"], textarea, select {
   background-color: #ffffff;
   color: var(--qr-ink-primary);
@@ -312,43 +431,44 @@ input[type="text"], input[type="url"], input[type="email"], input[type="password
 }
 
 html.dark input[type="text"], html.dark input[type="url"], html.dark input[type="email"], html.dark input[type="password"], html.dark textarea, html.dark select {
-  background-color: #0b0f19;
-  border-color: #1e293b;
-  color: #f8fafc;
+  background-color: #0c0c0e !important;
+  border-color: #27272a !important;
+  color: #fafafa !important;
 }
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #0f172a !important;
-  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1) !important;
+  border-color: var(--qr-accent-brand) !important;
+  box-shadow: 0 0 0 2px var(--qr-accent-glow) !important;
 }
 
 html.dark input:focus, html.dark textarea:focus, html.dark select:focus {
-  border-color: #f8fafc !important;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15) !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3) !important;
 }
 
-/* Modal Dialogs */
+/* --- 9. BKLIT MODALS & DIALOGS --- */
 .modal-backdrop:not(.hidden) {
   display: flex !important;
   animation: backdropIn 0.2s ease-out forwards;
 }
 
 @keyframes backdropIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(12px); }
 }
 
 .modal-dialog {
-  animation: modalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  border-radius: var(--qr-radius-lg);
+  animation: modalIn 0.25s var(--ease-spring) forwards;
+  border-radius: var(--qr-radius-xl);
   border: 1px solid var(--qr-border-hairline);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6);
 }
 
 @keyframes modalIn {
   from {
     opacity: 0;
-    transform: translateY(8px) scale(0.99);
+    transform: translateY(12px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -356,119 +476,131 @@ html.dark input:focus, html.dark textarea:focus, html.dark select:focus {
   }
 }
 
-/* Precision Scrollbars */
+html.dark .modal-dialog, html.dark .double-bezel-shell {
+  background: #0f0f12 !important;
+  border: 1px solid #27272a !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* --- 10. PRECISION SCROLLBARS --- */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--qr-border-medium);
-  border-radius: 9999px;
+  background: var(--qr-border-hairline);
+  border-radius: var(--qr-radius-pill);
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
 
-/* ==========================================
-   UNIVERSAL DARK MODE HIGH-CONTRAST ENGINE
-   ========================================== */
+/* ==========================================================
+   UNIVERSAL DARK MODE HIGH-CONTRAST ENGINE (BKLIT UI TIED)
+   ========================================================== */
 html.dark {
-  background-color: #090d16;
+  background-color: #09090b;
 }
 
 html.dark body {
-  background-color: #090d16;
-  color: #f8fafc;
+  background-color: #09090b;
+  color: #fafafa;
 }
 
 html.dark footer {
-  background-color: #0b0f19 !important;
-  color: #94a3b8 !important;
-  border-top-color: #1e293b !important;
+  background-color: #0c0c0e !important;
+  color: #a1a1aa !important;
+  border-top: 1px solid #27272a !important;
 }
 
 html.dark footer h4 {
-  color: #f8fafc !important;
+  color: #fafafa !important;
 }
 
-html.dark footer a:not(.btn-luxury-pill):not(.text-indigo-600) {
-  color: #94a3b8 !important;
+html.dark footer a:not(.btn-luxury-pill):not(.text-indigo-400):not(.text-indigo-600) {
+  color: #a1a1aa !important;
 }
 
 html.dark footer a:hover {
-  color: #f8fafc !important;
+  color: #fafafa !important;
 }
 
 html.dark .view-panel > div,
 html.dark .view-panel .grid > div:not(.bg-gradient-to-r) {
-  background-color: #0f172a;
-  border-color: #1e293b;
-  color: #cbd5e1;
+  background-color: #121215;
+  border-color: #27272a;
+  color: #e4e4e7;
 }
 
 html.dark .view-panel h2,
 html.dark .view-panel h3,
 html.dark .view-panel h4 {
-  color: #f8fafc;
+  color: #fafafa;
 }
 
 html.dark table thead {
-  background-color: #0b0f19 !important;
-  border-bottom-color: #1e293b !important;
-  color: #94a3b8 !important;
+  background-color: #0c0c0e !important;
+  border-bottom: 1px solid #27272a !important;
+  color: #a1a1aa !important;
 }
 
 html.dark table tbody tr {
-  border-bottom-color: #1e293b !important;
+  border-bottom: 1px solid #27272a !important;
+}
+
+html.dark table tbody tr:hover {
+  background-color: #18181b !important;
 }
 
 html.dark table tbody td {
-  color: #cbd5e1 !important;
+  color: #e4e4e7 !important;
 }
 
 html.dark .modal-dialog > div,
 html.dark #dynamic-modal > div {
-  background-color: #0f172a !important;
-  border-color: #1e293b !important;
-  color: #cbd5e1 !important;
+  background-color: #121215 !important;
+  border-color: #27272a !important;
+  color: #e4e4e7 !important;
 }
 
 html.dark .modal-dialog h3,
 html.dark #dynamic-modal h3 {
-  color: #f8fafc !important;
+  color: #fafafa !important;
 }
 
 html.dark #auth-modal .double-bezel-shell > div,
 html.dark #dynamic-qr-modal .double-bezel-shell > div,
 html.dark #admin-user-detail-modal .double-bezel-shell > div {
-  background-color: #0f172a !important;
-  border-color: #1e293b !important;
-  color: #cbd5e1 !important;
+  background-color: #121215 !important;
+  border-color: #27272a !important;
+  color: #e4e4e7 !important;
 }
 
-html.dark #auth-tab-signin.bg-white {
-  background-color: #1e293b !important;
-  color: #ffffff !important;
-}
-
-html.dark #auth-tab-signup.bg-white {
-  background-color: #1e293b !important;
+html.dark #auth-tab-signin.bg-white, html.dark #auth-tab-signup.bg-white {
+  background-color: #27272a !important;
   color: #ffffff !important;
 }
 
 html.dark #auth-modal .bg-slate-100\/90 {
-  background-color: #0b0f19 !important;
-  border-color: #1e293b !important;
+  background-color: #0c0c0e !important;
+  border-color: #27272a !important;
 }
 
-html.dark input,
-html.dark textarea,
-html.dark select {
-  background-color: #0b0f19 !important;
-  border-color: #1e293b !important;
-  color: #f8fafc !important;
+/* Top App Header & Navbar Precision */
+html.dark header, html.dark nav[data-nav-header] {
+  background-color: rgba(12, 12, 14, 0.85) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid #27272a !important;
 }
 
-html.dark #qr-canvas {
-  background-color: #ffffff !important; /* QR code matrix always stays clean white canvas for scanner readability */
+html.dark .sidebar-dock {
+  background-color: #0c0c0e;
+  border-right: 1px solid #27272a;
 }
