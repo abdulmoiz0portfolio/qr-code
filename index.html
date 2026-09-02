@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="light">
+<html lang="en" dir="ltr" class="dark">
 <head>
   <!-- Google Consent Mode v2 (must fire BEFORE gtag.js) -->
   <script>
@@ -32,13 +32,12 @@
     (function() {
       try {
         var saved = localStorage.getItem('automatix_qr_theme_mode_v2');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (saved === 'dark' || (!saved && prefersDark)) {
+        if (saved === 'light') {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        } else {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
-        } else {
-          document.documentElement.classList.remove('dark');
-          document.documentElement.classList.add('light');
         }
       } catch(e) {}
     })();

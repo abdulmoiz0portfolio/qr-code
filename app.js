@@ -593,10 +593,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const savedTheme = localStorage.getItem(THEME_KEY);
-  if (savedTheme === 'dark') {
-    applyTheme(true);
-  } else {
+  if (savedTheme === 'light') {
     applyTheme(false);
+  } else {
+    applyTheme(true);
   }
 
   if (themeToggleBtn) {
