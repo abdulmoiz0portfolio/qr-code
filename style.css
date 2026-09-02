@@ -1,186 +1,254 @@
 /* ==========================================================================
-   AUTOMATIXQR - INDUSTRIAL BRUTALIST & TACTICAL TELEMETRY DESIGN SYSTEM
-   Raw Mechanical Precision • Industrial Steel Grey Substrates • Zero Plain White Glare
-   Swiss Typographic Blueprint & Tactical Telemetry Terminal Engine
+   AUTOMATIXQR - ENTERPRISE HIGH-CONTRAST DUAL-THEME ENGINE (PIXEL PERFECT)
+   Engineered with Plus Jakarta Sans & Outfit Typography
+   Flawless Dark Mode (Obsidian Zinc) & Light Mode (Technical Slate)
    ========================================================================== */
 
-/* --- 1. INDUSTRIAL DESIGN TOKENS --- */
+/* --- 1. THEME TOKENS --- */
 :root {
-  /* LIGHT/CONCRETE MODE: Matte Industrial Blueprint & Cement Grey (No Harsh White) */
-  --qr-bg-canvas: #dcdfe6;             /* Matte Technical Concrete Grey */
-  --qr-surface-shell: #e7e9ee;          /* Milled Aluminum Panel */
-  --qr-surface-core: #eaecf1;           /* Industrial Grey Substrate */
-  --qr-surface-elevated: #f0f2f6;       /* Elevated Machine Housing */
-  --qr-surface-muted: #d0d4dc;          /* Recessed Panel */
+  /* LIGHT MODE */
+  --qr-bg-canvas: #f1f5f9;
+  --qr-surface-shell: #ffffff;
+  --qr-surface-core: #ffffff;
+  --qr-surface-elevated: #ffffff;
+  --qr-surface-muted: #f8fafc;
   
-  --qr-ink-primary: #121316;            /* Carbon Black Heavy Ink */
-  --qr-ink-secondary: #2b2e38;          /* Machine Tool Charcoal */
-  --qr-ink-muted: #585e6f;              /* Industrial Spec Grey */
-  --qr-ink-faint: #8890a2;              /* Hairline Stencil */
+  --qr-ink-primary: #0f172a;
+  --qr-ink-secondary: #334155;
+  --qr-ink-muted: #64748b;
+  --qr-ink-faint: #94a3b8;
   
-  --qr-accent-primary: #121316;
-  --qr-accent-brand: #3b49df;           /* Industrial Cobalt */
-  --qr-accent-hazard: #e62e2e;          /* Aviation Hazard Red */
-  --qr-accent-amber: #d97706;           /* Warning Amber */
-  --qr-accent-emerald: #059669;         /* Telemetry Green */
+  --qr-accent-primary: #0f172a;
+  --qr-accent-brand: #4f46e5;
+  --qr-accent-brand-hover: #4338ca;
+  --qr-accent-glow: rgba(79, 70, 229, 0.15);
+  --qr-accent-emerald: #059669;
+  --qr-accent-amber: #d97706;
+  --qr-accent-rose: #e11d48;
   
-  --qr-border-hairline: #b0b6c4;        /* Rigid Mechanical Border */
-  --qr-border-medium: #838c9e;          /* Medium Structural Dividing Line */
-  --qr-border-contrast: #121316;        /* Heavy Stencil Border */
+  --qr-border-hairline: #cbd5e1;
+  --qr-border-medium: #94a3b8;
+  --qr-border-highlight: #ffffff;
   
-  --qr-radius-xl: 8px;                  /* Industrial Machine Bevels */
-  --qr-radius-lg: 6px;
-  --qr-radius-md: 4px;
-  --qr-radius-sm: 2px;
-  --qr-radius-pill: 4px;                /* Rigid Technical Brackets */
+  --qr-radius-xl: 12px;
+  --qr-radius-lg: 10px;
+  --qr-radius-md: 8px;
+  --qr-radius-sm: 6px;
+  --qr-radius-pill: 9999px;
   
-  --qr-shadow-ambient: 0 2px 8px rgba(18, 19, 22, 0.08);
-  --qr-shadow-card: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 2px 4px rgba(18, 19, 22, 0.06);
-  --qr-shadow-hover: 0 4px 12px rgba(18, 19, 22, 0.12);
-  --qr-shadow-tactile: 0 2px 0 0 #838c9e;
+  --qr-shadow-ambient: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  --qr-shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 4px 14px -3px rgba(15, 23, 42, 0.04);
+  --qr-shadow-hover: 0 10px 25px -4px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(79, 70, 229, 0.3);
   
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* DARK TACTICAL MODE: Milled Carbon Alloy & CRT Telemetry (Default) */
+/* DARK MODE */
 html.dark {
   color-scheme: dark;
-  --qr-bg-canvas: #121316;             /* Dark Industrial Carbon Canvas */
-  --qr-surface-shell: #18191f;          /* Milled Steel Chassis */
-  --qr-surface-core: #1e1f26;           /* Heavy Machine Panel */
-  --qr-surface-elevated: #262832;       /* Raised Terminal Block */
-  --qr-surface-muted: #15161c;          /* Recessed Gauge Housing */
+  --qr-bg-canvas: #09090b;
+  --qr-surface-shell: #0c0c0e;
+  --qr-surface-core: #121215;
+  --qr-surface-elevated: #18181b;
+  --qr-surface-muted: #141418;
   
-  --qr-ink-primary: #e6e8ee;            /* Phosphor White-Grey */
-  --qr-ink-secondary: #b8bcc8;          /* Anodized Titanium Grey */
-  --qr-ink-muted: #7e8597;              /* Telemetry Legend Grey */
-  --qr-ink-faint: #434756;              /* Machine Frame Divider */
+  --qr-ink-primary: #fafafa;
+  --qr-ink-secondary: #e4e4e7;
+  --qr-ink-muted: #a1a1aa;
+  --qr-ink-faint: #52525b;
   
-  --qr-accent-primary: #e6e8ee;
-  --qr-accent-brand: #6366f1;           /* Electric Signal Violet */
-  --qr-accent-hazard: #ff3838;          /* Aviation Hazard Red */
-  --qr-accent-amber: #f59e0b;           /* Status Amber */
-  --qr-accent-emerald: #10b981;         /* HUD Phosphor Green */
+  --qr-accent-primary: #fafafa;
+  --qr-accent-brand: #6366f1;
+  --qr-accent-brand-hover: #818cf8;
+  --qr-accent-glow: rgba(99, 102, 241, 0.25);
+  --qr-accent-emerald: #10b981;
+  --qr-accent-amber: #fbbf24;
+  --qr-accent-rose: #f43f5e;
   
-  --qr-border-hairline: #2e303d;        /* Heavy Modular Dividing Lines */
-  --qr-border-medium: #45495c;          /* Structural Steel Grid */
+  --qr-border-hairline: #27272a;
+  --qr-border-medium: #3f3f46;
   --qr-border-highlight: rgba(255, 255, 255, 0.08);
-  --qr-border-contrast: #6b7280;
   
-  --qr-shadow-ambient: 0 8px 30px rgba(0, 0, 0, 0.7);
-  --qr-shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 4px 16px rgba(0, 0, 0, 0.5);
-  --qr-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 0 1px #6366f1;
-  --qr-shadow-tactile: 0 2px 0 0 #000000;
+  --qr-shadow-ambient: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
+  --qr-shadow-card: 0 4px 14px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  --qr-shadow-hover: 0 10px 28px -4px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(99, 102, 241, 0.4);
 }
 
-/* --- 2. BASE SURFACE & TECHNICAL BLUEPRINT MESH --- */
+/* --- 2. TYPOGRAPHY & BASE --- */
 body {
-  background-color: var(--qr-bg-canvas);
-  color: var(--qr-ink-primary);
-  font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace, sans-serif;
+  background-color: var(--qr-bg-canvas) !important;
+  color: var(--qr-ink-primary) !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
   overflow-x: hidden;
-  position: relative;
-}
-
-/* Technical Blueprint Grid Pattern */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background-image: 
-    linear-gradient(to right, rgba(100, 116, 139, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(100, 116, 139, 0.07) 1px, transparent 1px);
-  background-size: 24px 24px;
-  z-index: 0;
-}
-
-html.dark body::before {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
 h1, h2, h3, h4, .font-heading {
-  font-family: 'Outfit', 'JetBrains Mono', sans-serif;
-  letter-spacing: -0.03em;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: -0.025em;
+  text-transform: none !important;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 .font-mono, .tabular-nums {
   font-family: 'JetBrains Mono', monospace !important;
   font-feature-settings: 'tnum' 1;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
 }
 
-/* --- 3. INDUSTRIAL CARDS & MACHINE PLATES --- */
+/* --- 3. CARDS & CONTAINERS --- */
 .bklit-card, .bezel-core {
   background: var(--qr-surface-core);
   border-radius: var(--qr-radius-lg);
   border: 1px solid var(--qr-border-hairline);
   box-shadow: var(--qr-shadow-card);
-  position: relative;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s var(--ease-spring);
 }
 
-/* Industrial Corner Crosshairs (+) */
-.bezel-core::before {
-  content: "+";
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--qr-ink-faint);
-  pointer-events: none;
+html:not(.dark) .bklit-card, html:not(.dark) .bezel-core {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
 }
 
-.bezel-shell {
-  background: transparent;
-  border: none;
-  border-radius: var(--qr-radius-xl);
-  padding: 0;
-  box-shadow: none;
-  position: relative;
-  z-index: 1;
+html.dark .bklit-card, html.dark .bezel-core {
+  background: linear-gradient(180deg, #131317 0%, #0f0f12 100%);
+  border: 1px solid #27272a;
 }
 
 .view-panel {
   min-height: 540px;
 }
 
-/* Interactive Card Machine Elevation */
-.preset-card, .tool-card, #section-connected-suite .grid > div, #section-connected-suite .grid > a {
-  transition: transform 0.15s var(--ease-spring), border-color 0.15s ease, background-color 0.15s ease;
+/* --- 4. NAVIGATION TABS (FIXED NO-WRAP & CLEAN ALIGNMENT) --- */
+.tab-btn {
   border-radius: var(--qr-radius-md);
-  border: 1px solid var(--qr-border-hairline);
-  background-color: var(--qr-surface-core);
+  transition: all 0.15s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  white-space: nowrap !important;
+  user-select: none;
+  border: 1px solid transparent;
 }
 
-.preset-card:hover, .tool-card:hover, #section-connected-suite .grid > a:hover {
-  transform: translateY(-2px);
-  border-color: var(--qr-accent-brand) !important;
-  background-color: var(--qr-surface-elevated) !important;
+/* Tab Inactive (Light Mode) */
+html:not(.dark) .tab-btn {
+  color: #475569;
+  background-color: #ffffff;
+  border-color: #cbd5e1;
 }
 
-/* --- 4. TACTILE MECHANICAL BUTTONS --- */
+html:not(.dark) .tab-btn:hover {
+  color: #0f172a;
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* Tab Active (Light Mode) */
+html:not(.dark) .tab-btn.active {
+  color: #ffffff !important;
+  background-color: #0f172a !important;
+  border-color: #0f172a !important;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.15) !important;
+}
+
+html:not(.dark) .tab-btn.active i, html:not(.dark) .tab-btn.active span {
+  color: #ffffff !important;
+}
+
+/* Tab Inactive (Dark Mode) */
+html.dark .tab-btn {
+  color: #a1a1aa;
+  background-color: #141418;
+  border-color: #27272a;
+}
+
+html.dark .tab-btn:hover {
+  color: #fafafa;
+  background-color: #1c1c22;
+  border-color: #3f3f46;
+}
+
+/* Tab Active (Dark Mode) */
+html.dark .tab-btn.active {
+  color: #ffffff !important;
+  background: linear-gradient(180deg, #27272a 0%, #1a1a20 100%) !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+html.dark .tab-btn.active i, html.dark .tab-btn.active span {
+  color: #ffffff !important;
+}
+
+/* --- 5. SIDEBAR NAVIGATION --- */
+.nav-item {
+  border-radius: var(--qr-radius-md);
+  transition: all 0.15s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  text-transform: none !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  border: 1px solid transparent;
+}
+
+/* Nav Item (Light Mode) */
+html:not(.dark) .nav-item {
+  color: #334155;
+}
+
+html:not(.dark) .nav-item:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+html:not(.dark) .nav-item.active {
+  color: #ffffff !important;
+  background-color: #0f172a !important;
+  border-color: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12) !important;
+}
+
+html:not(.dark) .nav-item.active i, html:not(.dark) .nav-item.active span {
+  color: #ffffff !important;
+}
+
+/* Nav Item (Dark Mode) */
+html.dark .nav-item {
+  color: #a1a1aa;
+}
+
+html.dark .nav-item:hover {
+  color: #fafafa;
+  background-color: #18181b;
+}
+
+html.dark .nav-item.active {
+  color: #ffffff !important;
+  background-color: #27272a !important;
+  border-color: #3f3f46 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark .nav-item.active i, html.dark .nav-item.active span {
+  color: #ffffff !important;
+}
+
+/* --- 6. BUTTONS & MICRO-INTERACTIONS --- */
 button, .btn, .btn-luxury-pill, .nav-item, .tab-btn, .preset-pill, input[type="submit"] {
-  transition: transform 0.1s var(--ease-spring), background-color 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease, color 0.1s ease;
+  transition: transform 0.12s var(--ease-spring), background-color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, color 0.12s ease;
   user-select: none;
   outline: none;
-  border-radius: var(--qr-radius-md);
 }
 
 button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:active, .preset-pill:active {
-  transform: scale(0.96) translateY(1px) !important;
+  transform: scale(0.96) !important;
 }
 
 .btn-luxury-pill {
@@ -191,33 +259,19 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
   border-radius: var(--qr-radius-md);
   font-weight: 700;
   font-size: 0.8125rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-family: 'JetBrains Mono', monospace;
-  border: 1px solid var(--qr-border-hairline);
 }
 
-.btn-nested-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: var(--qr-radius-sm);
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* --- 5. TACTICAL TELEMETRY STATUS BADGES --- */
+/* --- 7. STATUS BADGES & EYEBROW PILLS --- */
 .eyebrow-pill, .bklit-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--qr-radius-sm);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--qr-radius-pill);
   font-size: 0.6875rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 800;
+  letter-spacing: 0.05em;
+  font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
   border: 1px solid var(--qr-border-hairline);
   background: var(--qr-surface-muted);
@@ -226,7 +280,7 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
 .bklit-dot {
   width: 6px;
   height: 6px;
-  border-radius: 1px; /* Square Pixel Dot */
+  border-radius: 50%;
   display: inline-block;
 }
 
@@ -240,23 +294,80 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
   box-shadow: 0 0 6px var(--qr-accent-brand);
 }
 
-/* --- 6. OPTICAL VIEWFINDER & RETICLE DOCK --- */
+/* --- 8. PRESET PILLS --- */
+.preset-pill {
+  border-radius: var(--qr-radius-pill);
+  border: 1px solid var(--qr-border-hairline);
+  background-color: var(--qr-surface-core);
+  color: var(--qr-ink-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  text-transform: none !important;
+}
+
+html:not(.dark) .preset-pill {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+html:not(.dark) .preset-pill:hover {
+  border-color: #0f172a;
+  color: #0f172a;
+}
+
+html:not(.dark) .preset-pill.active {
+  border-color: #0f172a !important;
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+html.dark .preset-pill {
+  background: #141418;
+  border-color: #27272a;
+  color: #a1a1aa;
+}
+
+html.dark .preset-pill:hover {
+  border-color: #52525b;
+  color: #fafafa;
+}
+
+html.dark .preset-pill.active {
+  border-color: var(--qr-accent-brand) !important;
+  background-color: var(--qr-accent-brand) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.35);
+}
+
+/* --- 9. VIEWFINDER & LIVE PREVIEW --- */
 .viewfinder-plate {
   position: relative;
   background: var(--qr-surface-muted);
   border: 1px solid var(--qr-border-hairline);
-  border-radius: var(--qr-radius-md);
+  border-radius: var(--qr-radius-lg);
   overflow: hidden;
+}
+
+html:not(.dark) .viewfinder-plate {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+}
+
+html.dark .viewfinder-plate {
+  background: #09090b;
+  border: 1px solid #27272a;
 }
 
 .viewfinder-corner {
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-color: var(--qr-ink-faint);
-  opacity: 0.9;
+  opacity: 0.7;
   pointer-events: none;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .viewfinder-plate:hover .viewfinder-corner {
@@ -264,24 +375,18 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
   border-color: var(--qr-accent-brand);
 }
 
-.viewfinder-corner-tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }
-.viewfinder-corner-tr { top: 8px; right: 8px; border-top: 2px solid; border-right: 2px solid; }
-.viewfinder-corner-bl { bottom: 8px; left: 8px; border-bottom: 2px solid; border-left: 2px solid; }
-.viewfinder-corner-br { bottom: 8px; right: 8px; border-bottom: 2px solid; border-right: 2px solid; }
+.viewfinder-corner-tl { top: 10px; left: 10px; border-top: 2px solid; border-left: 2px solid; }
+.viewfinder-corner-tr { top: 10px; right: 10px; border-top: 2px solid; border-right: 2px solid; }
+.viewfinder-corner-bl { bottom: 10px; left: 10px; border-bottom: 2px solid; border-left: 2px solid; }
+.viewfinder-corner-br { bottom: 10px; right: 10px; border-bottom: 2px solid; border-right: 2px solid; }
 
-/* QR Canvas Container (High contrast readable matrix on milled plate) */
+/* QR Canvas Container (Always crisp white canvas for scanner readability) */
 #qr-canvas {
   transition: transform 0.15s var(--ease-spring), opacity 0.15s ease;
   will-change: transform, opacity;
-  border-radius: var(--qr-radius-sm);
+  border-radius: var(--qr-radius-md);
   background-color: #ffffff !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--qr-border-hairline);
-}
-
-#qr-canvas.compiling {
-  transform: scale(0.97);
-  opacity: 0.7;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 #qr-canvas svg, #qr-canvas canvas {
@@ -290,209 +395,63 @@ button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:
   display: block;
 }
 
-/* --- 7. INDUSTRIAL NAVIGATION & SEGMENTED TABS --- */
-.nav-item {
-  color: var(--qr-ink-secondary);
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--qr-radius-md);
-  transition: all 0.12s ease;
-  font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-}
-
-.nav-item:hover {
-  color: var(--qr-ink-primary);
-  background-color: var(--qr-surface-muted);
-  border-color: var(--qr-border-hairline);
-}
-
-.nav-item.active {
-  color: #ffffff !important;
-  background-color: #121316 !important;
-  border-color: #121316 !important;
-  font-weight: 800;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
-}
-
-.nav-item.active i, .nav-item.active span {
-  color: #ffffff !important;
-}
-
-html.dark .nav-item.active {
-  background-color: #2b2e3a !important;
-  border-color: #4a5064 !important;
-  color: #ffffff !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Segmented Content Mode Tabs */
-.tab-btn {
-  color: var(--qr-ink-muted);
-  background-color: var(--qr-surface-muted);
-  border: 1px solid var(--qr-border-hairline);
-  border-radius: var(--qr-radius-md);
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.tab-btn:hover {
-  color: var(--qr-ink-primary);
-  background-color: var(--qr-surface-elevated);
-  border-color: var(--qr-border-medium);
-}
-
-.tab-btn.active {
-  color: #ffffff !important;
-  background-color: #121316 !important;
-  border-color: #121316 !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
-}
-
-.tab-btn.active i, .tab-btn.active span {
-  color: #ffffff !important;
-}
-
-html.dark .tab-btn.active {
-  background-color: #2b2e3a !important;
-  border-color: #4a5064 !important;
-  color: #ffffff !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Preset Pills */
-.preset-pill {
-  border-radius: var(--qr-radius-sm);
-  border: 1px solid var(--qr-border-hairline);
-  background-color: var(--qr-surface-core);
-  color: var(--qr-ink-secondary);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.725rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 0.3rem 0.65rem;
-}
-
-.preset-pill:hover {
-  border-color: var(--qr-border-medium);
-  background-color: var(--qr-surface-elevated);
-}
-
-.preset-pill.active {
-  border-color: var(--qr-accent-brand) !important;
-  background-color: var(--qr-accent-brand) !important;
-  color: #ffffff !important;
-}
-
-/* --- 8. INPUTS & FORM CONTROLS (MACHINE-SPEC) --- */
+/* --- 10. INPUTS & FORM CONTROLS --- */
 input[type="text"], input[type="url"], input[type="email"], input[type="password"], textarea, select {
-  background-color: var(--qr-surface-muted);
-  color: var(--qr-ink-primary);
-  border: 1px solid var(--qr-border-hairline);
   border-radius: var(--qr-radius-md);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.8125rem;
+  transition: all 0.15s ease;
 }
 
-input:focus, textarea:focus, select:focus {
+html:not(.dark) input[type="text"], html:not(.dark) input[type="url"], html:not(.dark) input[type="email"], html:not(.dark) input[type="password"], html:not(.dark) textarea, html:not(.dark) select {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) input:focus, html:not(.dark) textarea:focus, html:not(.dark) select:focus {
   outline: none;
-  border-color: var(--qr-accent-brand) !important;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25) !important;
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.18) !important;
 }
 
-/* --- 9. MODALS & DIALOGS --- */
-.modal-dialog, .double-bezel-shell {
-  background-color: var(--qr-surface-core) !important;
-  border: 1px solid var(--qr-border-hairline) !important;
-  border-radius: var(--qr-radius-xl) !important;
-  box-shadow: var(--qr-shadow-ambient) !important;
+html.dark input[type="text"], html.dark input[type="url"], html.dark input[type="email"], html.dark input[type="password"], html.dark textarea, html.dark select {
+  background-color: #0c0c0e !important;
+  border: 1px solid #27272a !important;
+  color: #fafafa !important;
 }
 
-/* --- 10. APP HEADER & NAVIGATION BAR --- */
+html.dark input:focus, html.dark textarea:focus, html.dark select:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* --- 11. TOP HEADER & NAVBAR --- */
 header {
-  background-color: var(--qr-surface-shell) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--qr-border-hairline) !important;
 }
 
-/* Custom Scrollbars */
+html:not(.dark) header {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark header {
+  background-color: rgba(12, 12, 14, 0.95) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* --- 12. CLEAN SCROLLBARS --- */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--qr-bg-canvas);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--qr-border-medium);
-  border-radius: var(--qr-radius-sm);
-}
-
-/* ==========================================================================
-   INDUSTRIAL BRUTALIST SUBSTRATE & CLASS OVERRIDES (NO STARK WHITE)
-   ========================================================================== */
-
-/* Universal Background & Surface Mapping */
-body, body.bg-slate-50 {
-  background-color: var(--qr-bg-canvas) !important;
-  color: var(--qr-ink-primary) !important;
-}
-
-/* Light / Concrete Substrate Overrides */
-html:not(.dark) .bg-white:not(#qr-canvas):not(.qr-preview-code) {
-  background-color: var(--qr-surface-core) !important;
-  border-color: var(--qr-border-hairline) !important;
-}
-
-html:not(.dark) .bg-slate-50 {
-  background-color: var(--qr-bg-canvas) !important;
-}
-
-html:not(.dark) .bg-slate-100 {
-  background-color: var(--qr-surface-muted) !important;
-  border-color: var(--qr-border-hairline) !important;
-}
-
-html:not(.dark) .border-slate-200,
-html:not(.dark) .border-slate-200\/80,
-html:not(.dark) .border-slate-300 {
-  border-color: var(--qr-border-hairline) !important;
-}
-
-/* Dark / Carbon Substrate Overrides */
-html.dark .bg-white:not(#qr-canvas):not(.qr-preview-code) {
-  background-color: var(--qr-surface-core) !important;
-  border-color: var(--qr-border-hairline) !important;
-  color: var(--qr-ink-primary) !important;
-}
-
-html.dark .bg-slate-50,
-html.dark .bg-slate-900\/70,
-html.dark .bg-slate-900 {
-  background-color: var(--qr-surface-shell) !important;
-  border-color: var(--qr-border-hairline) !important;
-}
-
-html.dark .bg-slate-100,
-html.dark .bg-slate-800 {
-  background-color: var(--qr-surface-muted) !important;
-  border-color: var(--qr-border-hairline) !important;
-}
-
-html.dark .border-slate-800,
-html.dark .border-slate-700,
-html.dark .border-slate-700\/70 {
-  border-color: var(--qr-border-hairline) !important;
-}
-
-/* Color inputs palette boxes */
-.color-picker-wrapper, input[type="color"] {
-  border-radius: var(--qr-radius-sm);
-  border: 1px solid var(--qr-border-hairline);
+  background: var(--qr-border-hairline);
+  border-radius: var(--qr-radius-pill);
 }
