@@ -217,7 +217,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- JSZip for Bulk/Batch ZIP Downloads -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <link rel="stylesheet" href="style.css?v=5.0.0">
+  <link rel="stylesheet" href="style.css?v=6.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1917,87 +1917,176 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
       </div>
 
       <!-- ============================================== -->
-      <!-- GLOBAL SECTION 2: CONNECTED SUITE              -->
       <!-- ============================================== -->
-      <div id="section-connected-suite" class="bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 space-y-6">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <span class="eyebrow-pill text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700">
-              <span>The Automatixes Suite</span>
-            </span>
-            <h2 class="text-xl font-bold font-heading text-slate-900 dark:text-white mt-2">
-              All-in-One Cloud Tools for Modern Businesses
+      <!-- GLOBAL SECTION 2: WHAT AUTOMATIXES DOES (BENTO) -->
+      <!-- ============================================== -->
+      <div id="section-connected-suite" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-10 space-y-8 shadow-sm">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-100 dark:border-slate-800/80 pb-6">
+          <div class="space-y-2 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-mono font-bold uppercase tracking-wider">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-pulse"></span>
+              <span>Powered by Automatixes Agency</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold font-heading text-slate-900 dark:text-white tracking-tight">
+              What We Do: Custom AI Agents, Voice Bots & Workflow Automations
             </h2>
-            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">
-              AutomatixQR is seamlessly connected with our invoice generator and autonomous automation services.
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              AutomatixQR is proudly engineered by <strong class="text-slate-900 dark:text-white">Automatixes</strong>. We partner with ambitious founders, brands, and operators to automate repetitive operations, deploy 24/7 AI callers, and engineer high-performance web software.
             </p>
           </div>
-          <a href="https://www.automatixes.com" target="_blank" class="btn-luxury-pill bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 shadow-xs group self-start md:self-auto">
-            <span>Explore Agency Services</span>
-            <span class="btn-nested-icon bg-white/20 dark:bg-slate-900/10">
-              <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-            </span>
-          </a>
+          <div class="flex items-center gap-3 shrink-0">
+            <a href="https://www.automatixes.com" target="_blank" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/20 transition-all flex items-center gap-2">
+              <span>Explore Agency Solutions</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </a>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Bento Grid: Core Capabilities -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           
-          <!-- Tool 1: AutomatixQR -->
-          <div class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-xs flex flex-col justify-between">
-            <div>
-              <div class="w-9 h-9 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 flex items-center justify-center mb-3">
-                <i data-lucide="qr-code" class="w-4 h-4"></i>
+          <!-- Card 1: AI Voice Agents (Hot / Featured) -->
+          <a href="https://www.automatixes.com/voice-agent" target="_blank" class="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 dark:from-indigo-950/30 dark:via-[#0f172a] dark:to-[#0b0f19] border-2 border-indigo-200 dark:border-indigo-800/80 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-6 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 group-hover:scale-105 transition-transform">
+                  <i data-lucide="phone-call" class="w-5 h-5"></i>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 text-[10px] font-bold uppercase tracking-wider">
+                  🔥 High Demand
+                </span>
               </div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-xs font-bold text-slate-900 dark:text-white">AutomatixQR</h3>
-                <span class="eyebrow-pill text-slate-700 dark:text-slate-300 py-0.5">Active</span>
-              </div>
-              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
-                Enterprise QR code studio with lossless vector exports, dynamic links, and bulk batch generation.
+              <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                AI Voice Agents & Calling
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Deploy human-like conversational phone callers that qualify inbound leads, schedule calendar bookings, and resolve 24/7 customer support with sub-second latency.
               </p>
             </div>
-            <span class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-slate-900 dark:text-slate-100">Currently Open</span>
+            <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-indigo-600 dark:text-indigo-400">
+              <span>View Voice Agents Demo</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </a>
+
+          <!-- Card 2: Autonomous AI Workflows -->
+          <a href="https://www.automatixes.com/ai-automated-solutions" target="_blank" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-6 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-11 h-11 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                  <i data-lucide="cpu" class="w-5 h-5"></i>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[10px] font-bold uppercase tracking-wider">
+                  Zero Hallucination
+                </span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                Autonomous Workflow Automation
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Custom n8n, Make.com, HubSpot, and WhatsApp CRM pipelines that automate 40+ hours of manual data entry, customer triage, and team notifications weekly.
+              </p>
+            </div>
+            <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+              <span>Explore AI Automations</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </a>
+
+          <!-- Card 3: Bespoke Web & App Development -->
+          <a href="https://www.automatixes.com/website-development" target="_blank" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-6 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                  <i data-lucide="layout" class="w-5 h-5"></i>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-[10px] font-bold uppercase tracking-wider">
+                  Full Stack
+                </span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                Bespoke Web & App Development
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                High-performance modern websites, client portals, and micro-tools engineered with pixel precision, extreme speed, and conversion-focused architectures.
+              </p>
+            </div>
+            <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+              <span>View Web Portfolio</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </a>
+
+          <!-- Card 4: Free SaaS Utilities (Invoice Maker) -->
+          <a href="https://invoicemaker.automatixes.com" target="_blank" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-6 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                  <i data-lucide="file-text" class="w-5 h-5"></i>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[10px] font-bold uppercase tracking-wider">
+                  Free Utility
+                </span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                AutomatixInvoice Maker
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Free professional A4 invoice builder with real-time tax calculations, company logo manager, and print-ready PDF export. 100% free forever.
+              </p>
+            </div>
+            <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+              <span>Open Free Invoice Maker</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </a>
+
+          <!-- Card 5: AI Commercial Product Staging -->
+          <a href="https://www.automatixes.com/product-shoot" target="_blank" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-6 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-11 h-11 rounded-xl bg-violet-50 dark:bg-violet-950/40 text-violet-600 dark:text-violet-400 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                  <i data-lucide="camera" class="w-5 h-5"></i>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20 text-[10px] font-bold uppercase tracking-wider">
+                  Visuals
+                </span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                AI Product Staging & Shoots
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Studio-grade commercial product photography and AI-generated environments designed to increase checkout conversions for luxury and e-commerce brands.
+              </p>
+            </div>
+            <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+              <span>View Product Shoots</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </a>
+
+          <!-- Card 6: Free AI Audit & Direct Contact -->
+          <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl p-6 shadow-md flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-indigo-300">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-base font-bold text-white">
+                Book a Free AI Audit
+              </h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Let our senior engineers analyze your workflows and demonstrate where AI voice callers and automations will save you 100+ hours every month.
+              </p>
+            </div>
+            <div class="mt-5 pt-3 border-t border-white/10 flex items-center gap-3">
+              <a href="https://www.automatixes.com/contact" target="_blank" class="flex-1 py-2 px-3 bg-white text-slate-950 hover:bg-slate-100 rounded-xl text-center text-xs font-bold transition-all shadow-sm">
+                Book 30-Min Audit
+              </a>
+              <a href="https://wa.me/923366920141?text=Hi%20Automatixes%20team%2C%20I%20am%20using%20AutomatixQR%20and%20want%20to%20learn%20more%20about%20your%20AI%20automation%20services." target="_blank" class="p-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl transition-all flex items-center justify-center" title="Chat on WhatsApp">
+                <i data-lucide="message-square" class="w-4 h-4"></i>
+              </a>
+            </div>
           </div>
-
-          <!-- Tool 2: AutomatixInvoice -->
-          <a href="https://invoicemaker.automatixes.com" target="_blank" class="bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-xs flex flex-col justify-between transition group">
-            <div>
-              <div class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <i data-lucide="receipt" class="w-4 h-4"></i>
-              </div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-slate-600 dark:group-hover:text-slate-300 transition">AutomatixInvoice</h3>
-                <span class="eyebrow-pill text-emerald-700 dark:text-emerald-300 py-0.5">Free SaaS</span>
-              </div>
-              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
-                Free professional A4 invoice maker with live tax math, custom logo manager, and instant print/PDF export.
-              </p>
-            </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-bold text-slate-900 dark:text-slate-100">
-              <span>Open Invoice Maker</span>
-              <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-            </div>
-          </a>
-
-          <!-- Tool 3: Automatixes Agency -->
-          <a href="https://www.automatixes.com/ai-automated-solutions" target="_blank" class="bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-xs flex flex-col justify-between transition group">
-            <div>
-              <div class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <i data-lucide="bot" class="w-4 h-4"></i>
-              </div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-slate-600 dark:group-hover:text-slate-300 transition">AI Automations & Agents</h3>
-                <span class="eyebrow-pill text-slate-700 dark:text-slate-300 py-0.5">Enterprise</span>
-              </div>
-              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
-                Autonomous AI Voice agents, WhatsApp CRM automation, and custom n8n/Make workflows for businesses.
-              </p>
-            </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-bold text-slate-900 dark:text-slate-100">
-              <span>View Solutions</span>
-              <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-            </div>
-          </a>
 
         </div>
       </div>
@@ -2005,88 +2094,103 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
       <!-- ============================================== -->
       <!-- GLOBAL SECTION 3: SEO SEMANTIC SEARCH & FAQ    -->
       <!-- ============================================== -->
-      <div id="section-faq" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 shadow-xs space-y-6">
+      <div id="section-faq" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm space-y-6">
         <div class="space-y-1">
-          <h2 class="text-lg font-bold font-heading text-slate-900 dark:text-white">
-            Frequently Asked Questions & QR Code Best Practices
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-[10px] font-mono font-bold uppercase tracking-wider">
+            <span>Knowledge Base</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold font-heading text-slate-900 dark:text-white">
+            Frequently Asked Questions & Automation Capabilities
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">
-            Direct, factual answers regarding print resolution, vector formats, dynamic links, logo embedding, and security.
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            Learn what Automatixes does, how our AI systems scale businesses, and QR code technical best practices.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1.5">
+          <!-- Agency FAQ 1 -->
+          <div class="p-5 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-xl border border-indigo-100 dark:border-indigo-800/40 space-y-2">
+            <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-[11px] uppercase tracking-wider font-mono">
+              <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+              <span>Automatixes Services</span>
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white">What does Automatixes do and how can it help our business?</h3>
+            <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+              <strong class="text-slate-900 dark:text-white">Automatixes is an elite AI Automation Agency</strong>. We design, deploy, and scale custom autonomous AI agents, human-sounding voice callers, WhatsApp CRM automations, and high-performance software. If your team spends hours on repetitive client communications, appointment scheduling, or data entry, our AI pipelines automate those operations 24/7.
+            </p>
+          </div>
+
+          <!-- Agency FAQ 2 -->
+          <div class="p-5 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-xl border border-indigo-100 dark:border-indigo-800/40 space-y-2">
+            <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-[11px] uppercase tracking-wider font-mono">
+              <i data-lucide="code-2" class="w-3.5 h-3.5"></i>
+              <span>Custom Development</span>
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white">Can Automatixes build custom software or AI tools for our company?</h3>
+            <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+              <strong class="text-slate-900 dark:text-white">Yes, absolutely.</strong> SaaS platforms like AutomatixQR and AutomatixInvoice are engineered entirely in-house. We build bespoke client portals, internal team dashboards, API integrations, and multi-agent workflow systems tailored directly to your business stack.
+            </p>
+          </div>
+
+          <!-- Standard QR FAQs -->
+          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
             <h3 class="font-bold text-slate-900 dark:text-white">What is the difference between Static and Dynamic QR Codes?</h3>
             <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
               Static QR codes encode the destination URL directly into the matrix—they never expire and cannot be changed once printed. Dynamic QR codes route through a short redirection URL, allowing you to change the destination web link anytime without reprinting your flyers, menus, or packaging!
             </p>
           </div>
 
-          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1.5">
+          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
             <h3 class="font-bold text-slate-900 dark:text-white">Is AutomatixQR really 100% free to use?</h3>
             <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
               Yes. Generating, styling, customizing logos, and exporting high-resolution PNG & vector SVG QR codes is 100% free with no hidden paywalls, scan caps, or watermarks.
             </p>
           </div>
 
-          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1.5">
+          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
             <h3 class="font-bold text-slate-900 dark:text-white">Should I download PNG or Vector SVG for print?</h3>
             <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
               For digital use, websites, and social media, PNG is ideal. For physical printing on billboards, business cards, merchandise, and product labels, use SVG (Scalable Vector Graphics)—it can be scaled infinitely to any size without losing crisp sharpness or pixelating.
             </p>
           </div>
 
-          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1.5">
+          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
             <h3 class="font-bold text-slate-900 dark:text-white">How do I generate a QR code with my company logo?</h3>
             <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
               Upload your PNG, SVG, or JPEG logo in the 'Center Brand Logo' area of the QR Studio. AutomatixQR centers the logo and automatically increases error correction to Level Q (25%) or Level H (30%) so scanners read it flawlessly.
-            </p>
-          </div>
-
-          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1.5">
-            <h3 class="font-bold text-slate-900 dark:text-white">Can I create Wi-Fi, vCard, and payment QR codes?</h3>
-            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-              Yes. AutomatixQR supports full data presets for instant Wi-Fi network connection (WPA/WPA2/WEP), vCard 3.0 electronic business cards, SMS, email drafts, plain text, and direct payment links.
-            </p>
-          </div>
-
-          <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1.5">
-            <h3 class="font-bold text-slate-900 dark:text-white">How does bulk batch generation work?</h3>
-            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-              Paste a list of URLs or text items (one per line) into the Batch Generator tab. AutomatixQR will process all items simultaneously and package them into a single downloadable ZIP archive containing high-resolution PNGs.
             </p>
           </div>
         </div>
       </div>
 
       <!-- ============================================== -->
-      <!-- GLOBAL SECTION 4: ABOUT & INFRASTRUCTURE       -->
+      <!-- GLOBAL SECTION 4: ABOUT AUTOMATIXES            -->
       <!-- ============================================== -->
-      <div id="section-about-geo" class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 shadow-xs space-y-4">
-        <div class="space-y-1">
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-[10px] font-mono font-bold uppercase">
-            <span>About AutomatixQR</span>
+      <div id="section-about-geo" class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm space-y-6">
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-[10px] font-mono font-bold uppercase tracking-wider">
+            <span>About Automatixes LLC</span>
           </div>
-          <h2 class="text-lg font-bold font-heading text-slate-900 dark:text-white">
-            High-Speed, Privacy-Centric QR Code Infrastructure
+          <h2 class="text-xl sm:text-2xl font-bold font-heading text-slate-900 dark:text-white">
+            Engineered by Automatixes — The AI-First Automation Agency
           </h2>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+            AutomatixQR is an enterprise-grade web utility engineered and maintained by <strong class="text-slate-900 dark:text-white">Automatixes LLC</strong>. As an AI-first agency, <strong class="text-indigo-600 dark:text-indigo-400">Automatixes designs custom autonomous AI agents, intelligent voice callers, CRM automations, and bespoke software</strong> for fast-growing businesses across the USA, Canada, Europe, and the Middle East.
+          </p>
         </div>
-        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-4xl">
-          AutomatixQR is an enterprise-grade web utility created by <strong>Automatixes LLC</strong>. It allows marketing teams, developers, designers, and business owners to produce high-density 2D barcodes with complete aesthetic control, client-side rendering privacy, lossless print vector exports, and real-time device scan analytics.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
-          <div class="p-3 bg-white dark:bg-[#0f172a] rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs">
-            <span class="font-bold text-slate-900 dark:text-white block mb-0.5">🔒 Client-Side Privacy</span>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400">Static QR codes are rendered locally in the browser. Sensitive Wi-Fi passwords and personal contact vCards never touch external servers.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs">
+          <div class="p-4 bg-white dark:bg-[#0f172a] rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+            <span class="font-bold text-slate-900 dark:text-white block text-sm">🤖 Custom AI Agents & Voice Bots</span>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Trained securely on your private knowledge bases with strict zero-hallucination guardrails and multi-channel deployment.</p>
           </div>
-          <div class="p-3 bg-white dark:bg-[#0f172a] rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs">
-            <span class="font-bold text-slate-900 dark:text-white block mb-0.5">📐 Lossless Vector Output</span>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400">Export true SVG vector paths compatible with Adobe Illustrator, Figma, and industrial print machinery.</p>
+          <div class="p-4 bg-white dark:bg-[#0f172a] rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+            <span class="font-bold text-slate-900 dark:text-white block text-sm">🔄 Autonomous Workflow Pipelines</span>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Deep integrations connecting WhatsApp, HubSpot, Stripe, Slack, and CRM systems using n8n and Make engines.</p>
           </div>
-          <div class="p-3 bg-white dark:bg-[#0f172a] rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs">
-            <span class="font-bold text-slate-900 dark:text-white block mb-0.5">⚡ Instant API & SDK</span>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400">Plug dynamic QR generation directly into CRM flows, invoices, and apps using REST endpoints and Node.js/Python SDKs.</p>
+          <div class="p-4 bg-white dark:bg-[#0f172a] rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+            <span class="font-bold text-slate-900 dark:text-white block text-sm">🔒 Client-Side Privacy & Lossless Output</span>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Sensitive QR payloads and company data are processed locally with true infinite vector SVG precision.</p>
           </div>
         </div>
       </div>
