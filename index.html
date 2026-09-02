@@ -368,10 +368,11 @@
           </div>
         </div>
 
-        <!-- Dark / Light Theme Toggle Button -->
-        <button id="theme-toggle-btn" class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center transition shadow-xs" title="Toggle Dark/Light Mode">
-          <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 text-amber-400 hidden"></i>
-          <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 text-slate-700 dark:text-slate-300"></i>
+        <!-- Dark / Light Theme Toggle Switch -->
+        <button id="theme-toggle-btn" class="h-9 px-3 rounded-lg bg-slate-200/80 dark:bg-[#18181b] hover:bg-slate-300/80 dark:hover:bg-[#27272a] border border-slate-300 dark:border-[#27272a] text-slate-800 dark:text-slate-200 flex items-center gap-1.5 transition shadow-xs cursor-pointer active:scale-95" title="Switch Theme (Dark / Light)">
+          <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 text-amber-500 hidden"></i>
+          <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 text-indigo-500 dark:text-indigo-400"></i>
+          <span id="theme-text-label" class="text-[11px] font-mono font-bold tracking-wide">Dark</span>
         </button>
 
         <!-- Auth Area: Sign In / Sign Up or Logged in User Profile -->

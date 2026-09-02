@@ -572,6 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const themeIconSun = document.getElementById('theme-icon-sun');
   const themeIconMoon = document.getElementById('theme-icon-moon');
+  const themeTextLabel = document.getElementById('theme-text-label');
 
   const applyTheme = (isDark) => {
     if (isDark) {
@@ -579,12 +580,14 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.remove('light');
       if (themeIconSun) themeIconSun.classList.remove('hidden');
       if (themeIconMoon) themeIconMoon.classList.add('hidden');
+      if (themeTextLabel) themeTextLabel.textContent = 'Dark';
       localStorage.setItem(THEME_KEY, 'dark');
     } else {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
       if (themeIconSun) themeIconSun.classList.add('hidden');
       if (themeIconMoon) themeIconMoon.classList.remove('hidden');
+      if (themeTextLabel) themeTextLabel.textContent = 'Light';
       localStorage.setItem(THEME_KEY, 'light');
     }
     if (window.lucide) {
