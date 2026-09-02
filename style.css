@@ -1,98 +1,92 @@
 /* ==========================================================================
-   AUTOMATIXQR - BKLIT UI ENTERPRISE DESIGN SYSTEM (DUAL THEME ENGINE)
-   High-Contrast Borders, Tactile Components, and Precision Dashboard Primitives
-   Both Light Mode and Dark Mode Crafted with Luxury Bklit UI Standards
+   AUTOMATIXQR - INDUSTRIAL BRUTALIST & TACTICAL TELEMETRY DESIGN SYSTEM
+   Raw Mechanical Precision • Industrial Steel Grey Substrates • Zero Plain White Glare
+   Swiss Typographic Blueprint & Tactical Telemetry Terminal Engine
    ========================================================================== */
 
-/* --- 1. DESIGN TOKENS & DUAL PALETTE --- */
+/* --- 1. INDUSTRIAL DESIGN TOKENS --- */
 :root {
-  /* LIGHT MODE: High-Contrast Technical Slate & Crisp Pure White Surfaces */
-  --qr-bg-canvas: #f1f3f7;
-  --qr-surface-shell: #ffffff;
-  --qr-surface-core: #ffffff;
-  --qr-surface-elevated: #ffffff;
-  --qr-surface-muted: #f8fafc;
+  /* LIGHT/CONCRETE MODE: Matte Industrial Blueprint & Cement Grey (No Harsh White) */
+  --qr-bg-canvas: #dcdfe6;             /* Matte Technical Concrete Grey */
+  --qr-surface-shell: #e7e9ee;          /* Milled Aluminum Panel */
+  --qr-surface-core: #eaecf1;           /* Industrial Grey Substrate */
+  --qr-surface-elevated: #f0f2f6;       /* Elevated Machine Housing */
+  --qr-surface-muted: #d0d4dc;          /* Recessed Panel */
   
-  --qr-ink-primary: #0f172a;
-  --qr-ink-secondary: #334155;
-  --qr-ink-muted: #64748b;
-  --qr-ink-faint: #94a3b8;
+  --qr-ink-primary: #121316;            /* Carbon Black Heavy Ink */
+  --qr-ink-secondary: #2b2e38;          /* Machine Tool Charcoal */
+  --qr-ink-muted: #585e6f;              /* Industrial Spec Grey */
+  --qr-ink-faint: #8890a2;              /* Hairline Stencil */
   
-  --qr-accent-primary: #0f172a;
-  --qr-accent-brand: #4f46e5;
-  --qr-accent-brand-hover: #4338ca;
-  --qr-accent-glow: rgba(79, 70, 229, 0.15);
-  --qr-accent-emerald: #059669;
-  --qr-accent-amber: #d97706;
-  --qr-accent-rose: #e11d48;
+  --qr-accent-primary: #121316;
+  --qr-accent-brand: #3b49df;           /* Industrial Cobalt */
+  --qr-accent-hazard: #e62e2e;          /* Aviation Hazard Red */
+  --qr-accent-amber: #d97706;           /* Warning Amber */
+  --qr-accent-emerald: #059669;         /* Telemetry Green */
   
-  --qr-border-hairline: #cbd5e1;       /* Crisp high-contrast hairline */
-  --qr-border-medium: #94a3b8;
-  --qr-border-highlight: #ffffff;
-  --qr-border-contrast: #0f172a;
+  --qr-border-hairline: #b0b6c4;        /* Rigid Mechanical Border */
+  --qr-border-medium: #838c9e;          /* Medium Structural Dividing Line */
+  --qr-border-contrast: #121316;        /* Heavy Stencil Border */
   
-  --qr-radius-xl: 1rem;    /* 16px cards */
-  --qr-radius-lg: 0.75rem; /* 12px containers */
-  --qr-radius-md: 0.5rem;  /* 8px inner cards */
-  --qr-radius-sm: 0.375rem; /* 6px controls */
-  --qr-radius-pill: 9999px;
+  --qr-radius-xl: 8px;                  /* Industrial Machine Bevels */
+  --qr-radius-lg: 6px;
+  --qr-radius-md: 4px;
+  --qr-radius-sm: 2px;
+  --qr-radius-pill: 4px;                /* Rigid Technical Brackets */
   
-  --qr-shadow-ambient: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
-  --qr-shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 6px 16px -4px rgba(15, 23, 42, 0.05);
-  --qr-shadow-hover: 0 12px 28px -6px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(79, 70, 229, 0.3);
-  --qr-shadow-tactile: 0 2px 0 0 rgba(15, 23, 42, 0.08);
+  --qr-shadow-ambient: 0 2px 8px rgba(18, 19, 22, 0.08);
+  --qr-shadow-card: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 2px 4px rgba(18, 19, 22, 0.06);
+  --qr-shadow-hover: 0 4px 12px rgba(18, 19, 22, 0.12);
+  --qr-shadow-tactile: 0 2px 0 0 #838c9e;
   
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* DARK MODE: Bklit Obsidian Canvas, Zinc Surfaces & High-Contrast Borders */
+/* DARK TACTICAL MODE: Milled Carbon Alloy & CRT Telemetry (Default) */
 html.dark {
   color-scheme: dark;
-  --qr-bg-canvas: #09090b;          /* Bklit Obsidian Canvas */
-  --qr-surface-shell: #0c0c0e;       /* Outer Shell */
-  --qr-surface-core: #121215;        /* Primary Card Surface */
-  --qr-surface-elevated: #18181b;    /* Elevated Floating Elements */
-  --qr-surface-muted: #141418;       /* Subtle Recessed Inputs / Badges */
+  --qr-bg-canvas: #121316;             /* Dark Industrial Carbon Canvas */
+  --qr-surface-shell: #18191f;          /* Milled Steel Chassis */
+  --qr-surface-core: #1e1f26;           /* Heavy Machine Panel */
+  --qr-surface-elevated: #262832;       /* Raised Terminal Block */
+  --qr-surface-muted: #15161c;          /* Recessed Gauge Housing */
   
-  --qr-ink-primary: #fafafa;         /* Crisp White */
-  --qr-ink-secondary: #e4e4e7;       /* Bright Zinc */
-  --qr-ink-muted: #a1a1aa;           /* Muted Zinc */
-  --qr-ink-faint: #52525b;           /* Dim Hairline */
+  --qr-ink-primary: #e6e8ee;            /* Phosphor White-Grey */
+  --qr-ink-secondary: #b8bcc8;          /* Anodized Titanium Grey */
+  --qr-ink-muted: #7e8597;              /* Telemetry Legend Grey */
+  --qr-ink-faint: #434756;              /* Machine Frame Divider */
   
-  --qr-accent-primary: #fafafa;
-  --qr-accent-brand: #6366f1;        /* Electric Indigo */
-  --qr-accent-brand-hover: #818cf8;
-  --qr-accent-glow: rgba(99, 102, 241, 0.25);
-  --qr-accent-emerald: #10b981;
-  --qr-accent-amber: #fbbf24;
-  --qr-accent-rose: #f43f5e;
+  --qr-accent-primary: #e6e8ee;
+  --qr-accent-brand: #6366f1;           /* Electric Signal Violet */
+  --qr-accent-hazard: #ff3838;          /* Aviation Hazard Red */
+  --qr-accent-amber: #f59e0b;           /* Status Amber */
+  --qr-accent-emerald: #10b981;         /* HUD Phosphor Green */
   
-  --qr-border-hairline: #27272a;     /* Bklit High-Contrast Hairline */
-  --qr-border-medium: #3f3f46;       /* Medium Active Border */
-  --qr-border-highlight: rgba(255, 255, 255, 0.12); /* Top Edge Light Glint */
-  --qr-border-contrast: #52525b;
+  --qr-border-hairline: #2e303d;        /* Heavy Modular Dividing Lines */
+  --qr-border-medium: #45495c;          /* Structural Steel Grid */
+  --qr-border-highlight: rgba(255, 255, 255, 0.08);
+  --qr-border-contrast: #6b7280;
   
-  --qr-shadow-ambient: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
-  --qr-shadow-card: 0 4px 12px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
-  --qr-shadow-hover: 0 12px 32px -4px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(99, 102, 241, 0.4);
-  --qr-shadow-tactile: 0 2px 0 0 rgba(0, 0, 0, 0.4);
+  --qr-shadow-ambient: 0 8px 30px rgba(0, 0, 0, 0.7);
+  --qr-shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 4px 16px rgba(0, 0, 0, 0.5);
+  --qr-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 0 1px #6366f1;
+  --qr-shadow-tactile: 0 2px 0 0 #000000;
 }
 
-/* --- 2. BASE SURFACE & GEOMETRIC MESH --- */
+/* --- 2. BASE SURFACE & TECHNICAL BLUEPRINT MESH --- */
 body {
   background-color: var(--qr-bg-canvas);
   color: var(--qr-ink-primary);
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
   overflow-x: hidden;
   position: relative;
 }
 
-/* Light Mode Geometric Dot Grid */
-html:not(.dark) body::before {
+/* Technical Blueprint Grid Pattern */
+body::before {
   content: "";
   position: fixed;
   top: 0;
@@ -100,63 +94,53 @@ html:not(.dark) body::before {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background-image: radial-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-image: 
+    linear-gradient(to right, rgba(100, 116, 139, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(100, 116, 139, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
   z-index: 0;
-  opacity: 0.7;
 }
 
-/* Dark Mode Geometric Dot Grid */
 html.dark body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 28px 28px;
-  z-index: 0;
-  opacity: 0.75;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
 h1, h2, h3, h4, .font-heading {
-  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
-  letter-spacing: -0.025em;
-  text-wrap: balance;
-}
-
-p {
-  text-wrap: pretty;
+  font-family: 'Outfit', 'JetBrains Mono', sans-serif;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .font-mono, .tabular-nums {
   font-family: 'JetBrains Mono', monospace !important;
   font-feature-settings: 'tnum' 1;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
-/* --- 3. BKLIT UI CARDS & HIGH-CONTRAST FRAMES --- */
+/* --- 3. INDUSTRIAL CARDS & MACHINE PLATES --- */
 .bklit-card, .bezel-core {
   background: var(--qr-surface-core);
   border-radius: var(--qr-radius-lg);
   border: 1px solid var(--qr-border-hairline);
   box-shadow: var(--qr-shadow-card);
   position: relative;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s var(--ease-spring);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-html:not(.dark) .bklit-card, html:not(.dark) .bezel-core {
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 8px 20px -6px rgba(15, 23, 42, 0.04);
-}
-
-html.dark .bklit-card, html.dark .bezel-core {
-  background: linear-gradient(180deg, #131317 0%, #0f0f12 100%);
-  border: 1px solid #27272a;
-  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+/* Industrial Corner Crosshairs (+) */
+.bezel-core::before {
+  content: "+";
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--qr-ink-faint);
+  pointer-events: none;
 }
 
 .bezel-shell {
@@ -173,172 +157,131 @@ html.dark .bklit-card, html.dark .bezel-core {
   min-height: 540px;
 }
 
-/* Interactive Card Elevation & Tactile Hover */
+/* Interactive Card Machine Elevation */
 .preset-card, .tool-card, #section-connected-suite .grid > div, #section-connected-suite .grid > a {
-  transition: transform 0.2s var(--ease-spring), border-color 0.2s ease, box-shadow 0.2s ease;
-  border-radius: var(--qr-radius-lg);
+  transition: transform 0.15s var(--ease-spring), border-color 0.15s ease, background-color 0.15s ease;
+  border-radius: var(--qr-radius-md);
+  border: 1px solid var(--qr-border-hairline);
+  background-color: var(--qr-surface-core);
 }
 
 .preset-card:hover, .tool-card:hover, #section-connected-suite .grid > a:hover {
   transform: translateY(-2px);
-  border-color: rgba(79, 70, 229, 0.5) !important;
-  box-shadow: var(--qr-shadow-hover);
+  border-color: var(--qr-accent-brand) !important;
+  background-color: var(--qr-surface-elevated) !important;
 }
 
-html.dark .preset-card:hover, html.dark .tool-card:hover, html.dark #section-connected-suite .grid > a:hover {
-  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(99, 102, 241, 0.5);
-  border-color: #6366f1 !important;
-}
-
-/* --- 4. TACTILE BUTTONS & SPRING FEEDBACK --- */
+/* --- 4. TACTILE MECHANICAL BUTTONS --- */
 button, .btn, .btn-luxury-pill, .nav-item, .tab-btn, .preset-pill, input[type="submit"] {
-  transition: transform 0.15s var(--ease-spring), background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+  transition: transform 0.1s var(--ease-spring), background-color 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease, color 0.1s ease;
   user-select: none;
-  position: relative;
   outline: none;
+  border-radius: var(--qr-radius-md);
 }
 
 button:active, .btn:active, .btn-luxury-pill:active, .nav-item:active, .tab-btn:active, .preset-pill:active {
-  transform: scale(0.96) !important;
+  transform: scale(0.96) translateY(1px) !important;
 }
 
 .btn-luxury-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: var(--qr-radius-md);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.8125rem;
-  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: 'JetBrains Mono', monospace;
   border: 1px solid var(--qr-border-hairline);
-  box-shadow: var(--qr-shadow-tactile);
 }
 
 .btn-nested-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.375rem;
-  height: 1.375rem;
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: var(--qr-radius-sm);
-  background: rgba(255, 255, 255, 0.18);
-  transition: transform 0.2s var(--ease-spring);
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.btn-luxury-pill:hover .btn-nested-icon {
-  transform: scale(1.1);
-}
-
-/* --- 5. BKLIT MICRO STATUS & EYEBROW BADGES --- */
+/* --- 5. TACTICAL TELEMETRY STATUS BADGES --- */
 .eyebrow-pill, .bklit-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.225rem 0.625rem;
-  border-radius: var(--qr-radius-pill);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--qr-radius-sm);
   font-size: 0.6875rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-weight: 800;
   font-family: 'JetBrains Mono', monospace;
   border: 1px solid var(--qr-border-hairline);
   background: var(--qr-surface-muted);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
-html:not(.dark) .eyebrow-pill, html:not(.dark) .bklit-badge {
-  background: #f8fafc;
-  border: 1px solid #cbd5e1;
-  color: #0f172a;
-}
-
-html.dark .eyebrow-pill, html.dark .bklit-badge {
-  background: #18181b;
-  border: 1px solid #27272a;
-  color: #e4e4e7;
-}
-
-/* Badge Status Dot */
 .bklit-dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: 1px; /* Square Pixel Dot */
   display: inline-block;
-  position: relative;
 }
 
 .bklit-dot-live {
-  background-color: #10b981;
-  box-shadow: 0 0 8px #10b981;
+  background-color: var(--qr-accent-emerald);
+  box-shadow: 0 0 6px var(--qr-accent-emerald);
 }
 
 .bklit-dot-brand {
-  background-color: #4f46e5;
-  box-shadow: 0 0 8px #4f46e5;
+  background-color: var(--qr-accent-brand);
+  box-shadow: 0 0 6px var(--qr-accent-brand);
 }
 
-.bklit-dot-amber {
-  background-color: #f59e0b;
-  box-shadow: 0 0 8px #f59e0b;
-}
-
-/* --- 6. OPTICAL VIEWFINDER & LIVE PREVIEW BENCH --- */
+/* --- 6. OPTICAL VIEWFINDER & RETICLE DOCK --- */
 .viewfinder-plate {
   position: relative;
   background: var(--qr-surface-muted);
   border: 1px solid var(--qr-border-hairline);
-  border-radius: var(--qr-radius-lg);
+  border-radius: var(--qr-radius-md);
   overflow: hidden;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-html:not(.dark) .viewfinder-plate {
-  background: #f8fafc;
-  border: 1px solid #cbd5e1;
-  box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.03), 0 4px 16px rgba(15, 23, 42, 0.04);
-}
-
-html.dark .viewfinder-plate {
-  background: #09090b;
-  border: 1px solid #27272a;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .viewfinder-corner {
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-color: var(--qr-ink-faint);
-  opacity: 0.7;
+  opacity: 0.9;
   pointer-events: none;
-  transition: all 0.25s var(--ease-spring);
+  transition: all 0.15s ease;
 }
 
 .viewfinder-plate:hover .viewfinder-corner {
   opacity: 1;
   border-color: var(--qr-accent-brand);
-  width: 16px;
-  height: 16px;
 }
 
-.viewfinder-corner-tl { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; }
-.viewfinder-corner-tr { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; }
-.viewfinder-corner-bl { bottom: 12px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; }
-.viewfinder-corner-br { bottom: 12px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; }
+.viewfinder-corner-tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }
+.viewfinder-corner-tr { top: 8px; right: 8px; border-top: 2px solid; border-right: 2px solid; }
+.viewfinder-corner-bl { bottom: 8px; left: 8px; border-bottom: 2px solid; border-left: 2px solid; }
+.viewfinder-corner-br { bottom: 8px; right: 8px; border-bottom: 2px solid; border-right: 2px solid; }
 
-/* QR Canvas Container */
+/* QR Canvas Container (High contrast readable matrix on milled plate) */
 #qr-canvas {
-  transition: transform 0.2s var(--ease-spring), opacity 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s var(--ease-spring), opacity 0.15s ease;
   will-change: transform, opacity;
-  border-radius: var(--qr-radius-md);
+  border-radius: var(--qr-radius-sm);
   background-color: #ffffff !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--qr-border-hairline);
 }
 
 #qr-canvas.compiling {
   transform: scale(0.97);
-  opacity: 0.75;
+  opacity: 0.7;
 }
 
 #qr-canvas svg, #qr-canvas canvas {
@@ -347,14 +290,17 @@ html.dark .viewfinder-plate {
   display: block;
 }
 
-/* --- 7. BKLIT NAVIGATION & HIGH-CONTRAST SEGMENTED TABS --- */
+/* --- 7. INDUSTRIAL NAVIGATION & SEGMENTED TABS --- */
 .nav-item {
   color: var(--qr-ink-secondary);
   background-color: transparent;
   border: 1px solid transparent;
   border-radius: var(--qr-radius-md);
-  transition: all 0.15s ease;
-  font-weight: 500;
+  transition: all 0.12s ease;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
 }
 
 .nav-item:hover {
@@ -363,239 +309,190 @@ html.dark .viewfinder-plate {
   border-color: var(--qr-border-hairline);
 }
 
-/* High-Contrast Active Navigation (Light Mode) */
-html:not(.dark) .nav-item.active {
+.nav-item.active {
   color: #ffffff !important;
-  background: #0f172a !important;
-  border-color: #0f172a !important;
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15) !important;
+  background-color: #121316 !important;
+  border-color: #121316 !important;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
 }
 
-html:not(.dark) .nav-item.active i, html:not(.dark) .nav-item.active span {
+.nav-item.active i, .nav-item.active span {
   color: #ffffff !important;
-}
-
-/* High-Contrast Active Navigation (Dark Mode) */
-html.dark .nav-item:hover {
-  background-color: #18181b;
-  border-color: #27272a;
 }
 
 html.dark .nav-item.active {
-  background: linear-gradient(180deg, #27272a 0%, #1f1f23 100%);
+  background-color: #2b2e3a !important;
+  border-color: #4a5064 !important;
   color: #ffffff !important;
-  border-color: #3f3f46;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Segmented Content Tabs */
+/* Segmented Content Mode Tabs */
 .tab-btn {
   color: var(--qr-ink-muted);
-  background-color: #f1f5f9;
-  border: 1px solid #cbd5e1;
+  background-color: var(--qr-surface-muted);
+  border: 1px solid var(--qr-border-hairline);
   border-radius: var(--qr-radius-md);
-  transition: all 0.15s ease;
-  font-weight: 600;
-}
-
-html:not(.dark) .tab-btn:hover {
-  color: #0f172a;
-  background-color: #e2e8f0;
-  border-color: #94a3b8;
-}
-
-html:not(.dark) .tab-btn.active {
-  color: #ffffff !important;
-  background: #0f172a !important;
-  border-color: #0f172a !important;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18) !important;
   font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-html:not(.dark) .tab-btn.active i, html:not(.dark) .tab-btn.active span {
+.tab-btn:hover {
+  color: var(--qr-ink-primary);
+  background-color: var(--qr-surface-elevated);
+  border-color: var(--qr-border-medium);
+}
+
+.tab-btn.active {
   color: #ffffff !important;
+  background-color: #121316 !important;
+  border-color: #121316 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
 }
 
-html.dark .tab-btn {
-  background-color: #121215;
-  border-color: #27272a;
-  color: #a1a1aa;
-}
-
-html.dark .tab-btn:hover {
-  color: #fafafa;
-  background-color: #1f1f23;
-  border-color: #3f3f46;
+.tab-btn.active i, .tab-btn.active span {
+  color: #ffffff !important;
 }
 
 html.dark .tab-btn.active {
-  background: linear-gradient(180deg, #27272a 0%, #1c1c20 100%);
+  background-color: #2b2e3a !important;
+  border-color: #4a5064 !important;
   color: #ffffff !important;
-  border-color: #3f3f46;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-  font-weight: 700;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Preset Pills */
 .preset-pill {
-  border-radius: var(--qr-radius-pill);
+  border-radius: var(--qr-radius-sm);
   border: 1px solid var(--qr-border-hairline);
   background-color: var(--qr-surface-core);
   color: var(--qr-ink-secondary);
-  transition: all 0.15s ease;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.35rem 0.75rem;
-}
-
-html:not(.dark) .preset-pill {
-  background: #ffffff;
-  border-color: #cbd5e1;
-  color: #334155;
-}
-
-html:not(.dark) .preset-pill:hover {
-  border-color: #0f172a;
-  color: #0f172a;
-  transform: translateY(-1px);
-}
-
-html:not(.dark) .preset-pill.active {
-  border-color: #0f172a !important;
-  background-color: #0f172a !important;
-  color: #ffffff !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.725rem;
   font-weight: 700;
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
 }
 
-html.dark .preset-pill {
-  background: #141418;
-  border-color: #27272a;
-  color: #a1a1aa;
+.preset-pill:hover {
+  border-color: var(--qr-border-medium);
+  background-color: var(--qr-surface-elevated);
 }
 
-html.dark .preset-pill:hover {
-  border-color: #52525b;
-  color: #fafafa;
-}
-
-html.dark .preset-pill.active {
+.preset-pill.active {
   border-color: var(--qr-accent-brand) !important;
   background-color: var(--qr-accent-brand) !important;
   color: #ffffff !important;
-  font-weight: 700;
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
 }
 
-/* --- 8. INPUTS, FORM FIELDS & PALETTES --- */
+/* --- 8. INPUTS & FORM CONTROLS (MACHINE-SPEC) --- */
 input[type="text"], input[type="url"], input[type="email"], input[type="password"], textarea, select {
-  background-color: #ffffff;
+  background-color: var(--qr-surface-muted);
   color: var(--qr-ink-primary);
-  border: 1px solid #cbd5e1;
-  border-radius: var(--qr-radius-md);
-  transition: all 0.15s ease;
-}
-
-html:not(.dark) input[type="text"], html:not(.dark) input[type="url"], html:not(.dark) input[type="email"], html:not(.dark) input[type="password"], html:not(.dark) textarea, html:not(.dark) select {
-  background-color: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  color: #0f172a !important;
-}
-
-html:not(.dark) input:focus, html:not(.dark) textarea:focus, html:not(.dark) select:focus {
-  outline: none;
-  border-color: #4f46e5 !important;
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.18) !important;
-}
-
-html.dark input[type="text"], html.dark input[type="url"], html.dark input[type="email"], html.dark input[type="password"], html.dark textarea, html.dark select {
-  background-color: #0c0c0e !important;
-  border-color: #27272a !important;
-  color: #fafafa !important;
-}
-
-html.dark input:focus, html.dark textarea:focus, html.dark select:focus {
-  border-color: #6366f1 !important;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3) !important;
-}
-
-/* --- 9. BKLIT MODALS & DIALOGS --- */
-.modal-backdrop:not(.hidden) {
-  display: flex !important;
-  animation: backdropIn 0.2s ease-out forwards;
-}
-
-@keyframes backdropIn {
-  from { opacity: 0; backdrop-filter: blur(0px); }
-  to { opacity: 1; backdrop-filter: blur(12px); }
-}
-
-.modal-dialog {
-  animation: modalIn 0.25s var(--ease-spring) forwards;
-  border-radius: var(--qr-radius-xl);
   border: 1px solid var(--qr-border-hairline);
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6);
+  border-radius: var(--qr-radius-md);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
 }
 
-@keyframes modalIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--qr-accent-brand) !important;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25) !important;
 }
 
-html:not(.dark) .modal-dialog, html:not(.dark) .double-bezel-shell {
-  background: #ffffff !important;
-  border: 1px solid #cbd5e1 !important;
-  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.2) !important;
+/* --- 9. MODALS & DIALOGS --- */
+.modal-dialog, .double-bezel-shell {
+  background-color: var(--qr-surface-core) !important;
+  border: 1px solid var(--qr-border-hairline) !important;
+  border-radius: var(--qr-radius-xl) !important;
+  box-shadow: var(--qr-shadow-ambient) !important;
 }
 
-html.dark .modal-dialog, html.dark .double-bezel-shell {
-  background: #0f0f12 !important;
-  border: 1px solid #27272a !important;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
+/* --- 10. APP HEADER & NAVIGATION BAR --- */
+header {
+  background-color: var(--qr-surface-shell) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--qr-border-hairline) !important;
 }
 
-/* --- 10. PRECISION SCROLLBARS --- */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--qr-bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--qr-border-hairline);
-  border-radius: var(--qr-radius-pill);
-}
-html.dark ::-webkit-scrollbar-thumb {
-  background: #27272a;
-}
-html.dark ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: var(--qr-border-medium);
+  border-radius: var(--qr-radius-sm);
 }
 
-/* --- 11. TOP APP HEADER & NAVBAR --- */
-html:not(.dark) header {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid #cbd5e1 !important;
+/* ==========================================================================
+   INDUSTRIAL BRUTALIST SUBSTRATE & CLASS OVERRIDES (NO STARK WHITE)
+   ========================================================================== */
+
+/* Universal Background & Surface Mapping */
+body, body.bg-slate-50 {
+  background-color: var(--qr-bg-canvas) !important;
+  color: var(--qr-ink-primary) !important;
 }
 
-html.dark header {
-  background-color: rgba(12, 12, 14, 0.9) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid #27272a !important;
+/* Light / Concrete Substrate Overrides */
+html:not(.dark) .bg-white:not(#qr-canvas):not(.qr-preview-code) {
+  background-color: var(--qr-surface-core) !important;
+  border-color: var(--qr-border-hairline) !important;
 }
 
-html.dark .sidebar-dock {
-  background-color: #0c0c0e;
-  border-right: 1px solid #27272a;
+html:not(.dark) .bg-slate-50 {
+  background-color: var(--qr-bg-canvas) !important;
+}
+
+html:not(.dark) .bg-slate-100 {
+  background-color: var(--qr-surface-muted) !important;
+  border-color: var(--qr-border-hairline) !important;
+}
+
+html:not(.dark) .border-slate-200,
+html:not(.dark) .border-slate-200\/80,
+html:not(.dark) .border-slate-300 {
+  border-color: var(--qr-border-hairline) !important;
+}
+
+/* Dark / Carbon Substrate Overrides */
+html.dark .bg-white:not(#qr-canvas):not(.qr-preview-code) {
+  background-color: var(--qr-surface-core) !important;
+  border-color: var(--qr-border-hairline) !important;
+  color: var(--qr-ink-primary) !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-900\/70,
+html.dark .bg-slate-900 {
+  background-color: var(--qr-surface-shell) !important;
+  border-color: var(--qr-border-hairline) !important;
+}
+
+html.dark .bg-slate-100,
+html.dark .bg-slate-800 {
+  background-color: var(--qr-surface-muted) !important;
+  border-color: var(--qr-border-hairline) !important;
+}
+
+html.dark .border-slate-800,
+html.dark .border-slate-700,
+html.dark .border-slate-700\/70 {
+  border-color: var(--qr-border-hairline) !important;
+}
+
+/* Color inputs palette boxes */
+.color-picker-wrapper, input[type="color"] {
+  border-radius: var(--qr-radius-sm);
+  border: 1px solid var(--qr-border-hairline);
 }
