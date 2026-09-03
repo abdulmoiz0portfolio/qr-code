@@ -1,43 +1,8 @@
-# Robots.txt for AutomatixQR (https://qrcode.automatixes.com/)
 User-agent: *
 Allow: /
-Disallow: /admin
 
-# Allow all AI Crawlers and Search Engine Bots for Generative Engine Optimization (GEO)
-User-agent: Googlebot
+User-agent: Googlebot-Image
 Allow: /
 
-User-agent: Bingbot
+User-agent: Google-Favicon
 Allow: /
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Applebot
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
-User-agent: Amazonbot
-Allow: /
-
-# XML Sitemap & AI Documentation
-Sitemap: https://qrcode.automatixes.com/sitemap.xml
-# LLM & AI Context
-# https://qrcode.automatixes.com/llms.txt
