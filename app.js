@@ -392,7 +392,20 @@ document.addEventListener('DOMContentLoaded', () => {
         label_subject: 'Subject',
         label_message_body: 'Message Body',
         styling_header: 'Visual Styling & Custom Colors',
-        label_colors: 'Palette Colors',
+        label_colors: 'Color Mode & Palette',
+        mode_solid: 'Solid',
+        mode_gradient: 'Gradient',
+        grad_start: 'Start Color',
+        grad_end: 'End Color',
+        grad_type: 'Gradient Type',
+        grad_angle: 'Angle',
+        logo_color_header: 'Logo Color & Tint',
+        logo_original: 'Original',
+        logo_recolor: 'Recolor / Tint',
+        label_logo_color: 'Logo Color',
+        btn_match_qr: 'Match QR Color',
+        label_badge_shape: 'Logo Background Shape',
+        label_badge_color: 'Badge Color',
         color_dots: 'QR Dots',
         color_bg: 'Background',
         color_frame: 'Corner Frame',
@@ -508,7 +521,20 @@ document.addEventListener('DOMContentLoaded', () => {
         label_subject: 'موضوع',
         label_message_body: 'پیغام کا متن',
         styling_header: 'ڈیزائن اور کسٹم کلرز',
-        label_colors: 'رنگوں کی پیلیٹ',
+        label_colors: 'رنگ موڈ اور پیلیٹ',
+        mode_solid: 'سولڈ کلر',
+        mode_gradient: 'گریڈینٹ',
+        grad_start: 'شروع کا رنگ',
+        grad_end: 'اختتامی رنگ',
+        grad_type: 'گریڈینٹ قسم',
+        grad_angle: 'زاویہ',
+        logo_color_header: 'لوگو کا رنگ اور ٹنٹ',
+        logo_original: 'اصلی رنگ',
+        logo_recolor: 'رنگ بدلیں / ٹنٹ',
+        label_logo_color: 'لوگو کا رنگ',
+        btn_match_qr: 'QR رنگ سے ملائیں',
+        label_badge_shape: 'لوگو کا بیک گراؤنڈ شیپ',
+        label_badge_color: 'بیج کا رنگ',
         color_dots: 'QR ڈاٹس',
         color_bg: 'بیک گراؤنڈ',
         color_frame: 'کونے کا فریم',
@@ -695,17 +721,27 @@ document.addEventListener('DOMContentLoaded', () => {
     imageFileName: '',
     imageFileSize: '',
     data: 'https://www.automatixes.com',
-    dotsColor: '#4f46e5',
+    colorMode: 'solid',
+    dotsColor: '#0f172a',
     bgColor: '#ffffff',
-    cornerSquareColor: '#4338ca',
-    cornerDotColor: '#6366f1',
-    dotType: 'rounded',
-    cornerSquareType: 'extra-rounded',
-    cornerDotType: 'dot',
+    cornerSquareColor: '#0f172a',
+    cornerDotColor: '#0f172a',
+    dotType: 'square',
+    cornerSquareType: 'square',
+    cornerDotType: 'square',
+    gradientType: 'linear',
+    gradientRotation: 0,
+    gradientColorStart: '#6366f1',
+    gradientColorEnd: '#a855f7',
     errorCorrectionLevel: 'Q',
     margin: 10,
+    rawLogoImage: null,
     logoImage: null,
-    logoFileName: ''
+    logoFileName: '',
+    logoColorMode: 'original',
+    logoTintColor: '#0f172a',
+    logoBadgeShape: 'rounded',
+    logoBadgeColor: '#ffffff'
   };
 
   const updateHistoryBadge = () => {
@@ -886,6 +922,101 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1200);
   };
 
+  const processLogoImage = (callback) => {
+    if (!state.rawLogoImage) {
+      state.logoImage = null;
+      const logoPreviewImg = document.getElementById('logo-preview-img');
+      const defaultLogoIcon = document.getElementById('default-logo-icon');
+      if (logoPreviewImg && defaultLogoIcon) {
+        logoPreviewImg.src = '';
+        logoPreviewImg.classList.add('hidden');
+        defaultLogoIcon.classList.remove('hidden');
+      }
+      if (callback) callback();
+      return;
+    }
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const origW = img.naturalWidth || img.width || 200;
+      const origH = img.naturalHeight || img.height || 200;
+      const size = 300;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      const shape = state.logoBadgeShape || 'rounded';
+      const badgeColor = state.logoBadgeColor || '#ffffff';
+
+      // 1. Background Badge
+      if (shape !== 'none') {
+        ctx.fillStyle = badgeColor;
+        if (shape === 'circle') {
+          ctx.beginPath();
+          ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (shape === 'rounded') {
+          const radius = size * 0.22;
+          ctx.beginPath();
+          if (ctx.roundRect) {
+            ctx.roundRect(0, 0, size, size, radius);
+          } else {
+            ctx.rect(0, 0, size, size);
+          }
+          ctx.fill();
+        } else if (shape === 'square') {
+          ctx.fillRect(0, 0, size, size);
+        }
+      }
+
+      // 2. Compute fitting bounds
+      const padding = shape === 'none' ? 0 : size * 0.18;
+      const drawArea = size - padding * 2;
+      const scale = Math.min(drawArea / origW, drawArea / origH);
+      const drawW = Math.round(origW * scale);
+      const drawH = Math.round(origH * scale);
+      const drawX = Math.round((size - drawW) / 2);
+      const drawY = Math.round((size - drawH) / 2);
+
+      if (state.logoColorMode === 'tint') {
+        const offCanvas = document.createElement('canvas');
+        offCanvas.width = drawW;
+        offCanvas.height = drawH;
+        const offCtx = offCanvas.getContext('2d');
+        offCtx.drawImage(img, 0, 0, drawW, drawH);
+
+        offCtx.globalCompositeOperation = 'source-in';
+        offCtx.fillStyle = state.logoTintColor || '#0f172a';
+        offCtx.fillRect(0, 0, drawW, drawH);
+
+        ctx.drawImage(offCanvas, drawX, drawY);
+      } else {
+        ctx.drawImage(img, drawX, drawY, drawW, drawH);
+      }
+
+      state.logoImage = canvas.toDataURL('image/png');
+
+      const logoPreviewImg = document.getElementById('logo-preview-img');
+      const defaultLogoIcon = document.getElementById('default-logo-icon');
+      if (logoPreviewImg && defaultLogoIcon) {
+        logoPreviewImg.src = state.logoImage;
+        logoPreviewImg.classList.remove('hidden');
+        defaultLogoIcon.classList.add('hidden');
+      }
+
+      if (callback) callback();
+    };
+
+    img.onerror = () => {
+      state.logoImage = state.rawLogoImage;
+      if (callback) callback();
+    };
+
+    img.src = state.rawLogoImage;
+  };
+
   const updateQRCode = () => {
     clearTimeout(updateTimeout);
     updateTimeout = setTimeout(() => {
@@ -902,15 +1033,46 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => qrCanvasEl.classList.remove('compiling'), 120);
       }
 
+      let dotsConfig = { type: state.dotType };
+      let cornersSquareConfig = { type: state.cornerSquareType };
+      let cornersDotConfig = { type: state.cornerDotType };
+
+      if (state.colorMode === 'gradient') {
+        const rotRad = (parseInt(state.gradientRotation, 10) || 0) * (Math.PI / 180);
+        const gradObj = {
+          type: state.gradientType || 'linear',
+          rotation: rotRad,
+          colorStops: [
+            { offset: 0, color: state.gradientColorStart || '#6366f1' },
+            { offset: 1, color: state.gradientColorEnd || '#a855f7' }
+          ]
+        };
+        dotsConfig.gradient = gradObj;
+        cornersSquareConfig.gradient = gradObj;
+        cornersDotConfig.gradient = gradObj;
+      } else {
+        if (qrCode._options) {
+          if (qrCode._options.dotsOptions) delete qrCode._options.dotsOptions.gradient;
+          if (qrCode._options.cornersSquareOptions) delete qrCode._options.cornersSquareOptions.gradient;
+          if (qrCode._options.cornersDotOptions) delete qrCode._options.cornersDotOptions.gradient;
+        }
+        dotsConfig.color = state.dotsColor;
+        dotsConfig.gradient = null;
+        cornersSquareConfig.color = state.cornerSquareColor;
+        cornersSquareConfig.gradient = null;
+        cornersDotConfig.color = state.cornerDotColor;
+        cornersDotConfig.gradient = null;
+      }
+
       qrCode.update({
         data: state.data,
         margin: parseInt(state.margin),
         qrOptions: { errorCorrectionLevel: state.errorCorrectionLevel },
         image: state.logoImage || undefined,
-        dotsOptions: { color: state.dotsColor, type: state.dotType },
+        dotsOptions: dotsConfig,
         backgroundOptions: { color: state.bgColor },
-        cornersSquareOptions: { color: state.cornerSquareColor, type: state.cornerSquareType },
-        cornersDotOptions: { color: state.cornerDotColor, type: state.cornerDotType }
+        cornersSquareOptions: cornersSquareConfig,
+        cornersDotOptions: cornersDotConfig
       });
 
       triggerAutoLog(state.data, state.currentType);
@@ -1120,13 +1282,166 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Logo Upload & Drag & Drop
+  // ==========================================
+  // COLOR MODE & GRADIENT CONTROLLER
+  // ==========================================
+  const colorModeSolidBtn = document.getElementById('color-mode-solid-btn');
+  const colorModeGradBtn = document.getElementById('color-mode-gradient-btn');
+  const solidControls = document.getElementById('solid-color-controls');
+  const gradControls = document.getElementById('gradient-color-controls');
+  const qrGradStart = document.getElementById('qr-grad-start');
+  const qrGradEnd = document.getElementById('qr-grad-end');
+  const qrGradType = document.getElementById('qr-grad-type');
+  const qrGradRotation = document.getElementById('qr-grad-rotation');
+
+  if (colorModeSolidBtn && colorModeGradBtn) {
+    colorModeSolidBtn.addEventListener('click', () => {
+      state.colorMode = 'solid';
+      colorModeSolidBtn.className = 'px-2.5 py-1 rounded-md font-semibold bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition';
+      colorModeGradBtn.className = 'px-2.5 py-1 rounded-md font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition';
+      if (solidControls) solidControls.classList.remove('hidden');
+      if (gradControls) gradControls.classList.add('hidden');
+      updateQRCode();
+    });
+
+    colorModeGradBtn.addEventListener('click', () => {
+      state.colorMode = 'gradient';
+      colorModeGradBtn.className = 'px-2.5 py-1 rounded-md font-semibold bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition';
+      colorModeSolidBtn.className = 'px-2.5 py-1 rounded-md font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition';
+      if (gradControls) gradControls.classList.remove('hidden');
+      if (solidControls) solidControls.classList.add('hidden');
+      updateQRCode();
+    });
+  }
+
+  if (qrGradStart) {
+    qrGradStart.addEventListener('input', (e) => {
+      state.gradientColorStart = e.target.value;
+      const valEl = document.getElementById('qr-grad-start-val');
+      if (valEl) valEl.textContent = e.target.value.toUpperCase();
+      updateQRCode();
+    });
+  }
+
+  if (qrGradEnd) {
+    qrGradEnd.addEventListener('input', (e) => {
+      state.gradientColorEnd = e.target.value;
+      const valEl = document.getElementById('qr-grad-end-val');
+      if (valEl) valEl.textContent = e.target.value.toUpperCase();
+      updateQRCode();
+    });
+  }
+
+  if (qrGradType) {
+    qrGradType.addEventListener('change', (e) => {
+      state.gradientType = e.target.value;
+      const rotWrap = document.getElementById('grad-rotation-wrap');
+      if (rotWrap) rotWrap.style.display = e.target.value === 'radial' ? 'none' : 'block';
+      updateQRCode();
+    });
+  }
+
+  if (qrGradRotation) {
+    qrGradRotation.addEventListener('change', (e) => {
+      state.gradientRotation = parseInt(e.target.value, 10) || 0;
+      updateQRCode();
+    });
+  }
+
+  // Gradient Presets
+  const gradPresetPills = document.querySelectorAll('.grad-preset-pill');
+  gradPresetPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const gstart = pill.getAttribute('data-gstart');
+      const gend = pill.getAttribute('data-gend');
+      state.gradientColorStart = gstart;
+      state.gradientColorEnd = gend;
+      if (qrGradStart) qrGradStart.value = gstart;
+      if (qrGradEnd) qrGradEnd.value = gend;
+      const sVal = document.getElementById('qr-grad-start-val');
+      const eVal = document.getElementById('qr-grad-end-val');
+      if (sVal) sVal.textContent = gstart.toUpperCase();
+      if (eVal) eVal.textContent = gend.toUpperCase();
+      updateQRCode();
+      showToast('Gradient preset applied!');
+    });
+  });
+
+  // ==========================================
+  // LOGO UPLOAD, RECOLOR & BADGE CONTROLLER
+  // ==========================================
   const dropZone = document.getElementById('drop-zone');
   const logoUpload = document.getElementById('logo-upload');
   const logoFileLabel = document.getElementById('logo-file-label');
   const removeLogoBtn = document.getElementById('remove-logo-btn');
   const defaultLogoIcon = document.getElementById('default-logo-icon');
   const logoPreviewImg = document.getElementById('logo-preview-img');
+  const logoColorOrigBtn = document.getElementById('logo-color-original-btn');
+  const logoColorTintBtn = document.getElementById('logo-color-tint-btn');
+  const logoTintControls = document.getElementById('logo-tint-controls');
+  const logoTintColor = document.getElementById('logo-tint-color');
+  const matchQrColorBtn = document.getElementById('match-qr-color-btn');
+  const logoBadgeShape = document.getElementById('logo-badge-shape');
+  const logoBadgeColor = document.getElementById('logo-badge-color');
+
+  if (logoColorOrigBtn && logoColorTintBtn) {
+    logoColorOrigBtn.addEventListener('click', () => {
+      state.logoColorMode = 'original';
+      logoColorOrigBtn.className = 'px-2.5 py-0.5 rounded-md font-semibold bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition';
+      logoColorTintBtn.className = 'px-2.5 py-0.5 rounded-md font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition';
+      if (logoTintControls) logoTintControls.classList.add('hidden');
+      processLogoImage(() => updateQRCode());
+    });
+
+    logoColorTintBtn.addEventListener('click', () => {
+      state.logoColorMode = 'tint';
+      logoColorTintBtn.className = 'px-2.5 py-0.5 rounded-md font-semibold bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition';
+      logoColorOrigBtn.className = 'px-2.5 py-0.5 rounded-md font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition';
+      if (logoTintControls) logoTintControls.classList.remove('hidden');
+      processLogoImage(() => updateQRCode());
+    });
+  }
+
+  if (logoTintColor) {
+    logoTintColor.addEventListener('input', (e) => {
+      state.logoTintColor = e.target.value;
+      const valEl = document.getElementById('logo-tint-color-val');
+      if (valEl) valEl.textContent = e.target.value.toUpperCase();
+      processLogoImage(() => updateQRCode());
+    });
+  }
+
+  if (matchQrColorBtn) {
+    matchQrColorBtn.addEventListener('click', () => {
+      const targetColor = state.colorMode === 'gradient' ? state.gradientColorStart : state.dotsColor;
+      state.logoTintColor = targetColor;
+      if (logoTintColor) logoTintColor.value = targetColor;
+      const valEl = document.getElementById('logo-tint-color-val');
+      if (valEl) valEl.textContent = targetColor.toUpperCase();
+      if (state.logoColorMode !== 'tint' && logoColorTintBtn) {
+        logoColorTintBtn.click();
+      } else {
+        processLogoImage(() => updateQRCode());
+      }
+      showToast(`Logo color matched to QR (${targetColor})`);
+    });
+  }
+
+  if (logoBadgeShape) {
+    logoBadgeShape.addEventListener('change', (e) => {
+      state.logoBadgeShape = e.target.value;
+      processLogoImage(() => updateQRCode());
+    });
+  }
+
+  if (logoBadgeColor) {
+    logoBadgeColor.addEventListener('input', (e) => {
+      state.logoBadgeColor = e.target.value;
+      const valEl = document.getElementById('logo-badge-color-val');
+      if (valEl) valEl.textContent = e.target.value.toUpperCase();
+      processLogoImage(() => updateQRCode());
+    });
+  }
 
   const processLogoFile = (file) => {
     if (!file) return;
@@ -1141,19 +1456,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      state.logoImage = event.target.result;
+      state.rawLogoImage = event.target.result;
       state.logoFileName = file.name;
 
       logoFileLabel.textContent = file.name.length > 25 ? file.name.slice(0, 22) + '...' : file.name;
-      if (logoPreviewImg && defaultLogoIcon) {
-        logoPreviewImg.src = state.logoImage;
-        logoPreviewImg.classList.remove('hidden');
-        defaultLogoIcon.classList.add('hidden');
-      }
       removeLogoBtn.classList.remove('hidden');
 
-      updateQRCode();
-      showToast('Logo embedded into QR code!');
+      processLogoImage(() => {
+        updateQRCode();
+        showToast('Logo embedded into QR code!');
+      });
     };
     reader.readAsDataURL(file);
   };
@@ -1187,10 +1499,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (removeLogoBtn) {
     removeLogoBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      state.rawLogoImage = null;
       state.logoImage = null;
       state.logoFileName = '';
-      logoUpload.value = '';
-      logoFileLabel.innerHTML = 'Drag & drop your logo here, or <span class="text-indigo-600 underline">browse</span>';
+      if (logoUpload) logoUpload.value = '';
+      logoFileLabel.innerHTML = 'Drag & drop your logo here, or <span class="text-slate-900 dark:text-white underline">browse</span>';
 
       if (logoPreviewImg && defaultLogoIcon) {
         logoPreviewImg.src = '';

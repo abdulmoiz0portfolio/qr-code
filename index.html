@@ -847,48 +847,123 @@
                 <span data-i18n="styling_header">Visual Styling & Custom Colors</span>
               </h2>
 
-              <!-- Color Pickers -->
+              <!-- Color Mode & Pickers -->
               <div class="space-y-3">
-                <label class="block text-xs font-medium text-slate-600 dark:text-slate-400" data-i18n="label_colors">Palette Colors</label>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
-                    <input type="color" id="qr-dots-color" value="#0f172a" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
-                    <div class="overflow-hidden">
-                      <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_dots">QR Dots</div>
-                      <div id="qr-dots-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#0F172A</div>
-                    </div>
-                  </div>
-                  <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
-                    <input type="color" id="qr-bg-color" value="#ffffff" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
-                    <div class="overflow-hidden">
-                      <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_bg">Background</div>
-                      <div id="qr-bg-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#FFFFFF</div>
-                    </div>
-                  </div>
-                  <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
-                    <input type="color" id="qr-corner-square-color" value="#0f172a" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
-                    <div class="overflow-hidden">
-                      <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_frame">Corner Frame</div>
-                      <div id="qr-corner-square-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#0F172A</div>
-                    </div>
-                  </div>
-                  <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
-                    <input type="color" id="qr-corner-dot-color" value="#0f172a" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
-                    <div class="overflow-hidden">
-                      <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_center">Corner Center</div>
-                      <div id="qr-corner-dot-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#0F172A</div>
-                    </div>
+                <div class="flex items-center justify-between">
+                  <label class="block text-xs font-medium text-slate-600 dark:text-slate-400" data-i18n="label_colors">Color Mode & Palette</label>
+                  <div class="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 text-[11px]">
+                    <button type="button" id="color-mode-solid-btn" class="px-2.5 py-1 rounded-md font-semibold bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition" data-i18n="mode_solid">Solid</button>
+                    <button type="button" id="color-mode-gradient-btn" class="px-2.5 py-1 rounded-md font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition" data-i18n="mode_gradient">Gradient</button>
                   </div>
                 </div>
 
-                <!-- Palette Pills -->
-                <div class="flex flex-wrap items-center gap-2 pt-1">
-                  <span class="text-xs text-slate-500 font-medium" data-i18n="label_presets">Presets:</span>
-                  <button data-dots="#0f172a" data-bg="#ffffff" class="preset-pill active px-2.5 py-1 text-xs rounded-md border border-slate-300 bg-slate-100 text-slate-900 font-semibold hover:border-slate-400 transition">Obsidian Slate</button>
-                  <button data-dots="#000000" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Monochrome B&W</button>
-                  <button data-dots="#059669" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Emerald</button>
-                  <button data-dots="#4f46e5" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Electric Indigo</button>
-                  <button data-dots="#0284c7" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Cyan Blue</button>
+                <!-- Solid Color Controls Container -->
+                <div id="solid-color-controls" class="space-y-3">
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
+                      <input type="color" id="qr-dots-color" value="#0f172a" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
+                      <div class="overflow-hidden">
+                        <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_dots">QR Dots</div>
+                        <div id="qr-dots-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#0F172A</div>
+                      </div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
+                      <input type="color" id="qr-bg-color" value="#ffffff" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
+                      <div class="overflow-hidden">
+                        <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_bg">Background</div>
+                        <div id="qr-bg-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#FFFFFF</div>
+                      </div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
+                      <input type="color" id="qr-corner-square-color" value="#0f172a" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
+                      <div class="overflow-hidden">
+                        <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_frame">Corner Frame</div>
+                        <div id="qr-corner-square-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#0F172A</div>
+                      </div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
+                      <input type="color" id="qr-corner-dot-color" value="#0f172a" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
+                      <div class="overflow-hidden">
+                        <div class="text-[10px] text-slate-500 font-medium" data-i18n="color_center">Corner Center</div>
+                        <div id="qr-corner-dot-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#0F172A</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Palette Pills -->
+                  <div class="flex flex-wrap items-center gap-2 pt-1">
+                    <span class="text-xs text-slate-500 font-medium" data-i18n="label_presets">Presets:</span>
+                    <button data-dots="#0f172a" data-bg="#ffffff" class="preset-pill active px-2.5 py-1 text-xs rounded-md border border-slate-300 bg-slate-100 text-slate-900 font-semibold hover:border-slate-400 transition">Obsidian Slate</button>
+                    <button data-dots="#000000" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Monochrome B&W</button>
+                    <button data-dots="#059669" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Emerald</button>
+                    <button data-dots="#4f46e5" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Electric Indigo</button>
+                    <button data-dots="#0284c7" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Cyan Blue</button>
+                  </div>
+                </div>
+
+                <!-- Gradient Controls Container (hidden by default) -->
+                <div id="gradient-color-controls" class="hidden space-y-3">
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
+                      <input type="color" id="qr-grad-start" value="#6366f1" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
+                      <div class="overflow-hidden">
+                        <div class="text-[10px] text-slate-500 font-medium" data-i18n="grad_start">Start Color</div>
+                        <div id="qr-grad-start-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#6366F1</div>
+                      </div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
+                      <input type="color" id="qr-grad-end" value="#a855f7" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
+                      <div class="overflow-hidden">
+                        <div class="text-[10px] text-slate-500 font-medium" data-i18n="grad_end">End Color</div>
+                        <div id="qr-grad-end-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#A855F7</div>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="block text-[10px] font-medium text-slate-500 mb-1" data-i18n="grad_type">Gradient Type</label>
+                      <select id="qr-grad-type" class="w-full px-2 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none">
+                        <option value="linear" selected>Linear</option>
+                        <option value="radial">Radial</option>
+                      </select>
+                    </div>
+                    <div id="grad-rotation-wrap">
+                      <label class="block text-[10px] font-medium text-slate-500 mb-1" data-i18n="grad_angle">Angle</label>
+                      <select id="qr-grad-rotation" class="w-full px-2 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none">
+                        <option value="0" selected>0° (Left → Right)</option>
+                        <option value="45">45° (Diagonal)</option>
+                        <option value="90">90° (Top → Bottom)</option>
+                        <option value="135">135° (Reverse Diagonal)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Gradient Presets -->
+                  <div class="flex flex-wrap items-center gap-2 pt-1">
+                    <span class="text-xs text-slate-500 font-medium" data-i18n="label_presets">Presets:</span>
+                    <button data-gstart="#6366f1" data-gend="#a855f7" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 inline-block"></span>
+                      <span>Electric Indigo</span>
+                    </button>
+                    <button data-gstart="#f43f5e" data-gend="#fb923c" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-rose-500 to-orange-400 inline-block"></span>
+                      <span>Sunset Flare</span>
+                    </button>
+                    <button data-gstart="#0284c7" data-gend="#06b6d4" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-sky-600 to-cyan-400 inline-block"></span>
+                      <span>Ocean Cyan</span>
+                    </button>
+                    <button data-gstart="#059669" data-gend="#10b981" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400 inline-block"></span>
+                      <span>Emerald Mint</span>
+                    </button>
+                    <button data-gstart="#ec4899" data-gend="#8b5cf6" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 inline-block"></span>
+                      <span>Cyber Neon</span>
+                    </button>
+                    <button data-gstart="#0f172a" data-gend="#475569" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-slate-900 to-slate-600 inline-block"></span>
+                      <span>Midnight Slate</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -948,6 +1023,59 @@
                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                     <span data-i18n="btn_remove">Remove</span>
                   </button>
+                </div>
+
+                <!-- Logo Customization & Recolor Panel -->
+                <div id="logo-custom-panel" class="space-y-3 pt-2">
+                  <div class="p-3 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl space-y-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                        <i data-lucide="paintbrush" class="w-3.5 h-3.5 text-slate-500"></i>
+                        <span data-i18n="logo_color_header">Logo Color & Tint</span>
+                      </span>
+                      <div class="flex bg-slate-200/70 dark:bg-slate-800 p-0.5 rounded-lg text-[10px]">
+                        <button type="button" id="logo-color-original-btn" class="px-2.5 py-0.5 rounded-md font-semibold bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition" data-i18n="logo_original">Original</button>
+                        <button type="button" id="logo-color-tint-btn" class="px-2.5 py-0.5 rounded-md font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition" data-i18n="logo_recolor">Recolor / Tint</button>
+                      </div>
+                    </div>
+
+                    <!-- Tint Color Controls (hidden when original is active) -->
+                    <div id="logo-tint-controls" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2 rounded-lg flex items-center gap-2.5">
+                        <input type="color" id="logo-tint-color" value="#0f172a" class="w-7 h-7 rounded-md cursor-pointer bg-transparent border-0">
+                        <div class="overflow-hidden">
+                          <div class="text-[10px] text-slate-500 font-medium" data-i18n="label_logo_color">Logo Color</div>
+                          <div id="logo-tint-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#0F172A</div>
+                        </div>
+                      </div>
+                      <div class="flex items-center">
+                        <button type="button" id="match-qr-color-btn" class="w-full h-full py-2 px-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition flex items-center justify-center gap-1.5 shadow-xs">
+                          <i data-lucide="pipette" class="w-3.5 h-3.5 text-indigo-500"></i>
+                          <span data-i18n="btn_match_qr">Match QR Color</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Logo Background Badge Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-800">
+                      <div>
+                        <label class="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1" data-i18n="label_badge_shape">Logo Background Shape</label>
+                        <select id="logo-badge-shape" class="w-full px-2.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none">
+                          <option value="rounded" selected>Rounded Badge</option>
+                          <option value="circle">Circle Badge</option>
+                          <option value="square">Square Badge</option>
+                          <option value="none">None (Transparent)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1" data-i18n="label_badge_color">Badge Color</label>
+                        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1.5 rounded-lg flex items-center gap-2">
+                          <input type="color" id="logo-badge-color" value="#ffffff" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0">
+                          <div id="logo-badge-color-val" class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase">#FFFFFF</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -2585,7 +2713,7 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-  <script src="app.js?v=6.0.0"></script>
+  <script src="app.js?v=6.1.0"></script>
   <!-- Agentation Visual Feedback Toolbar -->
   <script src="agentation-widget.js" defer></script>
   <!-- Cookie Consent Banner -->
