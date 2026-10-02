@@ -515,6 +515,16 @@ html:not(.dark) .border-slate-200\/80 {
 }
 
 /* --- 13. MOBILE RESPONSIVE ENGINE (COCONUT UI) --- */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+#mobile-qr-floating-bar {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
