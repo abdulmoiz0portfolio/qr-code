@@ -753,7 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 3. NAVIGATION CONTROLLER (AUTH PROTECTED)
   // ==========================================
-  const navButtons = document.querySelectorAll('#main-nav .nav-item');
+  const navButtons = document.querySelectorAll('.nav-item[data-view]');
   const viewPanels = document.querySelectorAll('.view-panel');
   const PROTECTED_VIEWS = ['history', 'analytics', 'api'];
 
@@ -797,6 +797,12 @@ document.addEventListener('DOMContentLoaded', () => {
       panel.classList.toggle('hidden', !isTarget);
     });
 
+    // Control Mobile Floating Action Bar visibility (only active on studio view)
+    const mobileQrFloatingBar = document.getElementById('mobile-qr-floating-bar');
+    if (mobileQrFloatingBar) {
+      mobileQrFloatingBar.classList.toggle('hidden', targetView !== 'studio');
+    }
+
     if (targetView === 'history') renderHistoryView();
     if (targetView === 'dynamic') renderDynamicLinksView();
     if (targetView === 'templates') renderTemplatesView();
@@ -829,6 +835,81 @@ document.addEventListener('DOMContentLoaded', () => {
   const headerAdminBtn = document.getElementById('header-admin-btn');
   if (headerAdminBtn) {
     headerAdminBtn.addEventListener('click', () => switchView('admin'));
+  }
+
+  // ==========================================
+  // MOBILE STUDIO SEGMENTED TABS & FLOATING BAR
+  // ==========================================
+  const mobileStudioTabEditor = document.getElementById('mobile-studio-tab-editor');
+  const mobileStudioTabPreview = document.getElementById('mobile-studio-tab-preview');
+  const studioControlsCol = document.getElementById('studio-controls-col');
+  const studioPreviewCol = document.getElementById('studio-preview-col');
+  const mobileSwitchViewBtn = document.getElementById('mobile-switch-view-btn');
+  const mobileSwitchViewText = document.getElementById('mobile-switch-view-text');
+  const mobileSwitchViewIcon = document.getElementById('mobile-switch-view-icon');
+  const mobileQuickDownloadBtn = document.getElementById('mobile-quick-download-btn');
+
+  let currentMobileStudioTab = 'editor'; // 'editor' | 'preview'
+
+  const setMobileStudioTab = (tab) => {
+    currentMobileStudioTab = tab;
+    if (tab === 'editor') {
+      if (studioControlsCol) {
+        studioControlsCol.classList.remove('hidden');
+        studioControlsCol.classList.add('block');
+      }
+      if (studioPreviewCol) {
+        studioPreviewCol.classList.add('hidden');
+        studioPreviewCol.classList.remove('block');
+      }
+      if (mobileStudioTabEditor) {
+        mobileStudioTabEditor.className = 'flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs';
+      }
+      if (mobileStudioTabPreview) {
+        mobileStudioTabPreview.className = 'flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all text-slate-600 dark:text-slate-400';
+      }
+      if (mobileSwitchViewText) mobileSwitchViewText.textContent = 'View QR & Export';
+      if (mobileSwitchViewIcon) mobileSwitchViewIcon.setAttribute('data-lucide', 'qr-code');
+    } else {
+      if (studioControlsCol) {
+        studioControlsCol.classList.add('hidden');
+        studioControlsCol.classList.remove('block');
+      }
+      if (studioPreviewCol) {
+        studioPreviewCol.classList.remove('hidden');
+        studioPreviewCol.classList.add('block');
+      }
+      if (mobileStudioTabEditor) {
+        mobileStudioTabEditor.className = 'flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all text-slate-600 dark:text-slate-400';
+      }
+      if (mobileStudioTabPreview) {
+        mobileStudioTabPreview.className = 'flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs';
+      }
+      if (mobileSwitchViewText) mobileSwitchViewText.textContent = 'Edit Content & Style';
+      if (mobileSwitchViewIcon) mobileSwitchViewIcon.setAttribute('data-lucide', 'sliders');
+    }
+    if (window.lucide) lucide.createIcons();
+  };
+
+  if (mobileStudioTabEditor) {
+    mobileStudioTabEditor.addEventListener('click', () => setMobileStudioTab('editor'));
+  }
+  if (mobileStudioTabPreview) {
+    mobileStudioTabPreview.addEventListener('click', () => setMobileStudioTab('preview'));
+  }
+  if (mobileSwitchViewBtn) {
+    mobileSwitchViewBtn.addEventListener('click', () => {
+      setMobileStudioTab(currentMobileStudioTab === 'editor' ? 'preview' : 'editor');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (mobileQuickDownloadBtn) {
+    mobileQuickDownloadBtn.addEventListener('click', () => {
+      const mainDownloadBtn = document.getElementById('download-png-btn');
+      if (mainDownloadBtn) {
+        mainDownloadBtn.click();
+      }
+    });
   }
 
   // ==========================================

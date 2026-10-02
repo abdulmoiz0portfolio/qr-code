@@ -222,7 +222,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- JSZip for Bulk/Batch ZIP Downloads -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <link rel="stylesheet" href="style.css?v=7.0.0">
+  <link rel="stylesheet" href="style.css?v=8.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -371,9 +371,9 @@
 
         <!-- Language Switcher Dropdown -->
         <div class="relative">
-          <button id="lang-selector-btn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2 transition shadow-xs">
+          <button id="lang-selector-btn" class="px-2.5 sm:px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 sm:gap-2 transition shadow-xs">
             <span id="current-lang-flag">🇺🇸</span>
-            <span id="current-lang-name">English</span>
+            <span id="current-lang-name" class="hidden sm:inline">English</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
           </button>
           
@@ -409,24 +409,24 @@
         </div>
 
         <!-- Dark / Light Theme Toggle Switch -->
-        <button id="theme-toggle-btn" class="h-9 px-3 rounded-lg bg-slate-200/80 dark:bg-[#18181b] hover:bg-slate-300/80 dark:hover:bg-[#27272a] border border-slate-300 dark:border-[#27272a] text-slate-800 dark:text-slate-200 flex items-center gap-1.5 transition shadow-xs cursor-pointer active:scale-95" title="Switch Theme (Dark / Light)">
+        <button id="theme-toggle-btn" class="h-9 px-2.5 sm:px-3 rounded-lg bg-slate-200/80 dark:bg-[#18181b] hover:bg-slate-300/80 dark:hover:bg-[#27272a] border border-slate-300 dark:border-[#27272a] text-slate-800 dark:text-slate-200 flex items-center gap-1.5 transition shadow-xs cursor-pointer active:scale-95" title="Switch Theme (Dark / Light)">
           <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 text-amber-500 hidden"></i>
           <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 text-indigo-500 dark:text-indigo-400"></i>
-          <span id="theme-text-label" class="text-[11px] font-mono font-bold tracking-wide">Dark</span>
+          <span id="theme-text-label" class="hidden sm:inline text-[11px] font-mono font-bold tracking-wide">Dark</span>
         </button>
 
         <!-- Auth Area: Sign In / Sign Up or Logged in User Profile -->
-        <div id="auth-guest-section" class="flex items-center gap-2">
-          <button id="header-signin-btn" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition">
+        <div id="auth-guest-section" class="flex items-center gap-1.5 sm:gap-2">
+          <button id="header-signin-btn" class="px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition">
             Sign In
           </button>
-          <button id="header-signup-btn" class="px-3.5 py-1.5 text-xs font-bold text-white dark:text-slate-900 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 rounded-lg shadow-xs transition">
+          <button id="header-signup-btn" class="px-2.5 sm:px-3.5 py-1.5 text-xs font-bold text-white dark:text-slate-900 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 rounded-lg shadow-xs transition">
             Sign Up
           </button>
         </div>
 
         <div id="auth-user-section" class="hidden relative">
-          <button id="user-menu-btn" class="flex items-center gap-2.5 p-1 pl-2.5 pr-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition">
+          <button id="user-menu-btn" class="flex items-center gap-2 p-1 pl-2 pr-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition">
             <div class="w-6 h-6 rounded-md bg-slate-900 text-white font-bold text-xs flex items-center justify-center font-mono uppercase" id="user-avatar-initial">
               M
             </div>
@@ -456,7 +456,7 @@
         </div>
 
         <!-- New QR Quick Action (Clean Tactile Button) -->
-        <button id="quick-create-btn" class="btn-luxury-pill bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs group border-indigo-600">
+        <button id="quick-create-btn" class="hidden sm:flex btn-luxury-pill bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs group border-indigo-600">
           <span data-i18n="new_qr">New QR</span>
           <span class="btn-nested-icon bg-white/20">
             <i data-lucide="plus" class="w-3.5 h-3.5 text-white"></i>
@@ -468,10 +468,42 @@
   </header>
 
   <!-- App Layout -->
-  <div class="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
+  <div class="flex-1 max-w-[1600px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col md:flex-row gap-6">
+
+    <!-- Mobile Horizontal View Tabs (Coconut UI) -->
+    <div id="mobile-nav" class="md:hidden overflow-x-auto no-scrollbar py-2 -mx-3 px-3 flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0c1322]/90 backdrop-blur-xl sticky top-16 z-30 mb-3 shadow-xs">
+      <button data-view="studio" class="nav-item active px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
+        <i data-lucide="wand-2" class="w-3.5 h-3.5 text-indigo-500"></i>
+        <span data-i18n="nav_studio">QR Studio</span>
+      </button>
+      <button data-view="dynamic" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
+        <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-500"></i>
+        <span data-i18n="nav_dynamic">Dynamic</span>
+      </button>
+      <button data-view="templates" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+        <span data-i18n="nav_templates">Templates</span>
+      </button>
+      <button data-view="batch" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
+        <i data-lucide="layers" class="w-3.5 h-3.5 text-violet-500"></i>
+        <span data-i18n="nav_batch">Batch</span>
+      </button>
+      <button data-view="history" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
+        <i data-lucide="folder-clock" class="w-3.5 h-3.5 text-emerald-500"></i>
+        <span data-i18n="nav_library">Saved QRs</span>
+      </button>
+      <button data-view="analytics" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
+        <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-rose-500"></i>
+        <span data-i18n="nav_analytics">Analytics</span>
+      </button>
+      <button data-view="api" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
+        <i data-lucide="code-2" class="w-3.5 h-3.5 text-blue-500"></i>
+        <span>API</span>
+      </button>
+    </div>
     
-    <!-- Sidebar Navigation -->
-    <aside class="w-full md:w-64 shrink-0 space-y-5">
+    <!-- Sidebar Navigation (Desktop) -->
+    <aside class="hidden md:block w-64 shrink-0 space-y-5">
       
       <!-- Navigation Shell -->
       <div class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl p-3 shadow-xs">
@@ -618,14 +650,26 @@
         <!-- Dynamic Industry Preset Agency Automation Funnel -->
         <div id="preset-agency-funnel" class="hidden transition-all duration-300"></div>
 
+        <!-- Mobile Studio Segmented View Switcher (Coconut UI) -->
+        <div class="xl:hidden flex p-1 bg-slate-200/90 dark:bg-slate-900/90 border border-slate-300/80 dark:border-slate-800 rounded-xl mb-4 text-xs font-bold shadow-xs">
+          <button type="button" id="mobile-studio-tab-editor" class="flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs">
+            <i data-lucide="sliders" class="w-4 h-4 text-indigo-500"></i>
+            <span>1. Content & Styling</span>
+          </button>
+          <button type="button" id="mobile-studio-tab-preview" class="flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all text-slate-600 dark:text-slate-400">
+            <i data-lucide="qr-code" class="w-4 h-4 text-emerald-500"></i>
+            <span>2. QR Code & Export</span>
+          </button>
+        </div>
+
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
           
           <!-- Controls (7 Cols) -->
-          <div class="xl:col-span-7 space-y-6">
+          <div id="studio-controls-col" class="xl:block xl:col-span-7 space-y-6">
             
             <!-- QR Type Tabs (Clean Segmented Control) -->
-            <div class="bg-slate-200/80 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 rounded-xl p-1.5">
-              <div class="grid grid-cols-2 sm:grid-cols-7 gap-1" id="type-tabs">
+            <div class="bg-slate-200/80 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 rounded-xl p-1.5 overflow-x-auto no-scrollbar">
+              <div class="flex sm:grid sm:grid-cols-7 gap-1 min-w-max sm:min-w-0" id="type-tabs">
                 <button data-type="url" class="tab-btn active flex flex-col items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-semibold transition-all">
                   <i data-lucide="link" class="w-4 h-4"></i>
                   <span data-i18n="type_url">URL Link</span>
@@ -1101,7 +1145,7 @@
           </div>
 
           <!-- Live Preview Card (5 Cols Sticky) -->
-          <div class="xl:col-span-5 xl:sticky xl:top-24 space-y-4">
+          <div id="studio-preview-col" class="hidden xl:block xl:col-span-5 xl:sticky xl:top-24 space-y-4">
             <div class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-xs flex flex-col items-center">
               
               <div class="w-full flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
@@ -1165,6 +1209,18 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- Mobile Floating Action Bar (Coconut UI) -->
+        <div id="mobile-qr-floating-bar" class="xl:hidden fixed bottom-3 inset-x-3 z-40 flex items-center gap-2 bg-white/95 dark:bg-[#0c1322]/95 backdrop-blur-2xl border border-slate-300 dark:border-slate-800 p-2 rounded-2xl shadow-2xl">
+          <button type="button" id="mobile-switch-view-btn" class="flex-1 py-2.5 px-3 text-xs font-bold rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center gap-1.5 active:scale-95 transition">
+            <i id="mobile-switch-view-icon" data-lucide="qr-code" class="w-4 h-4 text-indigo-500"></i>
+            <span id="mobile-switch-view-text">View QR & Export</span>
+          </button>
+          <button type="button" id="mobile-quick-download-btn" class="flex-1 py-2.5 px-3 text-xs font-bold rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download PNG</span>
+          </button>
         </div>
 
         <!-- ============================================== -->
@@ -2713,7 +2769,7 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-  <script src="app.js?v=6.1.0"></script>
+  <script src="app.js?v=8.0.0"></script>
   <!-- Agentation Visual Feedback Toolbar -->
   <script src="agentation-widget.js" defer></script>
   <!-- Cookie Consent Banner -->

@@ -513,3 +513,44 @@ html:not(.dark) .border-slate-200\/80 {
   background: var(--qr-border-hairline);
   border-radius: var(--qr-radius-pill);
 }
+
+/* --- 13. MOBILE RESPONSIVE ENGINE (COCONUT UI) --- */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media screen and (max-width: 768px) {
+  /* Prevent iOS Safari auto-zoom on inputs */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  select,
+  textarea {
+    font-size: 14px !important;
+  }
+
+  /* Compact button styling on mobile */
+  .btn-luxury-pill {
+    padding: 0.55rem 1rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Optical viewfinder on mobile */
+  .viewfinder-plate {
+    min-height: 250px !important;
+    padding: 1rem !important;
+  }
+
+  /* QR canvas sizing inside preview plate on mobile */
+  #qr-canvas canvas, #qr-canvas svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
