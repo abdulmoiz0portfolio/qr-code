@@ -468,40 +468,8 @@
   </header>
 
   <!-- App Layout -->
-  <div class="flex-1 max-w-[1600px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col md:flex-row gap-6">
+  <div class="flex-1 max-w-[1600px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6 flex flex-col md:flex-row gap-6">
 
-    <!-- Mobile Horizontal View Tabs (Coconut UI) -->
-    <div id="mobile-nav" class="md:hidden overflow-x-auto no-scrollbar py-2 px-1 flex items-center gap-1.5 border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0c1322]/95 backdrop-blur-xl sticky top-14 z-30 mb-3 shadow-xs rounded-xl w-full">
-      <button data-view="studio" class="nav-item active px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
-        <i data-lucide="wand-2" class="w-3.5 h-3.5 text-indigo-500"></i>
-        <span data-i18n="nav_studio">QR Studio</span>
-      </button>
-      <button data-view="dynamic" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
-        <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-500"></i>
-        <span data-i18n="nav_dynamic">Dynamic</span>
-      </button>
-      <button data-view="templates" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
-        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
-        <span data-i18n="nav_templates">Templates</span>
-      </button>
-      <button data-view="batch" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
-        <i data-lucide="layers" class="w-3.5 h-3.5 text-violet-500"></i>
-        <span data-i18n="nav_batch">Batch</span>
-      </button>
-      <button data-view="history" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
-        <i data-lucide="folder-clock" class="w-3.5 h-3.5 text-emerald-500"></i>
-        <span data-i18n="nav_library">Saved QRs</span>
-      </button>
-      <button data-view="analytics" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
-        <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-rose-500"></i>
-        <span data-i18n="nav_analytics">Analytics</span>
-      </button>
-      <button data-view="api" class="nav-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all">
-        <i data-lucide="code-2" class="w-3.5 h-3.5 text-blue-500"></i>
-        <span>API</span>
-      </button>
-    </div>
-    
     <!-- Sidebar Navigation (Desktop) -->
     <aside class="hidden md:block w-64 shrink-0 space-y-5">
       
@@ -650,51 +618,50 @@
         <!-- Dynamic Industry Preset Agency Automation Funnel -->
         <div id="preset-agency-funnel" class="hidden transition-all duration-300"></div>
 
-        <!-- Mobile Studio Segmented View Switcher (Coconut UI) -->
-        <div class="xl:hidden flex p-1 bg-slate-200/90 dark:bg-slate-900/90 border border-slate-300/80 dark:border-slate-800 rounded-xl mb-4 text-xs font-bold shadow-xs">
-          <button type="button" id="mobile-studio-tab-editor" class="flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs">
-            <i data-lucide="sliders" class="w-4 h-4 text-indigo-500"></i>
-            <span>1. Content & Styling</span>
-          </button>
-          <button type="button" id="mobile-studio-tab-preview" class="flex-1 py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all text-slate-600 dark:text-slate-400">
-            <i data-lucide="qr-code" class="w-4 h-4 text-emerald-500"></i>
-            <span>2. QR Code & Export</span>
+        <!-- Compact One-Line Quick Start Guide Banner (Mobile) -->
+        <div id="mobile-guide-banner" class="md:hidden flex items-center justify-between p-3 bg-slate-900 dark:bg-slate-800 text-white rounded-xl text-xs shadow-xs mb-3">
+          <div class="flex items-center gap-2 truncate">
+            <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+            <span class="truncate font-medium text-slate-200">Create, customize & export free high-res QR codes</span>
+          </div>
+          <button type="button" id="dismiss-mobile-guide-btn" class="p-1 text-slate-400 hover:text-white shrink-0 active:scale-95" aria-label="Dismiss guide">
+            <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        <div id="studio-layout-grid" class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
           
           <!-- Controls (7 Cols) -->
           <div id="studio-controls-col" class="xl:block xl:col-span-7 space-y-6">
             
-            <!-- QR Type Tabs (Clean Segmented Control) -->
-            <div class="bg-slate-200/80 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 rounded-xl p-1.5 overflow-x-auto no-scrollbar">
-              <div class="flex sm:grid sm:grid-cols-7 gap-1 min-w-max sm:min-w-0" id="type-tabs">
-                <button data-type="url" class="tab-btn active flex flex-col items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-semibold transition-all">
+            <!-- QR Type Tabs (Clean Horizontal Scroll Chips on Mobile) -->
+            <div id="type-tabs-wrapper" class="bg-slate-200/80 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 rounded-xl p-1.5 overflow-x-auto no-scrollbar">
+              <div class="flex gap-1.5 min-w-max sm:grid sm:grid-cols-7" id="type-tabs">
+                <button data-type="url" class="tab-btn active flex flex-row sm:flex-col items-center justify-center gap-1.5 py-2.5 px-3 sm:px-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap min-h-[44px]">
                   <i data-lucide="link" class="w-4 h-4"></i>
                   <span data-i18n="type_url">URL Link</span>
                 </button>
-                <button data-type="text" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-semibold transition-all">
+                <button data-type="text" class="tab-btn flex flex-row sm:flex-col items-center justify-center gap-1.5 py-2.5 px-3 sm:px-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap min-h-[44px]">
                   <i data-lucide="type" class="w-4 h-4"></i>
                   <span data-i18n="type_text">Text</span>
                 </button>
-                <button data-type="image" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-semibold transition-all">
+                <button data-type="image" class="tab-btn flex flex-row sm:flex-col items-center justify-center gap-1.5 py-2.5 px-3 sm:px-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap min-h-[44px]">
                   <i data-lucide="image" class="w-4 h-4"></i>
                   <span data-i18n="type_image">Image</span>
                 </button>
-                <button data-type="wifi" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-semibold transition-all">
+                <button data-type="wifi" class="tab-btn flex flex-row sm:flex-col items-center justify-center gap-1.5 py-2.5 px-3 sm:px-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap min-h-[44px]">
                   <i data-lucide="wifi" class="w-4 h-4"></i>
                   <span data-i18n="type_wifi">Wi-Fi</span>
                 </button>
-                <button data-type="vcard" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-semibold transition-all">
+                <button data-type="vcard" class="tab-btn flex flex-row sm:flex-col items-center justify-center gap-1.5 py-2.5 px-3 sm:px-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap min-h-[44px]">
                   <i data-lucide="contact-2" class="w-4 h-4"></i>
                   <span data-i18n="type_vcard">vCard</span>
                 </button>
-                <button data-type="social" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-semibold transition-all">
+                <button data-type="social" class="tab-btn flex flex-row sm:flex-col items-center justify-center gap-1.5 py-2.5 px-3 sm:px-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap min-h-[44px]">
                   <i data-lucide="share-2" class="w-4 h-4"></i>
                   <span data-i18n="type_social">Social Bio</span>
                 </button>
-                <button data-type="email" class="tab-btn flex flex-col items-center justify-center gap-1.5 py-2.5 px-2 text-xs font-semibold transition-all">
+                <button data-type="email" class="tab-btn flex flex-row sm:flex-col items-center justify-center gap-1.5 py-2.5 px-3 sm:px-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap min-h-[44px]">
                   <i data-lucide="mail" class="w-4 h-4"></i>
                   <span data-i18n="type_email">Email</span>
                 </button>
@@ -702,7 +669,7 @@
             </div>
 
             <!-- Content Inputs Card -->
-            <div class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-xs space-y-4">
+            <div id="content-inputs-card" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-xs space-y-4">
               <h2 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2">
                 <i data-lucide="edit-3" class="w-4 h-4 text-slate-700 dark:text-slate-300"></i>
                 <span data-i18n="content_header">QR Content & Information</span>
@@ -884,14 +851,23 @@
 
             </div>
 
-            <!-- Visual Customizer Card -->
-            <div class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-xs space-y-5">
-              <h2 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                <i data-lucide="palette" class="w-4 h-4 text-slate-700 dark:text-slate-300"></i>
-                <span data-i18n="styling_header">Visual Styling & Custom Colors</span>
-              </h2>
+            <!-- Visual Customizer Card (Collapsible Accordion on Mobile) -->
+            <div id="styling-accordion-card">
+              <details id="styling-accordion" class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl shadow-xs group overflow-hidden">
+                <summary class="cursor-pointer list-none p-4 sm:p-6 flex items-center justify-between text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider select-none">
+                  <div class="flex items-center gap-2">
+                    <i data-lucide="palette" class="w-4 h-4 text-indigo-500"></i>
+                    <span data-i18n="styling_header">Visual Styling & Custom Colors</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 font-mono tracking-normal capitalize xl:hidden">Customize</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform xl:hidden"></i>
+                  </div>
+                </summary>
 
-              <!-- Color Mode & Pickers -->
+                <div class="accordion-body p-4 pt-0 sm:p-6 sm:pt-0 space-y-5 border-t border-slate-100 dark:border-slate-800/80 mt-2">
+
+                  <!-- Color Mode & Pickers -->
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
                   <label class="block text-xs font-medium text-slate-600 dark:text-slate-400" data-i18n="label_colors">Color Mode & Palette</label>
@@ -935,13 +911,13 @@
                   </div>
 
                   <!-- Palette Pills -->
-                  <div class="flex flex-wrap items-center gap-2 pt-1">
-                    <span class="text-xs text-slate-500 font-medium" data-i18n="label_presets">Presets:</span>
-                    <button data-dots="#0f172a" data-bg="#ffffff" class="preset-pill active px-2.5 py-1 text-xs rounded-md border border-slate-300 bg-slate-100 text-slate-900 font-semibold hover:border-slate-400 transition">Obsidian Slate</button>
-                    <button data-dots="#000000" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Monochrome B&W</button>
-                    <button data-dots="#059669" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Emerald</button>
-                    <button data-dots="#4f46e5" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Electric Indigo</button>
-                    <button data-dots="#0284c7" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition">Cyan Blue</button>
+                  <div class="flex items-center gap-2 pt-1 pb-1 overflow-x-auto no-scrollbar">
+                    <span class="text-xs text-slate-500 font-medium shrink-0" data-i18n="label_presets">Presets:</span>
+                    <button data-dots="#0f172a" data-bg="#ffffff" class="preset-pill active px-2.5 py-1 text-xs rounded-md border border-slate-300 bg-slate-100 text-slate-900 font-semibold hover:border-slate-400 transition whitespace-nowrap shrink-0">Obsidian Slate</button>
+                    <button data-dots="#000000" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition whitespace-nowrap shrink-0">Monochrome B&W</button>
+                    <button data-dots="#059669" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition whitespace-nowrap shrink-0">Emerald</button>
+                    <button data-dots="#4f46e5" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition whitespace-nowrap shrink-0">Electric Indigo</button>
+                    <button data-dots="#0284c7" data-bg="#ffffff" class="preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white hover:border-slate-400 transition whitespace-nowrap shrink-0">Cyan Blue</button>
                   </div>
                 </div>
 
@@ -981,30 +957,30 @@
                   </div>
 
                   <!-- Gradient Presets -->
-                  <div class="flex flex-wrap items-center gap-2 pt-1">
-                    <span class="text-xs text-slate-500 font-medium" data-i18n="label_presets">Presets:</span>
-                    <button data-gstart="#6366f1" data-gend="#a855f7" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
-                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 inline-block"></span>
+                  <div class="flex items-center gap-2 pt-1 pb-1 overflow-x-auto no-scrollbar">
+                    <span class="text-xs text-slate-500 font-medium shrink-0" data-i18n="label_presets">Presets:</span>
+                    <button data-gstart="#6366f1" data-gend="#a855f7" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 inline-block shrink-0"></span>
                       <span>Electric Indigo</span>
                     </button>
-                    <button data-gstart="#f43f5e" data-gend="#fb923c" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
-                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-rose-500 to-orange-400 inline-block"></span>
+                    <button data-gstart="#f43f5e" data-gend="#fb923c" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-rose-500 to-orange-400 inline-block shrink-0"></span>
                       <span>Sunset Flare</span>
                     </button>
-                    <button data-gstart="#0284c7" data-gend="#06b6d4" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
-                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-sky-600 to-cyan-400 inline-block"></span>
+                    <button data-gstart="#0284c7" data-gend="#06b6d4" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-sky-600 to-cyan-400 inline-block shrink-0"></span>
                       <span>Ocean Cyan</span>
                     </button>
-                    <button data-gstart="#059669" data-gend="#10b981" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
-                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400 inline-block"></span>
+                    <button data-gstart="#059669" data-gend="#10b981" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400 inline-block shrink-0"></span>
                       <span>Emerald Mint</span>
                     </button>
-                    <button data-gstart="#ec4899" data-gend="#8b5cf6" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
-                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 inline-block"></span>
+                    <button data-gstart="#ec4899" data-gend="#8b5cf6" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 inline-block shrink-0"></span>
                       <span>Cyber Neon</span>
                     </button>
-                    <button data-gstart="#0f172a" data-gend="#475569" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5">
-                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-slate-900 to-slate-600 inline-block"></span>
+                    <button data-gstart="#0f172a" data-gend="#475569" class="grad-preset-pill px-2.5 py-1 text-xs rounded-md border border-slate-200 bg-white dark:bg-slate-800 hover:border-slate-400 transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-slate-900 to-slate-600 inline-block shrink-0"></span>
                       <span>Midnight Slate</span>
                     </button>
                   </div>
@@ -1138,14 +1114,14 @@
                   <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5"><span data-i18n="label_margin">Margin</span>: <span id="margin-val">10</span>px</label>
                   <input type="range" id="qr-margin" min="0" max="40" value="10" class="w-full accent-slate-900 dark:accent-slate-100 cursor-pointer">
                 </div>
-              </div>
-
+                </div>
+              </details>
             </div>
 
           </div>
 
-          <!-- Live Preview Card (5 Cols Sticky) -->
-          <div id="studio-preview-col" class="hidden xl:block xl:col-span-5 xl:sticky xl:top-24 space-y-4">
+          <!-- Live Preview Card (5 Cols Sticky on Desktop, Immediate on Mobile) -->
+          <div id="studio-preview-col" class="block xl:col-span-5 xl:sticky xl:top-24 space-y-4">
             <div class="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-xs flex flex-col items-center">
               
               <div class="w-full flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
@@ -1168,15 +1144,15 @@
                 <div id="qr-canvas" class="bg-white p-3 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xs"></div>
               </div>
 
-              <!-- Download & Save Buttons (High Contrast Clean Architecture) -->
-              <div class="w-full grid grid-cols-2 gap-3 mt-5">
-                <button id="download-png-btn" class="btn-luxury-pill bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 justify-center shadow-xs group">
+              <!-- Download & Save Buttons (Full Width on Mobile) -->
+              <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+                <button id="download-png-btn" class="btn-luxury-pill w-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 justify-center shadow-xs group min-h-[44px]">
                   <span data-i18n="btn_download_png">Download PNG</span>
                   <span class="btn-nested-icon bg-white/20 dark:bg-slate-900/10">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
                   </span>
                 </button>
-                <button id="download-svg-btn" class="btn-luxury-pill bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 justify-center shadow-xs group">
+                <button id="download-svg-btn" class="btn-luxury-pill w-full bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 justify-center shadow-xs group min-h-[44px]">
                   <span data-i18n="btn_download_svg">Download SVG</span>
                   <span class="btn-nested-icon bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
                     <i data-lucide="file-code-2" class="w-3.5 h-3.5"></i>
@@ -1233,10 +1209,10 @@
             </span>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          <div class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3 gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 sm:gap-4 sm:overflow-visible">
             
             <!-- Preset 1: Restaurant Menu -->
-            <button type="button" class="use-case-card text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="restaurant">
+            <button type="button" class="use-case-card min-w-[78%] sm:min-w-0 snap-center shrink-0 sm:shrink text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="restaurant">
               <div>
                 <div class="w-9 h-9 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-3">
                   <i data-lucide="utensils" class="w-4 h-4"></i>
@@ -1253,7 +1229,7 @@
             </button>
 
             <!-- Preset 2: Real Estate -->
-            <button type="button" class="use-case-card text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="realestate">
+            <button type="button" class="use-case-card min-w-[78%] sm:min-w-0 snap-center shrink-0 sm:shrink text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="realestate">
               <div>
                 <div class="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-3">
                   <i data-lucide="building-2" class="w-4 h-4"></i>
@@ -1270,7 +1246,7 @@
             </button>
 
             <!-- Preset 3: Events & Badges -->
-            <button type="button" class="use-case-card text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="events">
+            <button type="button" class="use-case-card min-w-[78%] sm:min-w-0 snap-center shrink-0 sm:shrink text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="events">
               <div>
                 <div class="w-9 h-9 rounded-lg bg-violet-50 dark:bg-violet-950/40 text-violet-600 dark:text-violet-400 flex items-center justify-center mb-3">
                   <i data-lucide="ticket" class="w-4 h-4"></i>
@@ -1287,7 +1263,7 @@
             </button>
 
             <!-- Preset 4: Product Packaging -->
-            <button type="button" class="use-case-card text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="packaging">
+            <button type="button" class="use-case-card min-w-[78%] sm:min-w-0 snap-center shrink-0 sm:shrink text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="packaging">
               <div>
                 <div class="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3">
                   <i data-lucide="package" class="w-4 h-4"></i>
@@ -1304,7 +1280,7 @@
             </button>
 
             <!-- Preset 5: Digital Business Card -->
-            <button type="button" class="use-case-card text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="vcard">
+            <button type="button" class="use-case-card min-w-[78%] sm:min-w-0 snap-center shrink-0 sm:shrink text-left p-4 bg-white dark:bg-[#0f172a] hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl shadow-xs transition group flex flex-col justify-between" data-usecase="vcard">
               <div>
                 <div class="w-9 h-9 rounded-lg bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-3">
                   <i data-lucide="contact-2" class="w-4 h-4"></i>
@@ -1327,23 +1303,23 @@
         <!-- 2. SOCIAL PROOF & LIVE TRUST METRICS BAR      -->
         <!-- ============================================== -->
         <div id="section-social-proof" class="bg-slate-900 dark:bg-[#0c1322] border border-slate-800 rounded-xl p-6 sm:p-8 text-white shadow-xs space-y-6">
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-slate-800">
-            <div class="pt-4 sm:pt-0">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-center sm:divide-x sm:divide-slate-800">
+            <div class="p-2 sm:p-0">
               <div class="text-2xl sm:text-3xl font-extrabold font-mono text-white">50,000+</div>
               <p class="text-xs text-slate-300 font-medium mt-1">QR Codes Generated</p>
               <p class="text-[10px] text-slate-400 font-mono mt-0.5">Worldwide across 120+ countries</p>
             </div>
-            <div class="pt-4 sm:pt-0">
+            <div class="p-2 sm:p-0">
               <div class="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-400">99.99%</div>
               <p class="text-xs text-slate-300 font-medium mt-1">Cloud Redirection Uptime</p>
               <p class="text-[10px] text-slate-400 font-mono mt-0.5">High availability infrastructure</p>
             </div>
-            <div class="pt-4 sm:pt-0">
+            <div class="p-2 sm:p-0">
               <div class="text-2xl sm:text-3xl font-extrabold font-mono text-sky-300">&lt; 100ms</div>
               <p class="text-xs text-slate-300 font-medium mt-1">Fast Scanner Redirection</p>
               <p class="text-[10px] text-slate-400 font-mono mt-0.5">Edge routed telemetry</p>
             </div>
-            <div class="pt-4 sm:pt-0">
+            <div class="p-2 sm:p-0">
               <div class="text-2xl sm:text-3xl font-extrabold font-mono text-amber-400 flex items-center justify-center gap-1">
                 <span>4.9</span>
                 <span class="text-sm">★</span>
@@ -1353,31 +1329,37 @@
             </div>
           </div>
 
-          <!-- Verified Customer Quote Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6 border-t border-slate-800 text-xs">
-            <div class="p-4 rounded-lg bg-slate-800/70 border border-slate-700/70 space-y-2">
-              <div class="flex text-amber-400 gap-1 text-[11px]">★★★★★</div>
-              <p class="text-slate-300 leading-relaxed italic">
-                "The dynamic links saved us thousands in reprinting costs for our chain of 14 restaurants when our menu changed."
-              </p>
+          <!-- Verified Customer Quote Cards (Snap-Scroll on Mobile) -->
+          <div class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 gap-3 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible pt-6 border-t border-slate-800 text-xs">
+            <div class="min-w-[85%] md:min-w-0 snap-center shrink-0 md:shrink p-4 rounded-lg bg-slate-800/70 border border-slate-700/70 space-y-2 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex text-amber-400 gap-1 text-[11px]">★★★★★</div>
+                <p class="text-slate-300 leading-relaxed italic">
+                  "The dynamic links saved us thousands in reprinting costs for our chain of 14 restaurants when our menu changed."
+                </p>
+              </div>
               <div class="pt-2 border-t border-slate-700/70 font-semibold text-slate-200">
                 Marcus T. <span class="text-slate-400 font-normal">• Restaurant Group Director</span>
               </div>
             </div>
-            <div class="p-4 rounded-lg bg-slate-800/70 border border-slate-700/70 space-y-2">
-              <div class="flex text-amber-400 gap-1 text-[11px]">★★★★★</div>
-              <p class="text-slate-300 leading-relaxed italic">
-                "Vector SVG export gave our packaging agency razor-sharp print quality for 100,000 cosmetic boxes."
-              </p>
+            <div class="min-w-[85%] md:min-w-0 snap-center shrink-0 md:shrink p-4 rounded-lg bg-slate-800/70 border border-slate-700/70 space-y-2 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex text-amber-400 gap-1 text-[11px]">★★★★★</div>
+                <p class="text-slate-300 leading-relaxed italic">
+                  "Vector SVG export gave our packaging agency razor-sharp print quality for 100,000 cosmetic boxes."
+                </p>
+              </div>
               <div class="pt-2 border-t border-slate-700/70 font-semibold text-slate-200">
                 Elena R. <span class="text-slate-400 font-normal">• Brand & Packaging Lead</span>
               </div>
             </div>
-            <div class="p-4 rounded-lg bg-slate-800/70 border border-slate-700/70 space-y-2">
-              <div class="flex text-amber-400 gap-1 text-[11px]">★★★★★</div>
-              <p class="text-slate-300 leading-relaxed italic">
-                "We generated 400 event badges in a single ZIP using the Bulk Generator in under 30 seconds."
-              </p>
+            <div class="min-w-[85%] md:min-w-0 snap-center shrink-0 md:shrink p-4 rounded-lg bg-slate-800/70 border border-slate-700/70 space-y-2 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex text-amber-400 gap-1 text-[11px]">★★★★★</div>
+                <p class="text-slate-300 leading-relaxed italic">
+                  "We generated 400 event badges in a single ZIP using the Bulk Generator in under 30 seconds."
+                </p>
+              </div>
               <div class="pt-2 border-t border-slate-700/70 font-semibold text-slate-200">
                 David K. <span class="text-slate-400 font-normal">• Tech Summit Organizer</span>
               </div>
@@ -2032,7 +2014,8 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
           </p>
         </div>
 
-        <div class="overflow-x-auto">
+        <!-- Desktop Comparison Table -->
+        <div class="overflow-x-auto hidden md:block">
           <table class="w-full text-left text-xs border-collapse">
             <thead>
               <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300">
@@ -2110,6 +2093,59 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
               </tr>
             </tfoot>
           </table>
+        </div>
+
+        <!-- Mobile Stacked Comparison Cards -->
+        <div class="md:hidden space-y-4">
+          <!-- Free Tier Card -->
+          <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+              <div>
+                <h3 class="font-bold text-slate-900 dark:text-white text-base">Free Forever Tier</h3>
+                <p class="text-slate-500 text-xs mt-0.5">High-Res Static Generation</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-md bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-mono font-bold text-sm">$0</span>
+            </div>
+            <ul class="space-y-2.5 text-xs text-slate-700 dark:text-slate-300">
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Unlimited Free Static QR Generation</span></li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Full Visual Customization & Presets</span></li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Center Brand Logo & Watermark</span></li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Lossless Vector SVG Export</span></li>
+              <li class="flex items-center gap-2.5 text-slate-400"><i data-lucide="minus" class="w-4 h-4 shrink-0"></i><span>1 Active Demo Dynamic Link</span></li>
+            </ul>
+            <div class="pt-2">
+              <span class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-semibold text-xs border border-emerald-200 dark:border-emerald-800/60 min-h-[44px]">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> Free (In Use)
+              </span>
+            </div>
+          </div>
+
+          <!-- Enterprise Cloud Card -->
+          <div class="p-5 rounded-xl border-2 border-indigo-500/80 bg-white dark:bg-[#0f172a] shadow-md space-y-4 relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-0.5 rounded-bl-lg uppercase tracking-wider">
+              Enterprise
+            </div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 pt-1">
+              <div>
+                <h3 class="font-bold text-slate-900 dark:text-white text-base">Enterprise Cloud</h3>
+                <p class="text-slate-500 text-xs mt-0.5">By Automatixes AI Solutions</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-md bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-mono font-bold text-xs">Custom</span>
+            </div>
+            <ul class="space-y-2.5 text-xs text-slate-700 dark:text-slate-300">
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Unlimited Dynamic Campaigns (Edit Target URL)</span></li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Live Scanner Telemetry & OS Analytics</span></li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Bulk Batch ZIP Generation (Hundreds via CSV)</span></li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Production REST API & Webhook Dispatch</span></li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>Brand Kit Auto-Sync & CMYK Print Prep</span></li>
+            </ul>
+            <div class="pt-2">
+              <a href="https://www.automatixes.com/contact" target="_blank" class="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs shadow-md transition active:scale-95 min-h-[44px]">
+                <span>Get Enterprise Cloud</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2407,9 +2443,9 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
           <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Stay Ahead with AI & Automation Insights</h3>
           <p class="text-sm text-slate-600 dark:text-slate-400">Join our newsletter to receive the latest updates on AI agents, workflows, and free tools like this one.</p>
         </div>
-        <div class="w-full md:w-auto max-w-sm flex gap-2">
-          <input type="email" placeholder="you@company.com" class="w-full min-w-[240px] px-4 py-2.5 bg-white dark:bg-[#0b0f19] border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition">
-          <button class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition whitespace-nowrap">Subscribe</button>
+        <div class="w-full md:w-auto max-w-sm flex flex-col sm:flex-row gap-2.5">
+          <input type="email" placeholder="you@company.com" class="w-full sm:min-w-[240px] px-4 py-2.5 bg-white dark:bg-[#0b0f19] border border-slate-200 dark:border-slate-800 rounded-xl text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition min-h-[44px]">
+          <button class="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition whitespace-nowrap min-h-[44px] flex items-center justify-center">Subscribe</button>
         </div>
       </div>
       <!-- Footer Links Grid -->
@@ -2756,17 +2792,244 @@ curl -X POST "https://qrcode.automatixes.com/api/v2/generate" \
     </div>
   </div>
 
-  <!-- Mobile Floating Action Bar (Coconut UI - Fixed to True Viewport) -->
-  <div id="mobile-qr-floating-bar" class="xl:hidden fixed bottom-3 inset-x-3 z-50 flex items-center gap-2 bg-white/95 dark:bg-[#0c1322]/95 backdrop-blur-2xl border border-slate-300 dark:border-slate-800 p-2 rounded-2xl shadow-2xl">
-    <button type="button" id="mobile-switch-view-btn" class="flex-1 py-2.5 px-3 text-xs font-bold rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center gap-1.5 active:scale-95 transition">
-      <i id="mobile-switch-view-icon" data-lucide="qr-code" class="w-4 h-4 text-indigo-500"></i>
-      <span id="mobile-switch-view-text">View QR & Export</span>
-    </button>
-    <button type="button" id="mobile-quick-download-btn" class="flex-1 py-2.5 px-3 text-xs font-bold rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition">
-      <i data-lucide="download" class="w-4 h-4"></i>
-      <span>Download PNG</span>
-    </button>
+  <!-- Sticky Lead CTA Bar (Mobile - Dismissible via sessionStorage) -->
+  <div id="sticky-lead-cta" class="md:hidden fixed bottom-[calc(3.75rem+env(safe-area-inset-bottom,0px))] inset-x-3 z-30 hidden transition-all duration-300">
+    <div class="bg-slate-900/95 dark:bg-[#0c1322]/95 text-white backdrop-blur-md border border-slate-700/80 rounded-2xl p-2.5 px-3.5 shadow-2xl flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+        <span class="text-xs font-semibold tracking-tight truncate">Book a Free AI Audit</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <a href="https://www.automatixes.com/contact" target="_blank" class="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-400 hover:to-indigo-500 text-white text-[11px] font-bold rounded-lg transition shadow-xs flex items-center gap-1 active:scale-95 whitespace-nowrap min-h-[36px]">
+          <span>Get Audit</span>
+          <i data-lucide="arrow-right" class="w-3 h-3"></i>
+        </a>
+        <button type="button" id="dismiss-sticky-cta" class="p-1.5 text-slate-400 hover:text-white rounded-lg active:scale-95 transition" aria-label="Dismiss offer">
+          <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
   </div>
+
+  <!-- Mobile Bottom Tab Bar (Fixed Below 768px with Safe Area Padding) -->
+  <nav id="mobile-bottom-tab-bar" class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-[#0c1322]/95 backdrop-blur-xl border-t border-slate-200/90 dark:border-slate-800/90 pb-[env(safe-area-inset-bottom,0px)] shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+    <div class="flex items-center justify-around px-1 h-14">
+      <button data-view="studio" class="nav-item active flex-1 flex flex-col items-center justify-center py-1 min-h-[44px] text-[10px] font-semibold text-slate-500 dark:text-slate-400 transition-colors">
+        <i data-lucide="wand-2" class="w-5 h-5 mb-0.5"></i>
+        <span data-i18n="nav_studio">Studio</span>
+      </button>
+
+      <button data-view="dynamic" class="nav-item flex-1 flex flex-col items-center justify-center py-1 min-h-[44px] text-[10px] font-semibold text-slate-500 dark:text-slate-400 transition-colors">
+        <i data-lucide="refresh-cw" class="w-5 h-5 mb-0.5"></i>
+        <span data-i18n="nav_dynamic">Links</span>
+      </button>
+
+      <button data-view="batch" class="nav-item flex-1 flex flex-col items-center justify-center py-1 min-h-[44px] text-[10px] font-semibold text-slate-500 dark:text-slate-400 transition-colors">
+        <i data-lucide="layers" class="w-5 h-5 mb-0.5"></i>
+        <span data-i18n="nav_batch">Batch</span>
+      </button>
+
+      <button data-view="history" class="nav-item flex-1 flex flex-col items-center justify-center py-1 min-h-[44px] text-[10px] font-semibold text-slate-500 dark:text-slate-400 transition-colors">
+        <i data-lucide="folder-clock" class="w-5 h-5 mb-0.5"></i>
+        <span data-i18n="nav_library">Library</span>
+      </button>
+
+      <button type="button" id="mobile-more-tab-btn" class="flex-1 flex flex-col items-center justify-center py-1 min-h-[44px] text-[10px] font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+        <i data-lucide="menu" class="w-5 h-5 mb-0.5"></i>
+        <span>More</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile More Slide-Up Drawer -->
+  <div id="mobile-more-drawer" class="md:hidden fixed inset-0 z-50 hidden">
+    <!-- Backdrop -->
+    <div id="mobile-more-backdrop" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
+    
+    <!-- Drawer Container -->
+    <div class="fixed bottom-0 inset-x-0 bg-white dark:bg-[#0f172a] border-t border-slate-200 dark:border-slate-800 rounded-t-2xl p-5 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] shadow-2xl max-h-[85vh] overflow-y-auto space-y-4">
+      <div class="w-10 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto"></div>
+      
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <i data-lucide="grid" class="w-4 h-4 text-indigo-500"></i>
+          <span>More Tools & Resources</span>
+        </h3>
+        <button type="button" id="close-mobile-more-btn" class="p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 active:scale-95">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <button data-view="templates" class="nav-item flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-left transition hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="sparkles" class="w-4 h-4 text-amber-500 shrink-0"></i>
+          <div>
+            <span class="block text-xs font-bold text-slate-900 dark:text-white">Templates</span>
+            <span class="block text-[10px] text-slate-500 dark:text-slate-400">Curated styles</span>
+          </div>
+        </button>
+
+        <button data-view="analytics" class="nav-item flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-left transition hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="bar-chart-3" class="w-4 h-4 text-rose-500 shrink-0"></i>
+          <div>
+            <span class="block text-xs font-bold text-slate-900 dark:text-white">Analytics</span>
+            <span class="block text-[10px] text-slate-500 dark:text-slate-400">Live telemetry</span>
+          </div>
+        </button>
+
+        <button data-view="api" class="nav-item flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-left transition hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="code-2" class="w-4 h-4 text-blue-500 shrink-0"></i>
+          <div>
+            <span class="block text-xs font-bold text-slate-900 dark:text-white">API & SDK</span>
+            <span class="block text-[10px] text-slate-500 dark:text-slate-400">Developer edge</span>
+          </div>
+        </button>
+
+        <button data-view="admin" class="nav-item flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-left transition hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="shield-check" class="w-4 h-4 text-indigo-500 shrink-0"></i>
+          <div>
+            <span class="block text-xs font-bold text-slate-900 dark:text-white">Admin</span>
+            <span class="block text-[10px] text-slate-500 dark:text-slate-400">Root control</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Quick External Links -->
+      <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+        <a href="https://invoicemaker.automatixes.com" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300">
+          <span class="flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4 text-indigo-500"></i> Free Invoice Maker</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400"></i>
+        </a>
+        <a href="https://www.automatixes.com/contact" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/50 text-xs font-bold text-indigo-700 dark:text-indigo-300">
+          <span class="flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-indigo-600"></i> Book Free AI Audit</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-indigo-600"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Interaction Handler -->
+  <script>
+  (function() {
+    function syncResponsiveLayout() {
+      var previewCol = document.getElementById('studio-preview-col');
+      var inputsCard = document.getElementById('content-inputs-card');
+      var layoutGrid = document.getElementById('studio-layout-grid');
+      
+      if (window.innerWidth < 1280) {
+        if (previewCol && inputsCard && previewCol.previousElementSibling !== inputsCard) {
+          inputsCard.parentNode.insertBefore(previewCol, inputsCard.nextElementSibling);
+        }
+      } else {
+        if (previewCol && layoutGrid && previewCol.parentNode !== layoutGrid) {
+          layoutGrid.appendChild(previewCol);
+        }
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      syncResponsiveLayout();
+      window.addEventListener('resize', syncResponsiveLayout);
+    });
+  })();
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // 1. Mobile Quick-Start Banner Dismissal (Persisted in localStorage)
+    var guideBanner = document.getElementById('mobile-guide-banner');
+    var dismissGuideBtn = document.getElementById('dismiss-mobile-guide-btn');
+    if (guideBanner && localStorage.getItem('autoqr_mobile_guide_dismissed') === '1') {
+      guideBanner.style.display = 'none';
+    }
+    if (dismissGuideBtn && guideBanner) {
+      dismissGuideBtn.addEventListener('click', function() {
+        guideBanner.style.display = 'none';
+        try { localStorage.setItem('autoqr_mobile_guide_dismissed', '1'); } catch (e) {}
+      });
+    }
+
+    // 2. Open styling accordion by default on desktop, closed on mobile
+    var stylingAcc = document.getElementById('styling-accordion');
+    if (stylingAcc && window.innerWidth >= 1280) {
+      stylingAcc.open = true;
+    }
+
+    // 3. Auto-scroll active chip into view on click
+    var tabBtns = document.querySelectorAll('#type-tabs .tab-btn');
+    tabBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        setTimeout(function() {
+          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }, 50);
+      });
+    });
+
+    // 4. Mobile More Drawer Toggle
+    var moreTabBtn = document.getElementById('mobile-more-tab-btn');
+    var moreDrawer = document.getElementById('mobile-more-drawer');
+    var closeMoreBtn = document.getElementById('close-mobile-more-btn');
+    var moreBackdrop = document.getElementById('mobile-more-backdrop');
+
+    function toggleMoreDrawer(open) {
+      if (!moreDrawer) return;
+      if (open) {
+        moreDrawer.classList.remove('hidden');
+      } else {
+        moreDrawer.classList.add('hidden');
+      }
+    }
+
+    if (moreTabBtn) {
+      moreTabBtn.addEventListener('click', function() { toggleMoreDrawer(true); });
+    }
+    if (closeMoreBtn) {
+      closeMoreBtn.addEventListener('click', function() { toggleMoreDrawer(false); });
+    }
+    if (moreBackdrop) {
+      moreBackdrop.addEventListener('click', function() { toggleMoreDrawer(false); });
+    }
+
+    // Close drawer when any nav-item in drawer is clicked
+    if (moreDrawer) {
+      var drawerNavItems = moreDrawer.querySelectorAll('.nav-item');
+      drawerNavItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+          toggleMoreDrawer(false);
+        });
+      });
+    }
+
+    // 5. Sticky Lead CTA Bar (Scroll Trigger & sessionStorage Dismissal)
+    var stickyCta = document.getElementById('sticky-lead-cta');
+    var dismissCtaBtn = document.getElementById('dismiss-sticky-cta');
+    var previewCol = document.getElementById('studio-preview-col');
+    var ctaDismissed = false;
+    try {
+      ctaDismissed = sessionStorage.getItem('autoqr_lead_cta_dismissed') === '1';
+    } catch (e) {}
+
+    if (stickyCta && !ctaDismissed) {
+      var checkScroll = function() {
+        if (ctaDismissed) return;
+        if (window.scrollY > 350) {
+          stickyCta.classList.remove('hidden');
+        } else {
+          stickyCta.classList.add('hidden');
+        }
+      };
+
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      checkScroll();
+
+      if (dismissCtaBtn) {
+        dismissCtaBtn.addEventListener('click', function() {
+          ctaDismissed = true;
+          stickyCta.classList.add('hidden');
+          try { sessionStorage.setItem('autoqr_lead_cta_dismissed', '1'); } catch (e) {}
+        });
+      }
+    }
+  });
+  </script>
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="app.js?v=8.0.0"></script>

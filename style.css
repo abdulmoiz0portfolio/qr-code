@@ -514,27 +514,65 @@ html:not(.dark) .border-slate-200\/80 {
   border-radius: var(--qr-radius-pill);
 }
 
-/* --- 13. MOBILE RESPONSIVE ENGINE (COCONUT UI) --- */
+/* --- 13. MOBILE RESPONSIVE ENGINE (COCONUT UI & TOOL-FIRST FLOW) --- */
 html, body {
   overflow-x: hidden !important;
   max-width: 100vw !important;
 }
 
-#mobile-qr-floating-bar {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-}
-
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 .no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
+/* Touch-friendly Snap Scrolling */
+.snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.snap-center {
+  scroll-snap-align: center;
+}
+
+/* Tool-First Mobile Ordering (Single Column Flow below xl: 1280px) */
+@media screen and (max-width: 1279px) {
+  #studio-layout-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+  
+  #studio-controls-col,
+  #studio-preview-col,
+  #type-tabs-wrapper,
+  #content-inputs-card,
+  #styling-accordion-card {
+    width: 100% !important;
+  }
+}
+
+/* Desktop Accordion Behavior (Always Expanded & Clean) */
+@media screen and (min-width: 1280px) {
+  #styling-accordion summary {
+    cursor: default !important;
+    pointer-events: none !important;
+  }
+  #styling-accordion .accordion-body {
+    display: block !important;
+  }
+}
+
+/* Mobile Viewport Rules (< 768px) */
 @media screen and (max-width: 768px) {
-  /* Prevent iOS Safari auto-zoom on inputs */
+  body {
+    font-size: 14px;
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Prevent iOS Safari auto-zoom on inputs (must be >= 16px) */
   input[type="text"],
   input[type="number"],
   input[type="email"],
@@ -542,18 +580,30 @@ html, body {
   input[type="url"],
   select,
   textarea {
-    font-size: 14px !important;
+    font-size: 16px !important;
+    min-height: 44px !important;
+  }
+
+  label {
+    font-size: 12px;
+  }
+
+  /* Minimum 44px Touch Targets */
+  .tab-btn,
+  .btn-luxury-pill,
+  button:not(.preset-pill):not(.grad-preset-pill):not([class*="p-1"]) {
+    min-height: 44px;
   }
 
   /* Compact button styling on mobile */
   .btn-luxury-pill {
-    padding: 0.55rem 1rem !important;
-    font-size: 0.75rem !important;
+    padding: 0.65rem 1rem !important;
+    font-size: 0.8125rem !important;
   }
 
   /* Optical viewfinder on mobile */
   .viewfinder-plate {
-    min-height: 250px !important;
+    min-height: 240px !important;
     padding: 1rem !important;
   }
 
@@ -562,5 +612,16 @@ html, body {
     max-width: 100% !important;
     height: auto !important;
   }
+
+  /* Bottom Tab Bar Active Highlighting */
+  #mobile-bottom-tab-bar .nav-item.active {
+    color: #4f46e5 !important;
+    font-weight: 700 !important;
+  }
+  .dark #mobile-bottom-tab-bar .nav-item.active {
+    color: #818cf8 !important;
+    font-weight: 700 !important;
+  }
 }
+
 
